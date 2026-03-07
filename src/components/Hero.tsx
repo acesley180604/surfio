@@ -3,7 +3,7 @@ import Reveal from "./Reveal";
 
 const institutions = [
   { name: "HKSTP", logo: "/logos/hkstp.svg" },
-  { name: "Techathon+", logo: null },
+  { name: "Techathon+", logo: "/logos/techathon.jpg" },
   { name: "HK PolyU", logo: "/logos/polyu.png" },
   { name: "HKUST", logo: "/logos/hkust.svg" },
   { name: "TU Darmstadt", logo: "/logos/tu-darmstadt.svg" },
@@ -104,17 +104,11 @@ export default function Hero() {
                   transition={{ delay: 0.5 + i * 0.1 }}
                   className="h-[32px] flex items-center grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
                 >
-                  {inst.logo ? (
-                    <img
-                      src={inst.logo}
-                      alt={inst.name}
-                      className="h-full w-auto object-contain"
-                    />
-                  ) : (
-                    <span className="text-[14px] font-bold text-gray-400 tracking-wide">
-                      {inst.name}
-                    </span>
-                  )}
+                  <img
+                    src={inst.logo}
+                    alt={inst.name}
+                    className="h-full w-auto object-contain"
+                  />
                 </motion.div>
               ))}
             </div>
