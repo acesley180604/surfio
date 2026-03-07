@@ -25,7 +25,7 @@ export default function Experts() {
             </p>
 
             <motion.a
-              href="#contact"
+              href="https://calendly.com/acesley180604/aeo-service-free-audit-surfio"
               className="text-[14px] font-semibold text-gray-900 underline underline-offset-4 decoration-gray-900 hover:text-[#7C3AED] transition-colors inline-block"
               whileHover={{ x: 4 }}
             >

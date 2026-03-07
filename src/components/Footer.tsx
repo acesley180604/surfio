@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -35,8 +36,17 @@ export default function Footer() {
           >
             <h4 className="text-[14px] font-bold text-[#7C3AED] mb-4">行業</h4>
             <div className="space-y-2">
-              {["金融服務", "會計師事務所", "B2B 軟件", "法律服務", "醫療服務", "電商", "教育科技", "初創企業"].map((item) => (
-                <a key={item} href="#" className="block text-[13px] text-gray-300 hover:text-white transition-colors">{item}</a>
+              {[
+                { name: "金融服務", slug: "financial-services" },
+                { name: "會計師事務所", slug: "accounting-firms" },
+                { name: "B2B 軟件", slug: "b2b-software" },
+                { name: "法律服務", slug: "legal-services" },
+                { name: "醫療服務", slug: "healthcare" },
+                { name: "電商", slug: "ecommerce" },
+                { name: "教育科技", slug: "edtech" },
+                { name: "初創企業", slug: "startups" },
+              ].map((item) => (
+                <Link key={item.slug} to={`/aeo/${item.slug}`} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{item.name}</Link>
               ))}
             </div>
           </motion.div>
@@ -57,9 +67,11 @@ export default function Footer() {
 
             <h4 className="text-[14px] font-bold text-[#7C3AED] mt-6 mb-4">資源</h4>
             <div className="space-y-2">
-              {["Blog", "AEO 入門指南", "術語表", "網站地圖", "案例分析"].map((item) => (
-                <a key={item} href="#" className="block text-[13px] text-gray-300 hover:text-white transition-colors">{item}</a>
-              ))}
+              <a href="#" className="block text-[13px] text-gray-300 hover:text-white transition-colors">Blog</a>
+              <Link to="/glossary/aeo" className="block text-[13px] text-gray-300 hover:text-white transition-colors">AEO 入門指南</Link>
+              <Link to="/glossary" className="block text-[13px] text-gray-300 hover:text-white transition-colors">術語表</Link>
+              <a href="#" className="block text-[13px] text-gray-300 hover:text-white transition-colors">網站地圖</a>
+              <a href="#" className="block text-[13px] text-gray-300 hover:text-white transition-colors">案例分析</a>
             </div>
 
             <h4 className="text-[14px] font-bold text-[#7C3AED] mt-6 mb-4">支持機構</h4>

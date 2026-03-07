@@ -1,35 +1,25 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import ProblemSection from "./components/ProblemSection";
-import Experts from "./components/Experts";
-import Playbook from "./components/Playbook";
-import Planning from "./components/Planning";
-import Services from "./components/Services";
-import CaseStudies from "./components/CaseStudies";
-import SimpleSteps from "./components/SimpleSteps";
-
-import Comparison from "./components/Comparison";
-import OurProcess from "./components/OurProcess";
-import FAQ from "./components/FAQ";
 import Footer from "./components/Footer";
+import HomePage from "./pages/HomePage";
+import IndustryPage from "./pages/IndustryPage";
+import PlatformPage from "./pages/PlatformPage";
+import GlossaryPage from "./pages/GlossaryPage";
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-white text-text-body font-sans">
-      <Navbar />
-      <Hero />
-      <ProblemSection />
-      <Experts />
-      <Playbook />
-      <Planning />
-      <Services />
-      <CaseStudies />
-      <SimpleSteps />
-
-      <Comparison />
-      <OurProcess />
-      <FAQ />
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <div className="min-h-screen bg-white text-text-body font-sans">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/aeo/:slug" element={<IndustryPage />} />
+          <Route path="/platform/:slug" element={<PlatformPage />} />
+          <Route path="/glossary" element={<GlossaryPage />} />
+          <Route path="/glossary/:slug" element={<GlossaryPage />} />
+        </Routes>
+        <Footer />
+      </div>
+    </BrowserRouter>
   );
 }

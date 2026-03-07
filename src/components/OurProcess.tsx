@@ -179,7 +179,7 @@ export default function OurProcess() {
             睇到呢度都唔想走？同我哋嘅 SEO 策略師傾下，免費規劃會議 + 度身方案。
           </p>
           <motion.a
-            href="#contact"
+            href="https://calendly.com/acesley180604/aeo-service-free-audit-surfio"
             className="inline-block px-7 py-3 rounded-lg bg-[#7C3AED] text-white text-[14px] font-semibold hover:bg-[#6D28D9] transition-colors"
             whileHover={{ scale: 1.06, y: -2 }}
             whileTap={{ scale: 0.97 }}

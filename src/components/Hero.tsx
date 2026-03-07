@@ -2,22 +2,11 @@ import { motion } from "framer-motion";
 import Reveal from "./Reveal";
 
 const institutions = [
-  {
-    name: "HKSTP",
-    logo: "https://www.hkstp.org/-/media/corpsite/assets/park-life/news-and-events/news/logo/hkstp_logo_eng_op-01.svg",
-  },
-  {
-    name: "HK PolyU",
-    logo: "https://www.polyu.edu.hk/assets/img/main-logo-1x.png",
-  },
-  {
-    name: "HKUST",
-    logo: "https://hkust.edu.hk/sites/default/files/2024-03/HKUST_logo_1.svg",
-  },
-  {
-    name: "TU Darmstadt",
-    logo: "https://upload.wikimedia.org/wikipedia/de/thumb/2/24/TU_Darmstadt_Logo.svg/300px-TU_Darmstadt_Logo.svg.png",
-  },
+  { name: "HKSTP", logo: "/logos/hkstp.svg" },
+  { name: "Techathon+", logo: null },
+  { name: "HK PolyU", logo: "/logos/polyu.png" },
+  { name: "HKUST", logo: "/logos/hkust.svg" },
+  { name: "TU Darmstadt", logo: "/logos/tu-darmstadt.svg" },
 ];
 
 export default function Hero() {
@@ -84,7 +73,7 @@ export default function Hero() {
               點樣喺 LLM 排名
             </motion.a>
             <motion.a
-              href="#contact"
+              href="https://calendly.com/acesley180604/aeo-service-free-audit-surfio"
               className="px-6 py-3 rounded-full bg-[#7C3AED] text-white text-[14px] font-medium hover:bg-[#6D28D9] transition-colors"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.97 }}
@@ -115,30 +104,19 @@ export default function Hero() {
                   transition={{ delay: 0.5 + i * 0.1 }}
                   className="h-[32px] flex items-center grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
                 >
-                  <img
-                    src={inst.logo}
-                    alt={inst.name}
-                    className="h-full w-auto object-contain"
-                    onError={(e) => {
-                      const target = e.currentTarget;
-                      target.style.display = "none";
-                      const fallback = document.createElement("span");
-                      fallback.className = "text-[14px] font-bold text-gray-400 tracking-wide";
-                      fallback.textContent = inst.name;
-                      target.parentElement?.appendChild(fallback);
-                    }}
-                  />
+                  {inst.logo ? (
+                    <img
+                      src={inst.logo}
+                      alt={inst.name}
+                      className="h-full w-auto object-contain"
+                    />
+                  ) : (
+                    <span className="text-[14px] font-bold text-gray-400 tracking-wide">
+                      {inst.name}
+                    </span>
+                  )}
                 </motion.div>
               ))}
-              <motion.span
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.9 }}
-                className="text-[14px] font-bold text-gray-400 tracking-wide opacity-60 hover:opacity-100 transition-opacity duration-300"
-              >
-                Techathon+
-              </motion.span>
             </div>
           </div>
         </Reveal>

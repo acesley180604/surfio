@@ -69,7 +69,7 @@ export default function Navbar() {
 
         {/* CTA */}
         <motion.a
-          href="#contact"
+          href="https://calendly.com/acesley180604/aeo-service-free-audit-surfio"
           className="hidden md:inline-block border border-gray-300 text-gray-900 px-5 py-2 rounded-full text-[14px] font-medium hover:border-gray-400 transition-colors"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -97,7 +97,7 @@ export default function Navbar() {
                   {label}
                 </a>
               ))}
-              <a href="#contact" className="block text-[14px] text-[#7C3AED] font-semibold" onClick={() => setMenuOpen(false)}>
+              <a href="https://calendly.com/acesley180604/aeo-service-free-audit-surfio" className="block text-[14px] text-[#7C3AED] font-semibold" onClick={() => setMenuOpen(false)}>
                 預約策略會議
               </a>
             </div>

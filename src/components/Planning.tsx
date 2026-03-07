@@ -18,7 +18,7 @@ export default function Planning() {
               我哋唔單止有 AEO 策略經驗，仲有網站開發、內容撰寫同 PR 級連結建設嘅實力，令你嘅網站內容變成 LLM 嘅推薦素材。
             </p>
             <motion.a
-              href="#contact"
+              href="https://calendly.com/acesley180604/aeo-service-free-audit-surfio"
               className="inline-block px-7 py-3 rounded-lg bg-[#7C3AED] text-white text-[14px] font-semibold hover:bg-[#6D28D9] transition-colors"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.97 }}
