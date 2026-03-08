@@ -1,12 +1,13 @@
 import { motion } from "framer-motion";
 import Reveal from "./Reveal";
+import { LogoCloud } from "./ui/logo-cloud";
 
-const institutions = [
-  { name: "HKSTP", logo: "/logos/hkstp.svg" },
-  { name: "Techathon+", logo: "/logos/techathon.jpg" },
-  { name: "HK PolyU", logo: "/logos/polyu.png" },
-  { name: "HKUST", logo: "/logos/hkust.svg" },
-  { name: "TU Darmstadt", logo: "/logos/tu-darmstadt.svg" },
+const logos = [
+  { src: "/logos/hkstp.svg", alt: "HKSTP" },
+  { src: "/logos/techathon.jpg", alt: "Techathon+" },
+  { src: "/logos/polyu.png", alt: "HK PolyU" },
+  { src: "/logos/hkust.svg", alt: "HKUST" },
+  { src: "/logos/tu-darmstadt.svg", alt: "TU Darmstadt" },
 ];
 
 export default function Hero() {
@@ -83,7 +84,7 @@ export default function Hero() {
           </div>
         </Reveal>
 
-        {/* Logo bar - Real institution logos */}
+        {/* Logo cloud - infinite slider */}
         <Reveal delay={0.4}>
           <div className="mb-6">
             <div className="flex items-center justify-center gap-4 mb-5">
@@ -94,24 +95,7 @@ export default function Hero() {
               <div className="h-px bg-gray-300 w-16" />
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
-              {institutions.map((inst, i) => (
-                <motion.div
-                  key={inst.name}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.5 + i * 0.1 }}
-                  className="h-[44px] flex items-center grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
-                >
-                  <img
-                    src={inst.logo}
-                    alt={inst.name}
-                    className="h-full w-auto object-contain"
-                  />
-                </motion.div>
-              ))}
-            </div>
+            <LogoCloud logos={logos} />
           </div>
         </Reveal>
       </div>
