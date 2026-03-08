@@ -501,4 +501,96 @@ export function setCanonical(url: string) {
   link.href = url;
 }
 
+// HowTo schema for the OurProcess section
+export function howToSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "點樣透過 AEO 令你嘅品牌喺 AI 搜尋被推薦",
+    description:
+      "SurfIO 嘅四步 AEO 流程：從深度研究到持續追蹤，幫你嘅品牌喺 ChatGPT、Google AI Overview、Perplexity 被推薦。",
+    totalTime: "P90D",
+    estimatedCost: {
+      "@type": "MonetaryAmount",
+      currency: "HKD",
+      value: "0",
+      name: "免費 AI 搜尋能見度審計",
+    },
+    step: [
+      {
+        "@type": "HowToStep",
+        position: 1,
+        name: "深度研究同策略",
+        text: "透過詳細問卷、客戶評價、競爭對手分析同歷史表現洞察，為你制定針對性、高轉化嘅 AEO 策略。BrandBrain 系統確保每個活動都經過微調。",
+        url: `${SITE_URL}/#process`,
+      },
+      {
+        "@type": "HowToStep",
+        position: 2,
+        name: "SEO + AI 優化內容",
+        text: "創作旨在喺搜尋引擎排名同被 AI 答案引用嘅內容。包括關鍵字豐富、以問題為焦點嘅文章、優化標題同結構化格式。結合人類專業知識同 AI 洞察。",
+        url: `${SITE_URL}/#process`,
+      },
+      {
+        "@type": "HowToStep",
+        position: 3,
+        name: "技術 AEO",
+        text: "添加 Schema、修改內容結構、撰寫 FAQ 同優化精選摘要。實施結構化數據增強、內部連結策略同索引改善，加強實體識別同知識圖譜存在感。",
+        url: `${SITE_URL}/#process`,
+      },
+      {
+        "@type": "HowToStep",
+        position: 4,
+        name: "連結建設",
+        text: "採用白帽連結建設策略，提升你網站嘅權威性同排名。包括客座發文、失效連結建設同數碼 PR 策略，專注於來自相關、高域名權威網站嘅連結。",
+        url: `${SITE_URL}/#process`,
+      },
+      {
+        "@type": "HowToStep",
+        position: 5,
+        name: "追蹤同分析",
+        text: "監測你喺搜尋引擎同 AI 平台嘅能見度，追蹤關鍵字排名、精選摘要同 AI 答案位置。詳細分析揭示邊啲內容驅動流量、轉化同 LLM 引用。",
+        url: `${SITE_URL}/#process`,
+      },
+    ],
+  };
+}
+
+// ItemList schema for industry pages
+export function industryListSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "SurfIO 行業 AEO 方案",
+    description: "SurfIO 為唔同行業提供嘅專業 AEO 優化方案",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "金融服務 AEO", url: `${SITE_URL}/aeo/financial-services` },
+      { "@type": "ListItem", position: 2, name: "會計師事務所 AEO", url: `${SITE_URL}/aeo/accounting-firms` },
+      { "@type": "ListItem", position: 3, name: "B2B 軟件 AEO", url: `${SITE_URL}/aeo/b2b-software` },
+      { "@type": "ListItem", position: 4, name: "法律服務 AEO", url: `${SITE_URL}/aeo/legal-services` },
+      { "@type": "ListItem", position: 5, name: "醫療服務 AEO", url: `${SITE_URL}/aeo/healthcare` },
+      { "@type": "ListItem", position: 6, name: "電商 AEO", url: `${SITE_URL}/aeo/ecommerce` },
+      { "@type": "ListItem", position: 7, name: "教育科技 AEO", url: `${SITE_URL}/aeo/edtech` },
+      { "@type": "ListItem", position: 8, name: "初創企業 AEO", url: `${SITE_URL}/aeo/startups` },
+    ],
+  };
+}
+
+// Platform list schema
+export function platformListSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "AI 平台優化指南",
+    description: "SurfIO 為各大 AI 搜尋平台提供嘅優化指南",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "ChatGPT 搜尋優化", url: `${SITE_URL}/platform/chatgpt` },
+      { "@type": "ListItem", position: 2, name: "Google AI Overview 優化", url: `${SITE_URL}/platform/google-ai-overview` },
+      { "@type": "ListItem", position: 3, name: "Perplexity 搜尋優化", url: `${SITE_URL}/platform/perplexity` },
+      { "@type": "ListItem", position: 4, name: "Claude AI 優化", url: `${SITE_URL}/platform/claude` },
+      { "@type": "ListItem", position: 5, name: "Bing Chat / Copilot 優化", url: `${SITE_URL}/platform/bing-chat` },
+    ],
+  };
+}
+
 export const SITE = { url: SITE_URL, calendly: CALENDLY };

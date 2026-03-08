@@ -17,6 +17,9 @@ import {
   websiteSchema,
   serviceSchema,
   homepageFaqSchema,
+  howToSchema,
+  industryListSchema,
+  platformListSchema,
   injectMultipleJsonLd,
   cleanupJsonLd,
   setMetaTags,
@@ -56,10 +59,16 @@ export default function HomePage() {
       { id: "ld-website", data: websiteSchema() },
       { id: "ld-service", data: serviceSchema() },
       { id: "ld-faq", data: homepageFaqSchema() },
+      { id: "ld-howto", data: howToSchema() },
+      { id: "ld-industry-list", data: industryListSchema() },
+      { id: "ld-platform-list", data: platformListSchema() },
     ]);
 
     return () => {
-      cleanupJsonLd(["ld-org", "ld-founder", "ld-website", "ld-service", "ld-faq"]);
+      cleanupJsonLd([
+        "ld-org", "ld-founder", "ld-website", "ld-service", "ld-faq",
+        "ld-howto", "ld-industry-list", "ld-platform-list",
+      ]);
     };
   }, []);
 
