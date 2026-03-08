@@ -90,7 +90,7 @@ export default function GlossaryPage() {
               想了解更多 AEO 策略？
             </h3>
             <p className="text-[14px] text-gray-300 mb-5">
-              預約免費 AEO 審計，了解你嘅品牌喺 AI 搜尋中嘅表現。
+              免費 AI 搜尋能見度審計，了解你嘅品牌喺 AI 搜尋中嘅表現。
             </p>
             <motion.a
               href={CALENDLY}
@@ -98,7 +98,7 @@ export default function GlossaryPage() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.97 }}
             >
-              預約免費 AEO 審計
+              免費 AI 搜尋能見度審計
             </motion.a>
           </div>
         </Reveal>

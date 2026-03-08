@@ -184,7 +184,7 @@ export default function OurProcess() {
             whileHover={{ scale: 1.06, y: -2 }}
             whileTap={{ scale: 0.97 }}
           >
-            預約策略會議
+            免費 AI 搜尋能見度審計
           </motion.a>
         </Reveal>
       </section>

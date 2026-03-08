@@ -52,7 +52,7 @@ export default function IndustryPage() {
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.97 }}
           >
-            免費 {data.name} AEO 審計
+            免費 AI 搜尋能見度審計
           </motion.a>
         </Reveal>
       </section>
@@ -164,7 +164,7 @@ export default function IndustryPage() {
             whileHover={{ scale: 1.06, y: -2 }}
             whileTap={{ scale: 0.97 }}
           >
-            預約免費 {data.name} AEO 審計
+            免費 AI 搜尋能見度審計
           </motion.a>
         </Reveal>
       </section>

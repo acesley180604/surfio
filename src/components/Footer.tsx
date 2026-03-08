@@ -91,9 +91,7 @@ export default function Footer() {
             transition={{ delay: 0.24 }}
           >
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-7 h-7 rounded-lg bg-[#7C3AED] flex items-center justify-center">
-                <span className="text-white text-[12px] font-extrabold">S</span>
-              </div>
+              <img src="/logos/surfio-icon.png" alt="SurfIO" className="w-7 h-7 rounded-lg object-cover" />
               <span className="text-[18px] font-extrabold tracking-tight">SurfIO</span>
             </div>
 

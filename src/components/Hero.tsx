@@ -50,14 +50,14 @@ export default function Hero() {
         {/* Headline */}
         <Reveal delay={0.1}>
           <h1 className="text-[clamp(32px,5vw,52px)] font-extrabold leading-[1.15] tracking-[-0.02em] text-gray-900 mb-5">
-            主宰 AI 搜尋，令 Google AI 同 ChatGPT 主動為你帶來客戶
+            令你嘅品牌喺 ChatGPT、Perplexity 同 Google AI 被搵到
           </h1>
         </Reveal>
 
         {/* Subtitle */}
         <Reveal delay={0.2}>
           <p className="text-[15px] md:text-[16px] text-gray-500 leading-[1.7] max-w-[550px] mx-auto mb-8">
-            唔好等。把握 AI 搜尋革命——令你出現喺 ChatGPT、Google AI Overview、Perplexity 同語音助手入面，90 日內帶來高達 800% 更多銷售。
+            我哋幫企業喺 AI 搜尋引擎建立能見度——30 日內出現喺 ChatGPT、Google AI Overview、Perplexity 同語音助手嘅推薦結果入面。
           </p>
         </Reveal>
 
@@ -70,7 +70,7 @@ export default function Hero() {
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.97 }}
             >
-              點樣喺 LLM 排名
+              了解我哋嘅流程
             </motion.a>
             <motion.a
               href="https://calendly.com/acesley180604/aeo-service-free-audit-surfio"
@@ -78,7 +78,7 @@ export default function Hero() {
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.97 }}
             >
-              預約策略會議
+              免費 AI 搜尋能見度審計
             </motion.a>
           </div>
         </Reveal>
@@ -102,7 +102,7 @@ export default function Hero() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.5 + i * 0.1 }}
-                  className="h-[32px] flex items-center grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                  className="h-[44px] flex items-center grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
                 >
                   <img
                     src={inst.logo}

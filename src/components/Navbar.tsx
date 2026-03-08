@@ -29,9 +29,7 @@ export default function Navbar() {
           whileHover={{ scale: 1.03 }}
           transition={{ type: "spring", stiffness: 400 }}
         >
-          <div className="w-7 h-7 rounded-lg bg-[#7C3AED] flex items-center justify-center">
-            <span className="text-white text-[12px] font-extrabold">S</span>
-          </div>
+          <img src="/logos/surfio-icon.png" alt="SurfIO" className="w-7 h-7 rounded-lg object-cover" />
           <span className="text-[18px] font-extrabold text-gray-900 tracking-tight">
             SurfIO<sup className="text-[9px] text-gray-400 ml-0.5 relative -top-2">&reg;</sup>
           </span>
@@ -77,7 +75,7 @@ export default function Navbar() {
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.97 }}
         >
-          預約策略會議
+          免費 AI 搜尋能見度審計
         </motion.a>
       </div>
 
@@ -98,7 +96,7 @@ export default function Navbar() {
                 </a>
               ))}
               <a href="https://calendly.com/acesley180604/aeo-service-free-audit-surfio" className="block text-[14px] text-[#7C3AED] font-semibold" onClick={() => setMenuOpen(false)}>
-                預約策略會議
+                免費 AI 搜尋能見度審計
               </a>
             </div>
           </motion.div>

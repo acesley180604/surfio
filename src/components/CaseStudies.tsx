@@ -1,38 +1,38 @@
 import { motion } from "framer-motion";
 import Reveal from "./Reveal";
 
-const cases = [
+const trackRecord = [
   {
-    brand: "會計師事務所",
-    tagline: "香港中型會計師事務所 AI 搜尋優化",
-    label: "AEO 案例 \u00b7 6 個月",
+    project: "GymsLock",
+    tagline: "健身社交應用程式\n自然增長至 5,000+ 用戶",
+    label: "產品開發",
     labelBg: "bg-[#EC4899]",
     stats: [
-      { value: "+340%", label: "AI 提及率\n增長" },
-      { value: "+520%", label: "關鍵字\n排名增長" },
-      { value: "45", label: "首頁\n排名關鍵字" },
+      { value: "5,000+", label: "累計\n用戶" },
+      { value: "3M+", label: "自然\n曝光" },
+      { value: "0", label: "付費\n廣告支出" },
     ],
   },
   {
-    brand: "電商品牌",
-    tagline: "本地電商品牌 Perplexity\n推薦覆蓋率提升",
-    label: "AEO 案例 \u00b7 10 個月",
-    labelBg: "bg-[#EC4899]",
-    stats: [
-      { value: "+280%", label: "AI 推薦\n出現率" },
-      { value: "+190%", label: "內容頁面\n增長" },
-      { value: "200+", label: "排名\n關鍵字" },
-    ],
-  },
-  {
-    brand: "SaaS 公司",
-    tagline: "B2B SaaS 公司喺 ChatGPT\n同 Google AI 嘅能見度",
-    label: "AEO 案例 \u00b7 1 年",
+    project: "HKSTP Ideation",
+    tagline: "兩次獲選香港科技園\nIdeation Programme",
+    label: "創業支持",
     labelBg: "bg-[#7C3AED]",
     stats: [
-      { value: "+15%", label: "額外查詢\n來源" },
-      { value: "30,000", label: "每月\n自然點擊" },
-      { value: "+450%", label: "首頁排名\n增長" },
+      { value: "2x", label: "HKSTP\n獲選" },
+      { value: "1x", label: "Techathon+\n得獎" },
+      { value: "HK$", label: "創科\n資助" },
+    ],
+  },
+  {
+    project: "教育同分享",
+    tagline: "喺香港理工大學同科技大學\n教授 AI 同數碼營銷",
+    label: "學術經驗",
+    labelBg: "bg-[#EC4899]",
+    stats: [
+      { value: "400+", label: "教授\n學生" },
+      { value: "PolyU", label: "香港\n理工大學" },
+      { value: "HKUST", label: "香港\n科技大學" },
     ],
   },
 ];
@@ -44,19 +44,19 @@ export default function CaseStudies() {
         <div className="text-center mb-3">
           <h2 className="inline-block text-[26px] md:text-[32px] font-extrabold">
             <span className="bg-gradient-to-r from-[#EC4899] via-[#A855F7] to-[#7C3AED] bg-clip-text text-transparent">
-              準備好咁樣增長？
+              創辦人實戰經驗
             </span>
           </h2>
         </div>
         <p className="text-center text-[14px] text-gray-600 leading-[1.7] mb-10 max-w-[450px] mx-auto">
-          超過 100 間公司已經同 SurfIO 合作，獲得穩定、高質素嘅客戶流量。
+          SurfIO 嘅方法論源自創辦人喺產品開發、自然增長同學術研究嘅真實經驗。
         </p>
       </Reveal>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {cases.map((c, idx) => (
+        {trackRecord.map((c, idx) => (
           <motion.div
-            key={c.brand}
+            key={c.project}
             className="rounded-xl overflow-hidden bg-gradient-to-br from-[#0f1629] to-[#1a1a3a] p-5 pb-6 flex flex-col justify-between min-h-[260px]"
             initial={{ opacity: 0, y: 40, scale: 0.95 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -70,7 +70,7 @@ export default function CaseStudies() {
             <div>
               <div className="flex items-start justify-between mb-1">
                 <span className="text-white font-extrabold text-[15px] tracking-wider">
-                  {c.brand}
+                  {c.project}
                 </span>
               </div>
               <p className="text-[10px] text-gray-500 leading-[1.4] mb-3 whitespace-pre-line max-w-[180px]">

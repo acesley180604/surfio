@@ -6,6 +6,7 @@ import Playbook from "../components/Playbook";
 import Planning from "../components/Planning";
 import Services from "../components/Services";
 import CaseStudies from "../components/CaseStudies";
+import Founder from "../components/Founder";
 import SimpleSteps from "../components/SimpleSteps";
 import Comparison from "../components/Comparison";
 import OurProcess from "../components/OurProcess";
@@ -29,6 +30,7 @@ export default function HomePage() {
       <Planning />
       <Services />
       <CaseStudies />
+      <Founder />
       <SimpleSteps />
       <Comparison />
       <OurProcess />

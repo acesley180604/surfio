@@ -4,7 +4,7 @@ import Reveal from "./Reveal";
 const steps = [
   {
     step: "第一步：",
-    title: "預約探索會議",
+    title: "免費 AI 搜尋能見度審計",
     desc: "同我哋嘅策略師會面，制定符合你目標嘅度身增長計劃。",
     color: "text-[#EC4899]",
   },
