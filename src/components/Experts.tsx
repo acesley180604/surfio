@@ -13,15 +13,19 @@ export default function Experts() {
             </h2>
 
             <p className="text-[14px] text-gray-700 leading-[1.75] mb-4">
-              跳過學習曲線，即刻啟動一支 AEO 專家團隊，以極速幫你帶來更多 AI 同自然搜尋嘅潛在客戶。
+              SurfIO 提供專業嘅 AEO 團隊，幫你喺 AI 搜尋引擎快速獲得能見度。
             </p>
 
             <p className="text-[14px] text-gray-700 leading-[1.75] mb-4">
-              當你嘅競爭對手花 6-12 個月摸索 AI 搜尋嘅時候，我哋嘅客戶 30 日內已經開始出現喺 ChatGPT 同 Google AI Overview。
+              我哋嘅客戶 30 日內已經出現喺 ChatGPT 同 Google AI Overview。你嘅競爭對手可能仲需要 6-12 個月先摸索到。
+            </p>
+
+            <p className="text-[14px] text-gray-700 leading-[1.75] mb-4">
+              SurfIO 已經喺唔同品牌同行業驗證咗 AEO 策略。你可以即刻使用我哋花咗幾年完善嘅方法論。
             </p>
 
             <p className="text-[14px] text-gray-700 leading-[1.75] mb-6">
-              我哋已經搵到有效嘅方法、建立咗系統、並喺唔同品牌同行業驗證咗結果。你可以即刻享用我哋花咗幾年先完善嘅策略——無學習成本、無浪費預算，只有喺你嘅潛在客戶真正搜尋嘅地方快速獲得能見度。
+              無學習成本、無浪費預算。只有喺潛在客戶真正搜尋嘅地方快速獲得能見度。
             </p>
 
             <motion.a

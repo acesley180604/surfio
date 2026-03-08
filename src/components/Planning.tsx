@@ -12,10 +12,13 @@ export default function Planning() {
               AEO & SEO 規劃 + 執行
             </h2>
             <p className="text-[14px] text-gray-700 leading-[1.75] mb-4">
-              研究同策略係我哋嘅起點，但當你確認方案之後，我哋會將 AEO 實施一路做到底。
+              SurfIO 由研究同策略開始。當你確認方案後，我哋會將 AEO 實施一路做到底。
+            </p>
+            <p className="text-[14px] text-gray-700 leading-[1.75] mb-4">
+              SurfIO 擁有 AEO 策略、網站開發、內容撰寫同 PR 級連結建設嘅全方位能力。
             </p>
             <p className="text-[14px] text-gray-700 leading-[1.75] mb-7">
-              我哋唔單止有 AEO 策略經驗，仲有網站開發、內容撰寫同 PR 級連結建設嘅實力，令你嘅網站內容變成 LLM 嘅推薦素材。
+              我哋嘅目標係令你嘅網站內容變成 LLM 嘅推薦素材。
             </p>
             <motion.a
               href="https://calendly.com/acesley180604/aeo-service-free-audit-surfio"

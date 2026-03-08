@@ -42,6 +42,8 @@ export function organizationSchema() {
     sameAs: [
       "https://github.com/acesley180604",
       "https://www.linkedin.com/company/surfio",
+      "https://www.crunchbase.com/organization/surfio",
+      "https://angel.co/company/surfio-aeo",
     ],
     contactPoint: {
       "@type": "ContactPoint",

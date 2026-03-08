@@ -4,22 +4,22 @@ import Reveal from "./Reveal";
 const steps = [
   {
     title: "深度研究同策略",
-    desc: "SEO 嘅成功始於數據。我哋為科技公司制定針對性、高轉化嘅策略，透過詳細問卷、客戶評價、競爭對手分析同歷史表現洞察。我哋嘅 BrandBrain 系統確保每個活動都經過微調，突顯你品牌嘅優勢、獨特價值同市場定位。",
+    desc: "SurfIO 透過詳細問卷、競爭對手分析同歷史表現數據，為你制定針對性嘅 AEO 策略。我哋嘅 BrandBrain 系統會微調每個活動，突顯你品牌嘅獨特價值。",
     img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80&auto=format&fit=crop",
   },
   {
     title: "SEO + AI 優化內容",
-    desc: "我哋創作嘅內容旨在喺搜尋引擎排名同被 AI 答案引用。包括關鍵字豐富、以問題為焦點嘅文章、優化標題同結構化格式，符合 SEO 最佳實踐同 LLM 訓練模式。結合人類專業知識同 AI 洞察，確保你嘅內容可被發現、具權威性，並準備好被納入 AI 生成嘅回應。",
+    desc: "SurfIO 創作嘅內容同時針對搜尋引擎排名同 AI 答案引用。我哋撰寫以問題為焦點嘅文章，配合結構化格式同優化標題，令你嘅內容準備好被 AI 引擎納入回應。",
     img: "https://images.unsplash.com/photo-1542435503-956c469947f6?w=800&q=80&auto=format&fit=crop",
   },
   {
     title: "技術 AEO",
-    desc: "技術追蹤同實施確保搜尋引擎同 LLM 可以高效抓取同索引你嘅網站。添加 Schema、修改內容結構、撰寫 FAQ 同優化精選摘要，提升你喺 AI 驅動答案中被呈現嘅機會。我哋仲實施結構化數據增強、內部連結策略同索引改善，以加強實體識別同知識圖譜存在感。",
+    desc: "SurfIO 為你嘅網站添加 Schema 標記、撰寫 FAQ 同優化精選摘要格式。我哋實施結構化數據增強同內部連結策略，加強你喺知識圖譜中嘅實體識別度。",
     img: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&q=80&auto=format&fit=crop",
   },
   {
     title: "連結建設",
-    desc: "高質素嘅反向連結對 SEO 成功至關重要。我哋採用白帽連結建設策略，提升你網站嘅權威性同排名。包括客座發文、失效連結建設同數碼 PR 策略。我哋專注於來自相關、高域名權威網站嘅連結。",
+    desc: "SurfIO 採用白帽連結建設策略提升你網站嘅權威性。包括客座發文、失效連結建設同數碼 PR，專注於來自高域名權威網站嘅連結。",
     img: "https://images.unsplash.com/photo-1563986768609-322da13575f2?w=800&q=80&auto=format&fit=crop",
   },
 ];
@@ -143,7 +143,7 @@ export default function OurProcess() {
                   追蹤同分析
                 </h3>
                 <p className="text-[13px] text-gray-300 leading-[1.75]">
-                  我哋監測你喺搜尋引擎同 AI 平台嘅能見度，追蹤關鍵字排名、精選摘要同 AI 答案位置。詳細分析揭示邊啲內容驅動流量、轉化同 LLM 引用。洞察用於優化策略、改善表現，並喺傳統同 AI 驅動搜尋中保持領先。
+                  SurfIO 監測你喺搜尋引擎同 AI 平台嘅能見度。我哋追蹤關鍵字排名、精選摘要同 AI 答案位置。分析結果用於持續優化策略，確保你喺 AI 搜尋中保持領先。
                 </p>
               </div>
 
@@ -174,10 +174,10 @@ export default function OurProcess() {
         />
         <Reveal>
           <h2 className="text-[26px] md:text-[34px] font-extrabold text-gray-900 mb-3">
-            一齊打造你嘅完美 SEO 營銷計劃
+            一齊打造你嘅 AEO 增長計劃
           </h2>
           <p className="text-[14px] text-gray-600 leading-[1.7] max-w-[460px] mx-auto mb-8">
-            睇到呢度都唔想走？同我哋嘅 SEO 策略師傾下，免費規劃會議 + 度身方案。
+            SurfIO 提供免費 AI 搜尋能見度審計。了解你嘅品牌喺 ChatGPT、Perplexity 同 Google AI 嘅表現。
           </p>
           <motion.a
             href="https://calendly.com/acesley180604/aeo-service-free-audit-surfio"

@@ -55,15 +55,23 @@ export default function Founder() {
             </h2>
 
             <p className="text-[14px] text-gray-700 leading-[1.75] mb-4">
-              Acesley 係 SurfIO 嘅創辦人，專注於 AI 搜尋優化（AEO）同生成式引擎優化（GEO）。佢曾經兩次獲選 HKSTP Ideation Programme，並喺 Techathon+ 創業比賽中獲獎。
+              Acesley Chan 係 SurfIO 嘅創辦人。佢專注於 AI 搜尋優化（AEO）同生成式引擎優化（GEO）。
             </p>
 
             <p className="text-[14px] text-gray-700 leading-[1.75] mb-4">
-              佢創立嘅產品 GymsLock 累積超過 5,000 名用戶，並透過自然搜尋同內容策略達到超過 300 萬次曝光。佢亦曾喺香港理工大學同科技大學教授超過 400 名學生有關 AI 同數碼營銷嘅課程。
+              Acesley 曾經兩次獲選 HKSTP Ideation Programme。佢亦喺 Techathon+ 創業比賽中獲獎。
+            </p>
+
+            <p className="text-[14px] text-gray-700 leading-[1.75] mb-4">
+              佢創立嘅產品 GymsLock 累積超過 5,000 名用戶。透過自然搜尋同內容策略達到超過 300 萬次曝光。
+            </p>
+
+            <p className="text-[14px] text-gray-700 leading-[1.75] mb-4">
+              Acesley 曾喺香港理工大學同科技大學教授超過 400 名學生有關 AI 同數碼營銷嘅課程。
             </p>
 
             <p className="text-[14px] text-gray-700 leading-[1.75] mb-7">
-              SurfIO 將 Acesley 喺 AI 產品開發、內容增長同學術研究嘅經驗，轉化成一套幫企業喺 AI 搜尋時代被搵到嘅系統化方法。
+              SurfIO 將呢啲實戰經驗轉化成一套幫企業喺 AI 搜尋時代被搵到嘅系統化方法。
             </p>
 
             {/* Credential stats */}
