@@ -3,6 +3,15 @@ import { motion } from "framer-motion";
 import { useEffect } from "react";
 import { glossaryTerms } from "../data/glossary";
 import Reveal from "../components/Reveal";
+import {
+  glossaryTermSchema,
+  glossaryArticleSchema,
+  injectMultipleJsonLd,
+  cleanupJsonLd,
+  setMetaTags,
+  setCanonical,
+  SITE,
+} from "../lib/schema";
 
 const CALENDLY = "https://calendly.com/acesley180604/aeo-service-free-audit-surfio";
 
@@ -14,8 +23,32 @@ export default function GlossaryPage() {
     if (data) {
       document.title = data.metaTitle;
       document.querySelector('meta[name="description"]')?.setAttribute("content", data.metaDescription);
+
+      // Set canonical URL
+      setCanonical(`${SITE.url}/glossary/${data.slug}`);
+
+      // Set OG tags
+      setMetaTags({
+        "og:type": "article",
+        "og:url": `${SITE.url}/glossary/${data.slug}`,
+        "og:title": data.metaTitle,
+        "og:description": data.metaDescription,
+        "og:image": `${SITE.url}/logos/surfio-icon.png`,
+        "og:site_name": "SurfIO",
+        "og:locale": "zh_HK",
+      });
+
+      // Inject JSON-LD
+      injectMultipleJsonLd([
+        { id: "ld-glossary-term", data: glossaryTermSchema(data) },
+        { id: "ld-glossary-article", data: glossaryArticleSchema(data) },
+      ]);
     }
     window.scrollTo(0, 0);
+
+    return () => {
+      cleanupJsonLd(["ld-glossary-term", "ld-glossary-article"]);
+    };
   }, [data]);
 
   if (!data) return <GlossaryIndex />;
@@ -24,34 +57,54 @@ export default function GlossaryPage() {
     <div className="pt-[90px] pb-16">
       {/* Breadcrumb */}
       <div className="max-w-[800px] mx-auto px-5 md:px-10 mb-6">
-        <div className="text-[12px] text-gray-400">
-          <Link to="/" className="hover:text-gray-600">首頁</Link>
-          <span className="mx-2">/</span>
-          <Link to="/glossary" className="hover:text-gray-600">術語表</Link>
-          <span className="mx-2">/</span>
-          <span className="text-gray-600">{data.term}</span>
-        </div>
+        <nav aria-label="Breadcrumb">
+          <ol className="text-[12px] text-gray-400 flex items-center" itemScope itemType="https://schema.org/BreadcrumbList">
+            <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+              <Link to="/" className="hover:text-gray-600" itemProp="item"><span itemProp="name">首頁</span></Link>
+              <meta itemProp="position" content="1" />
+            </li>
+            <span className="mx-2">/</span>
+            <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+              <Link to="/glossary" className="hover:text-gray-600" itemProp="item"><span itemProp="name">術語表</span></Link>
+              <meta itemProp="position" content="2" />
+            </li>
+            <span className="mx-2">/</span>
+            <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+              <span className="text-gray-600" itemProp="name">{data.term}</span>
+              <meta itemProp="position" content="3" />
+            </li>
+          </ol>
+        </nav>
       </div>
 
       {/* Content */}
-      <article className="max-w-[800px] mx-auto px-5 md:px-10">
+      <article className="max-w-[800px] mx-auto px-5 md:px-10" itemScope itemType="https://schema.org/Article">
+        <meta itemProp="datePublished" content="2025-01-15" />
+        <meta itemProp="dateModified" content="2026-03-08" />
+        <div itemProp="author" itemScope itemType="https://schema.org/Person">
+          <meta itemProp="name" content="Acesley Chan" />
+        </div>
+        <div itemProp="publisher" itemScope itemType="https://schema.org/Organization">
+          <meta itemProp="name" content="SurfIO" />
+        </div>
+
         <Reveal>
           <p className="text-[#7C3AED] text-[12px] font-semibold tracking-[0.2em] uppercase mb-4">
             AEO 術語表
           </p>
-          <h1 className="text-[clamp(28px,4vw,40px)] font-extrabold text-gray-900 leading-[1.2] mb-6">
+          <h1 className="text-[clamp(28px,4vw,40px)] font-extrabold text-gray-900 leading-[1.2] mb-6" itemProp="headline">
             {data.term}
           </h1>
 
           {/* Definition box */}
           <div className="bg-purple-50 border border-purple-200 rounded-xl p-6 mb-8">
-            <p className="text-[15px] text-gray-800 leading-[1.75] font-medium">
+            <p className="text-[15px] text-gray-800 leading-[1.75] font-medium" itemProp="description">
               {data.definition}
             </p>
           </div>
 
           {/* Full explanation */}
-          <div className="prose-custom mb-10">
+          <div className="prose-custom mb-10" itemProp="articleBody">
             {data.fullExplanation.split("\n\n").map((para, i) => (
               <p key={i} className="text-[15px] text-gray-700 leading-[1.8] mb-5">
                 {para}
@@ -129,7 +182,39 @@ function GlossaryIndex() {
   useEffect(() => {
     document.title = "AEO 術語表 | AI 搜尋優化完整詞彙 - SurfIO";
     document.querySelector('meta[name="description"]')?.setAttribute("content", "SurfIO AEO 術語表：AI 搜尋優化、答案引擎優化、LLM、Schema Markup 等核心概念完整解釋。");
+
+    setCanonical(`${SITE.url}/glossary`);
+
+    setMetaTags({
+      "og:type": "website",
+      "og:url": `${SITE.url}/glossary`,
+      "og:title": "AEO 術語表 | AI 搜尋優化完整詞彙 - SurfIO",
+      "og:description": "SurfIO AEO 術語表：AI 搜尋優化、答案引擎優化、LLM、Schema Markup 等核心概念完整解釋。",
+      "og:image": `${SITE.url}/logos/surfio-icon.png`,
+      "og:site_name": "SurfIO",
+    });
+
+    // Inject DefinedTermSet schema for the glossary index
+    const glossarySetSchema = {
+      "@context": "https://schema.org",
+      "@type": "DefinedTermSet",
+      name: "SurfIO AEO 術語表",
+      description: "AI 搜尋優化、答案引擎優化、LLM、Schema Markup 等核心概念完整解釋",
+      url: `${SITE.url}/glossary`,
+      hasDefinedTerm: glossaryTerms.map((t) => ({
+        "@type": "DefinedTerm",
+        name: t.term,
+        description: t.definition,
+        url: `${SITE.url}/glossary/${t.slug}`,
+      })),
+    };
+    injectMultipleJsonLd([{ id: "ld-glossary-set", data: glossarySetSchema }]);
+
     window.scrollTo(0, 0);
+
+    return () => {
+      cleanupJsonLd(["ld-glossary-set"]);
+    };
   }, []);
 
   return (

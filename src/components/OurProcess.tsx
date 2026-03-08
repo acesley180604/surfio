@@ -93,6 +93,7 @@ export default function OurProcess() {
                     src={step.img}
                     alt={step.title}
                     className="w-full h-full object-cover"
+                    loading="lazy"
                   />
                 </motion.div>
               </motion.div>

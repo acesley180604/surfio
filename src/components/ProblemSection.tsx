@@ -76,6 +76,7 @@ export default function ProblemSection() {
               <img
                 src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80&auto=format&fit=crop"
                 alt="團隊合作"
+                loading="lazy"
                 className="w-full h-full object-cover"
               />
             </motion.div>

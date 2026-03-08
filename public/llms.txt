@@ -1,0 +1,60 @@
+# SurfIO — Hong Kong's Leading AEO Agency
+
+> SurfIO is an Answer Engine Optimization (AEO) agency based in Hong Kong, helping businesses get recommended by AI search engines including ChatGPT, Google AI Overview, Perplexity, Claude, and Microsoft Copilot. Founded by Acesley Chan, SurfIO is backed by HKSTP Ideation Programme and Techathon+.
+
+## About SurfIO
+
+SurfIO specializes in Answer Engine Optimization (AEO) and Generative Engine Optimization (GEO). We help Hong Kong businesses become visible and recommended in AI-powered search engines. Our methodology combines structured data implementation, entity authority building, content architecture optimization, and multi-platform citation strategies.
+
+**Founded:** 2024
+**Location:** Hong Kong Science and Technology Parks (HKSTP)
+**Founder:** Acesley Chan
+**Backed by:** HKSTP Ideation Programme (2x), Techathon+ Award Winner
+
+## Core Services
+
+- AEO Readiness Audit & Growth Roadmap
+- Multi-platform Answer Engine Positioning (Google AI Overview, ChatGPT, Perplexity, Claude, Copilot)
+- Entity & Topical Authority Mapping
+- Content Hub & Pillar Strategy for AI Citation
+- FAQ Schema, HowTo & Q&A Markup Deployment
+- Entity-based Internal Linking & Knowledge Graph Building
+- High-authority Citation & Link Acquisition for LLM Training Data
+- Cross-LLM Answer Appearance Tracking & Monthly Reporting
+
+## Industries Served
+
+- [Financial Services AEO](/aeo/financial-services): AI search optimization for banks, insurers, and financial advisors
+- [Accounting Firms AEO](/aeo/accounting-firms): Get accounting firms recommended by AI assistants
+- [B2B Software AEO](/aeo/b2b-software): SaaS product recommendations in AI search
+- [Legal Services AEO](/aeo/legal-services): Law firm visibility in ChatGPT and Perplexity
+- [Healthcare AEO](/aeo/healthcare): Medical service recommendations in AI search
+- [E-commerce AEO](/aeo/ecommerce): Product recommendations in AI shopping assistants
+- [EdTech AEO](/aeo/edtech): Learning platform recommendations in AI search
+- [Startups AEO](/aeo/startups): Accelerate startup growth through AI search visibility
+
+## Platform Optimization Guides
+
+- [ChatGPT Search Optimization](/platform/chatgpt): Get recommended by ChatGPT's 200M+ monthly users
+- [Google AI Overview Optimization](/platform/google-ai-overview): Capture the top AI search position on Google
+- [Perplexity Optimization](/platform/perplexity): Earn citations from Perplexity's real-time AI search
+- [Claude AI Optimization](/platform/claude): Get recommended by Anthropic's Claude
+- [Bing Chat / Copilot Optimization](/platform/bing-chat): Optimize for Microsoft's AI ecosystem
+
+## AEO Glossary
+
+- [AEO (Answer Engine Optimization)](/glossary/aeo): Strategy for getting AI search engines to recommend your brand
+- [GEO (Generative Engine Optimization)](/glossary/geo): Broader optimization for all generative AI systems
+- [LLM (Large Language Model)](/glossary/llm): The AI technology powering ChatGPT, Claude, and Gemini
+- [Schema Markup](/glossary/schema-markup): Structured data that helps AI understand your content
+- [E-E-A-T](/glossary/e-e-a-t): Experience, Expertise, Authoritativeness, Trustworthiness framework
+- [Featured Snippets](/glossary/featured-snippets): Google's position zero, precursor to AI Overviews
+- [Knowledge Graph](/glossary/knowledge-graph): How search engines and AI understand entity relationships
+- [AI Citations](/glossary/ai-citations): When AI search engines cite your brand as a source
+- [Brand Mentions](/glossary/brand-mentions): How online brand mentions influence AI recommendations
+- [Prompt Optimization](/glossary/prompt-optimization): Analyzing AI query patterns to optimize content
+
+## Contact
+
+- Free AI Visibility Audit: https://calendly.com/acesley180604/aeo-service-free-audit-surfio
+- Website: https://surfio.net

@@ -4,6 +4,14 @@ import { useEffect } from "react";
 import { platforms } from "../data/platforms";
 import Reveal from "../components/Reveal";
 import { StaggerContainer, StaggerItem } from "../components/Reveal";
+import {
+  platformPageSchema,
+  injectMultipleJsonLd,
+  cleanupJsonLd,
+  setMetaTags,
+  setCanonical,
+  SITE,
+} from "../lib/schema";
 
 const CALENDLY = "https://calendly.com/acesley180604/aeo-service-free-audit-surfio";
 
@@ -15,8 +23,33 @@ export default function PlatformPage() {
     if (data) {
       document.title = data.metaTitle;
       document.querySelector('meta[name="description"]')?.setAttribute("content", data.metaDescription);
+
+      // Set canonical URL
+      setCanonical(`${SITE.url}/platform/${data.slug}`);
+
+      // Set OG tags
+      setMetaTags({
+        "og:type": "article",
+        "og:url": `${SITE.url}/platform/${data.slug}`,
+        "og:title": data.metaTitle,
+        "og:description": data.metaDescription,
+        "og:image": `${SITE.url}/logos/surfio-icon.png`,
+        "og:site_name": "SurfIO",
+        "og:locale": "zh_HK",
+      });
+
+      // Inject JSON-LD
+      const schemas = platformPageSchema(data);
+      injectMultipleJsonLd([
+        { id: "ld-platform-page", data: schemas[0] },
+        { id: "ld-platform-faq", data: schemas[1] },
+      ]);
     }
     window.scrollTo(0, 0);
+
+    return () => {
+      cleanupJsonLd(["ld-platform-page", "ld-platform-faq"]);
+    };
   }, [data]);
 
   if (!data) return <NotFound />;
@@ -25,13 +58,24 @@ export default function PlatformPage() {
     <div className="pt-[90px] pb-16">
       {/* Breadcrumb */}
       <div className="max-w-[1100px] mx-auto px-5 md:px-10 mb-6">
-        <div className="text-[12px] text-gray-400">
-          <Link to="/" className="hover:text-gray-600">首頁</Link>
-          <span className="mx-2">/</span>
-          <Link to="/" className="hover:text-gray-600">平台</Link>
-          <span className="mx-2">/</span>
-          <span className="text-gray-600">{data.name}</span>
-        </div>
+        <nav aria-label="Breadcrumb">
+          <ol className="text-[12px] text-gray-400 flex items-center" itemScope itemType="https://schema.org/BreadcrumbList">
+            <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+              <Link to="/" className="hover:text-gray-600" itemProp="item"><span itemProp="name">首頁</span></Link>
+              <meta itemProp="position" content="1" />
+            </li>
+            <span className="mx-2">/</span>
+            <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+              <span itemProp="name">平台</span>
+              <meta itemProp="position" content="2" />
+            </li>
+            <span className="mx-2">/</span>
+            <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+              <span className="text-gray-600" itemProp="name">{data.name}</span>
+              <meta itemProp="position" content="3" />
+            </li>
+          </ol>
+        </nav>
       </div>
 
       {/* Hero */}

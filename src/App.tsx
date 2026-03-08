@@ -11,13 +11,15 @@ export default function App() {
     <BrowserRouter>
       <div className="min-h-screen bg-white text-text-body font-sans">
         <Navbar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/aeo/:slug" element={<IndustryPage />} />
-          <Route path="/platform/:slug" element={<PlatformPage />} />
-          <Route path="/glossary" element={<GlossaryPage />} />
-          <Route path="/glossary/:slug" element={<GlossaryPage />} />
-        </Routes>
+        <main>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/aeo/:slug" element={<IndustryPage />} />
+            <Route path="/platform/:slug" element={<PlatformPage />} />
+            <Route path="/glossary" element={<GlossaryPage />} />
+            <Route path="/glossary/:slug" element={<GlossaryPage />} />
+          </Routes>
+        </main>
         <Footer />
       </div>
     </BrowserRouter>

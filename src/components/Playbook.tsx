@@ -80,6 +80,7 @@ export default function Playbook() {
               <img
                 src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80&auto=format&fit=crop"
                 alt="數據分析儀表板"
+                loading="lazy"
                 className="w-full h-full object-cover"
               />
             </motion.div>

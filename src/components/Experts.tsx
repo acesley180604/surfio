@@ -47,6 +47,7 @@ export default function Experts() {
                   src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80&auto=format&fit=crop"
                   alt="AEO 專家團隊"
                   className="w-full h-full object-cover"
+                  loading="lazy"
                 />
               </motion.div>
 
