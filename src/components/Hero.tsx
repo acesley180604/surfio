@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import Reveal from "./Reveal";
 import { LogoCloud } from "./ui/logo-cloud";
+import { useLanguage } from "../i18n/context";
+import { t } from "../i18n/translations";
 
 const logos = [
   { src: "/logos/hkstp.svg", alt: "HKSTP" },
@@ -11,6 +13,8 @@ const logos = [
 ];
 
 export default function Hero() {
+  const lang = useLanguage();
+
   return (
     <section className="relative pt-[100px] pb-10 overflow-hidden">
       {/* Lavender gradient background */}
@@ -41,28 +45,24 @@ export default function Hero() {
       />
 
       <div className="relative z-10 text-center max-w-[900px] mx-auto px-5 md:px-8 pt-8">
-        {/* AEO AGENCY label */}
         <Reveal>
           <p className="text-[#7C3AED] text-[13px] font-semibold tracking-[0.2em] uppercase mb-5">
-            AEO Agency
+            {t("hero.label", lang)}
           </p>
         </Reveal>
 
-        {/* Headline */}
         <Reveal delay={0.1}>
           <h1 className="text-[clamp(32px,5vw,52px)] font-extrabold leading-[1.15] tracking-[-0.02em] text-gray-900 mb-5">
-            令你嘅品牌喺 ChatGPT、Perplexity 同 Google AI 被搵到
+            {t("hero.headline", lang)}
           </h1>
         </Reveal>
 
-        {/* Subtitle */}
         <Reveal delay={0.2}>
           <p className="text-[15px] md:text-[16px] text-gray-500 leading-[1.7] max-w-[550px] mx-auto mb-8">
-            我哋幫企業喺 AI 搜尋引擎建立能見度——30 日內出現喺 ChatGPT、Google AI Overview、Perplexity 同語音助手嘅推薦結果入面。
+            {t("hero.subtitle", lang)}
           </p>
         </Reveal>
 
-        {/* Two buttons */}
         <Reveal delay={0.3}>
           <div className="flex items-center justify-center gap-3 mb-14">
             <motion.a
@@ -71,7 +71,7 @@ export default function Hero() {
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.97 }}
             >
-              了解我哋嘅流程
+              {t("hero.processBtn", lang)}
             </motion.a>
             <motion.a
               href="https://calendly.com/acesley180604/aeo-service-free-audit-surfio"
@@ -79,22 +79,20 @@ export default function Hero() {
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.97 }}
             >
-              免費 AI 搜尋能見度審計
+              {t("hero.ctaBtn", lang)}
             </motion.a>
           </div>
         </Reveal>
 
-        {/* Logo cloud - infinite slider */}
         <Reveal delay={0.4}>
           <div className="mb-6">
             <div className="flex items-center justify-center gap-4 mb-5">
               <div className="h-px bg-gray-300 w-16" />
               <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-[0.18em]">
-                受頂尖學術機構同創科計劃支持
+                {t("hero.backed", lang)}
               </p>
               <div className="h-px bg-gray-300 w-16" />
             </div>
-
             <LogoCloud logos={logos} />
           </div>
         </Reveal>

@@ -1,9 +1,11 @@
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
-import { platforms } from "../data/platforms";
 import Reveal from "../components/Reveal";
 import { StaggerContainer, StaggerItem } from "../components/Reveal";
+import { useLanguage, langPath } from "../i18n/context";
+import { t } from "../i18n/translations";
+import { getPlatforms } from "../data/getters";
 import {
   platformPageSchema,
   injectMultipleJsonLd,
@@ -17,6 +19,8 @@ const CALENDLY = "https://calendly.com/acesley180604/aeo-service-free-audit-surf
 
 export default function PlatformPage() {
   const { slug } = useParams();
+  const lang = useLanguage();
+  const platforms = getPlatforms(lang);
   const data = platforms.find((p) => p.slug === slug);
 
   useEffect(() => {
@@ -24,21 +28,19 @@ export default function PlatformPage() {
       document.title = data.metaTitle;
       document.querySelector('meta[name="description"]')?.setAttribute("content", data.metaDescription);
 
-      // Set canonical URL
-      setCanonical(`${SITE.url}/platform/${data.slug}`);
+      const pagePath = lang === "en" ? `/en/platform/${data.slug}` : `/platform/${data.slug}`;
+      setCanonical(`${SITE.url}${pagePath}`);
 
-      // Set OG tags
       setMetaTags({
         "og:type": "article",
-        "og:url": `${SITE.url}/platform/${data.slug}`,
+        "og:url": `${SITE.url}${pagePath}`,
         "og:title": data.metaTitle,
         "og:description": data.metaDescription,
         "og:image": `${SITE.url}/logos/surfio-icon.png`,
         "og:site_name": "SurfIO",
-        "og:locale": "zh_HK",
+        "og:locale": lang === "en" ? "en" : "zh_HK",
       });
 
-      // Inject JSON-LD
       const schemas = platformPageSchema(data);
       injectMultipleJsonLd([
         { id: "ld-platform-page", data: schemas[0] },
@@ -50,9 +52,16 @@ export default function PlatformPage() {
     return () => {
       cleanupJsonLd(["ld-platform-page", "ld-platform-faq"]);
     };
-  }, [data]);
+  }, [data, lang]);
 
   if (!data) return <NotFound />;
+
+  const howItWorksTitle = (t("platform.howItWorks", lang) as any)(data.name);
+  const rankingTitle = (t("platform.rankingFactors", lang) as any)(data.name);
+  const strategyTitle = (t("platform.ourStrategy", lang) as any)(data.name);
+  const faqTitle = (t("platform.faqTitle", lang) as any)(data.name);
+  const readyTitle = (t("platform.readyTitle", lang) as any)(data.name);
+  const readySubtitle = (t("platform.readySubtitle", lang) as any)(data.name);
 
   return (
     <div className="pt-[90px] pb-16">
@@ -61,12 +70,12 @@ export default function PlatformPage() {
         <nav aria-label="Breadcrumb">
           <ol className="text-[12px] text-gray-400 flex items-center" itemScope itemType="https://schema.org/BreadcrumbList">
             <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-              <Link to="/" className="hover:text-gray-600" itemProp="item"><span itemProp="name">首頁</span></Link>
+              <Link to={langPath(lang, "/")} className="hover:text-gray-600" itemProp="item"><span itemProp="name">{t("platform.breadcrumbHome", lang)}</span></Link>
               <meta itemProp="position" content="1" />
             </li>
             <span className="mx-2">/</span>
             <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-              <span itemProp="name">平台</span>
+              <span itemProp="name">{t("platform.breadcrumbPlatform", lang)}</span>
               <meta itemProp="position" content="2" />
             </li>
             <span className="mx-2">/</span>
@@ -82,21 +91,12 @@ export default function PlatformPage() {
       <section className="max-w-[1100px] mx-auto px-5 md:px-10 mb-16">
         <Reveal>
           <p className="text-[#7C3AED] text-[12px] font-semibold tracking-[0.2em] uppercase mb-4">
-            {data.name} 優化
+            {data.name} {t("platform.optimization", lang)}
           </p>
-          <h1 className="text-[clamp(28px,4vw,44px)] font-extrabold text-gray-900 leading-[1.2] mb-5 max-w-[800px]">
-            {data.heroTitle}
-          </h1>
-          <p className="text-[15px] text-gray-600 leading-[1.75] mb-8 max-w-[650px]">
-            {data.heroSubtitle}
-          </p>
-          <motion.a
-            href={CALENDLY}
-            className="inline-block px-7 py-3 rounded-full bg-[#7C3AED] text-white text-[14px] font-semibold hover:bg-[#6D28D9] transition-colors"
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.97 }}
-          >
-            免費 AI 搜尋能見度審計
+          <h1 className="text-[clamp(28px,4vw,44px)] font-extrabold text-gray-900 leading-[1.2] mb-5 max-w-[800px]">{data.heroTitle}</h1>
+          <p className="text-[15px] text-gray-600 leading-[1.75] mb-8 max-w-[650px]">{data.heroSubtitle}</p>
+          <motion.a href={CALENDLY} className="inline-block px-7 py-3 rounded-full bg-[#7C3AED] text-white text-[14px] font-semibold hover:bg-[#6D28D9] transition-colors" whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.97 }}>
+            {t("platform.cta", lang)}
           </motion.a>
         </Reveal>
       </section>
@@ -106,14 +106,7 @@ export default function PlatformPage() {
         <div className="max-w-[1100px] mx-auto px-5 md:px-10">
           <div className="grid grid-cols-3 gap-6">
             {data.stats.map((s, i) => (
-              <motion.div
-                key={i}
-                className="text-center"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15 }}
-              >
+              <motion.div key={i} className="text-center" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.15 }}>
                 <div className="text-[32px] md:text-[42px] font-extrabold text-white">{s.value}</div>
                 <div className="text-[13px] text-gray-400 mt-1">{s.label}</div>
               </motion.div>
@@ -125,50 +118,26 @@ export default function PlatformPage() {
       {/* How it works */}
       <section className="max-w-[1100px] mx-auto px-5 md:px-10 mb-16">
         <Reveal>
-          <h2 className="text-[24px] md:text-[30px] font-extrabold text-gray-900 mb-5">
-            {data.name} 點樣運作
-          </h2>
-          <p className="text-[15px] text-gray-700 leading-[1.75] max-w-[750px] mb-10">
-            {data.howItWorks}
-          </p>
+          <h2 className="text-[24px] md:text-[30px] font-extrabold text-gray-900 mb-5">{howItWorksTitle}</h2>
+          <p className="text-[15px] text-gray-700 leading-[1.75] max-w-[750px] mb-10">{data.howItWorks}</p>
         </Reveal>
 
-        {/* Ranking factors */}
-        <Reveal delay={0.1}>
-          <h3 className="text-[20px] font-bold text-gray-900 mb-6">
-            {data.name} 推薦排名因素
-          </h3>
-        </Reveal>
+        <Reveal delay={0.1}><h3 className="text-[20px] font-bold text-gray-900 mb-6">{rankingTitle}</h3></Reveal>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-12">
           {data.rankingFactors.map((f, i) => (
-            <motion.div
-              key={i}
-              className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              whileHover={{ y: -4 }}
-            >
+            <motion.div key={i} className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} whileHover={{ y: -4 }}>
               <h4 className="text-[15px] font-bold text-gray-900 mb-2">{f.title}</h4>
               <p className="text-[13px] text-gray-600 leading-[1.7]">{f.desc}</p>
             </motion.div>
           ))}
         </div>
 
-        {/* Optimizations */}
-        <Reveal delay={0.15}>
-          <h3 className="text-[20px] font-bold text-gray-900 mb-6">
-            我哋嘅 {data.name} 優化策略
-          </h3>
-        </Reveal>
+        <Reveal delay={0.15}><h3 className="text-[20px] font-bold text-gray-900 mb-6">{strategyTitle}</h3></Reveal>
         <StaggerContainer className="space-y-3 mb-10">
           {data.optimizations.map((opt, i) => (
             <StaggerItem key={i}>
               <div className="flex items-start gap-3">
-                <span className="w-6 h-6 rounded-full bg-purple-100 flex items-center justify-center shrink-0 mt-0.5">
-                  <span className="text-[11px] font-bold text-[#7C3AED]">{i + 1}</span>
-                </span>
+                <span className="w-6 h-6 rounded-full bg-purple-100 flex items-center justify-center shrink-0 mt-0.5"><span className="text-[11px] font-bold text-[#7C3AED]">{i + 1}</span></span>
                 <span className="text-[14px] text-gray-700 leading-[1.65]">{opt}</span>
               </div>
             </StaggerItem>
@@ -179,21 +148,10 @@ export default function PlatformPage() {
       {/* FAQ */}
       <section className="bg-gray-50 py-14 mb-16">
         <div className="max-w-[800px] mx-auto px-5 md:px-10">
-          <Reveal>
-            <h2 className="text-[24px] md:text-[30px] font-extrabold text-gray-900 mb-8 text-center">
-              {data.name} 優化常見問題
-            </h2>
-          </Reveal>
+          <Reveal><h2 className="text-[24px] md:text-[30px] font-extrabold text-gray-900 mb-8 text-center">{faqTitle}</h2></Reveal>
           <div className="space-y-6">
             {data.faqs.map(([q, a], i) => (
-              <motion.div
-                key={i}
-                className="bg-white rounded-xl p-6 shadow-sm border border-gray-100"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-              >
+              <motion.div key={i} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
                 <h3 className="text-[15px] font-bold text-gray-900 mb-2">{q}</h3>
                 <p className="text-[14px] text-gray-600 leading-[1.75]">{a}</p>
               </motion.div>
@@ -205,19 +163,10 @@ export default function PlatformPage() {
       {/* CTA */}
       <section className="max-w-[1100px] mx-auto px-5 md:px-10 text-center">
         <Reveal>
-          <h2 className="text-[26px] md:text-[34px] font-extrabold text-gray-900 mb-3">
-            準備好喺 {data.name} 被推薦？
-          </h2>
-          <p className="text-[14px] text-gray-600 leading-[1.7] max-w-[460px] mx-auto mb-8">
-            預約免費審計，了解你嘅品牌喺 {data.name} 嘅表現同改善機會。
-          </p>
-          <motion.a
-            href={CALENDLY}
-            className="inline-block px-7 py-3 rounded-lg bg-[#7C3AED] text-white text-[14px] font-semibold hover:bg-[#6D28D9] transition-colors"
-            whileHover={{ scale: 1.06, y: -2 }}
-            whileTap={{ scale: 0.97 }}
-          >
-            免費 AI 搜尋能見度審計
+          <h2 className="text-[26px] md:text-[34px] font-extrabold text-gray-900 mb-3">{readyTitle}</h2>
+          <p className="text-[14px] text-gray-600 leading-[1.7] max-w-[460px] mx-auto mb-8">{readySubtitle}</p>
+          <motion.a href={CALENDLY} className="inline-block px-7 py-3 rounded-lg bg-[#7C3AED] text-white text-[14px] font-semibold hover:bg-[#6D28D9] transition-colors" whileHover={{ scale: 1.06, y: -2 }} whileTap={{ scale: 0.97 }}>
+            {t("platform.cta", lang)}
           </motion.a>
         </Reveal>
       </section>
@@ -225,15 +174,11 @@ export default function PlatformPage() {
       {/* Internal links */}
       <section className="max-w-[1100px] mx-auto px-5 md:px-10 mt-16">
         <div className="border-t border-gray-200 pt-10">
-          <h3 className="text-[16px] font-bold text-gray-900 mb-4">其他平台優化</h3>
+          <h3 className="text-[16px] font-bold text-gray-900 mb-4">{t("platform.otherPlatforms", lang)}</h3>
           <div className="flex flex-wrap gap-2">
             {platforms.filter((p) => p.slug !== slug).map((p) => (
-              <Link
-                key={p.slug}
-                to={`/platform/${p.slug}`}
-                className="px-4 py-2 rounded-full border border-gray-200 text-[13px] text-gray-600 hover:border-[#7C3AED] hover:text-[#7C3AED] transition-colors"
-              >
-                {p.name} 優化
+              <Link key={p.slug} to={langPath(lang, `/platform/${p.slug}`)} className="px-4 py-2 rounded-full border border-gray-200 text-[13px] text-gray-600 hover:border-[#7C3AED] hover:text-[#7C3AED] transition-colors">
+                {p.name} {t("platform.optimization", lang)}
               </Link>
             ))}
           </div>
@@ -244,10 +189,11 @@ export default function PlatformPage() {
 }
 
 function NotFound() {
+  const lang = useLanguage();
   return (
     <div className="pt-[120px] pb-20 text-center">
-      <h1 className="text-[32px] font-extrabold text-gray-900 mb-3">搵唔到呢個頁面</h1>
-      <Link to="/" className="text-[#7C3AED] font-semibold underline">返回首頁</Link>
+      <h1 className="text-[32px] font-extrabold text-gray-900 mb-3">{t("platform.notFoundTitle", lang)}</h1>
+      <Link to={langPath(lang, "/")} className="text-[#7C3AED] font-semibold underline">{t("platform.backHome", lang)}</Link>
     </div>
   );
 }

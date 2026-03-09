@@ -1,25 +1,21 @@
 import { motion } from "framer-motion";
 import Reveal from "./Reveal";
 import { StaggerContainer, StaggerItem } from "./Reveal";
-
-const bullets = [
-  "自然搜尋流量不斷縮水，而且喺 AI 結果入面搵唔到你嘅品牌",
-  "唔確定要點樣做先可以喺 LLM 入面出現，同 SEO 有咩唔同",
-  "唔知點量度你嘅 LLM 表現，或者應該專注邊方面",
-  "唔清楚點樣組織內容，令 AI 助手揀你而唔係競爭對手",
-];
-
-const keys = ["專業 AEO 團隊", "AEO 實戰手冊", "規劃同執行"];
+import { useLanguage } from "../i18n/context";
+import { t } from "../i18n/translations";
 
 export default function ProblemSection() {
+  const lang = useLanguage();
+  const bullets = t("problem.bullets", lang) as string[];
+  const keys = t("problem.keys", lang) as string[];
+
   return (
     <section className="py-16 px-5 md:px-10 max-w-[1100px] mx-auto">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-start">
-        {/* Left - Text */}
         <div>
           <Reveal>
             <h2 className="text-[28px] md:text-[34px] font-extrabold text-gray-900 leading-[1.2] mb-5">
-              你嘅自然搜尋流量喺 AI 時代係咪跌緊？
+              {t("problem.headline", lang)}
             </h2>
           </Reveal>
 
@@ -36,13 +32,13 @@ export default function ProblemSection() {
 
           <Reveal delay={0.2}>
             <p className="text-[14px] text-gray-700 leading-[1.7] mb-6">
-              AI 搜尋唔係將來嘅事，已經嚟咗。我哋可以幫你做好 AEO 準備，免得你落後於人。
+              {t("problem.body", lang)}
             </p>
           </Reveal>
 
           <Reveal delay={0.3}>
             <h3 className="text-[17px] font-bold text-[#7C3AED] mb-4">
-              贏取 LLM 推薦嘅 3 大關鍵
+              {t("problem.keysTitle", lang)}
             </h3>
             <div className="flex flex-wrap items-center gap-6">
               {keys.map((label, i) => (
@@ -65,7 +61,6 @@ export default function ProblemSection() {
           </Reveal>
         </div>
 
-        {/* Right - Team photo + HKSTP badge */}
         <Reveal delay={0.15} direction="left">
           <div className="relative">
             <motion.div
@@ -75,12 +70,11 @@ export default function ProblemSection() {
             >
               <img
                 src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80&auto=format&fit=crop"
-                alt="團隊合作"
+                alt={t("problem.teamAlt", lang)}
                 loading="lazy"
                 className="w-full h-full object-cover"
               />
             </motion.div>
-            {/* HKSTP badge */}
             <motion.div
               className="absolute top-3 right-3 bg-white shadow-md rounded-lg px-3 py-2.5 flex items-center gap-2"
               initial={{ opacity: 0, scale: 0.8 }}

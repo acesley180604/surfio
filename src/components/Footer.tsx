@@ -1,7 +1,15 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useLanguage, langPath } from "../i18n/context";
+import { t } from "../i18n/translations";
+
+const industrySlugs = ["financial-services", "accounting-firms", "b2b-software", "legal-services", "healthcare", "ecommerce", "edtech", "startups"];
 
 export default function Footer() {
+  const lang = useLanguage();
+  const industryNames = t("footer.industryNames", lang) as string[];
+  const strategyItems = t("footer.strategyItems", lang) as string[];
+
   return (
     <footer className="bg-[#0d0820] text-white">
       <div className="max-w-[1100px] mx-auto px-5 md:px-10 py-14">
@@ -13,16 +21,16 @@ export default function Footer() {
             viewport={{ once: true }}
             transition={{ delay: 0 }}
           >
-            <h4 className="text-[14px] font-bold text-[#EC4899] mb-4">聯絡</h4>
+            <h4 className="text-[14px] font-bold text-[#EC4899] mb-4">{t("footer.contact", lang)}</h4>
             <div className="space-y-3">
               <a href="#" className="block text-[13px] text-gray-300 hover:text-white transition-colors">
-                聯絡我哋
+                {t("footer.contactUs", lang)}
               </a>
               <a href="#" className="block text-[13px] text-gray-300 hover:text-white transition-colors">
                 WhatsApp
               </a>
               <a href="#" className="block text-[13px] text-gray-300 hover:text-white transition-colors">
-                香港科學園
+                {t("footer.hksp", lang)}
               </a>
             </div>
           </motion.div>
@@ -34,47 +42,38 @@ export default function Footer() {
             viewport={{ once: true }}
             transition={{ delay: 0.08 }}
           >
-            <h4 className="text-[14px] font-bold text-[#7C3AED] mb-4">行業</h4>
+            <h4 className="text-[14px] font-bold text-[#7C3AED] mb-4">{t("footer.industries", lang)}</h4>
             <div className="space-y-2">
-              {[
-                { name: "金融服務", slug: "financial-services" },
-                { name: "會計師事務所", slug: "accounting-firms" },
-                { name: "B2B 軟件", slug: "b2b-software" },
-                { name: "法律服務", slug: "legal-services" },
-                { name: "醫療服務", slug: "healthcare" },
-                { name: "電商", slug: "ecommerce" },
-                { name: "教育科技", slug: "edtech" },
-                { name: "初創企業", slug: "startups" },
-              ].map((item) => (
-                <Link key={item.slug} to={`/aeo/${item.slug}`} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{item.name}</Link>
+              {industrySlugs.map((slug, i) => (
+                <Link key={slug} to={langPath(lang, `/aeo/${slug}`)} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{industryNames[i]}</Link>
               ))}
             </div>
           </motion.div>
 
-          {/* Strategies */}
+          {/* Strategies + Resources + Supporters */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.16 }}
           >
-            <h4 className="text-[14px] font-bold text-[#7C3AED] mb-4">策略</h4>
+            <h4 className="text-[14px] font-bold text-[#7C3AED] mb-4">{t("footer.strategies", lang)}</h4>
             <div className="space-y-2">
-              {["B2B 數碼營銷", "電商營銷", "效果營銷", "客戶獲取", "潛在客戶開發", "需求生成", "集客式營銷", "增長營銷"].map((item) => (
+              {strategyItems.map((item) => (
                 <a key={item} href="#" className="block text-[13px] text-gray-300 hover:text-white transition-colors">{item}</a>
               ))}
             </div>
 
-            <h4 className="text-[14px] font-bold text-[#7C3AED] mt-6 mb-4">資源</h4>
+            <h4 className="text-[14px] font-bold text-[#7C3AED] mt-6 mb-4">{t("footer.resources", lang)}</h4>
             <div className="space-y-2">
               <a href="#" className="block text-[13px] text-gray-300 hover:text-white transition-colors">Blog</a>
-              <Link to="/glossary/aeo" className="block text-[13px] text-gray-300 hover:text-white transition-colors">AEO 入門指南</Link>
-              <Link to="/glossary" className="block text-[13px] text-gray-300 hover:text-white transition-colors">術語表</Link>
-              <a href="#" className="block text-[13px] text-gray-300 hover:text-white transition-colors">網站地圖</a>
-              <a href="#" className="block text-[13px] text-gray-300 hover:text-white transition-colors">案例分析</a>
+              <Link to={langPath(lang, "/glossary/aeo")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{t("footer.aeoGuide", lang)}</Link>
+              <Link to={langPath(lang, "/glossary")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{t("footer.glossary", lang)}</Link>
+              <a href="#" className="block text-[13px] text-gray-300 hover:text-white transition-colors">{t("footer.sitemap", lang)}</a>
+              <a href="#" className="block text-[13px] text-gray-300 hover:text-white transition-colors">{t("footer.caseStudies", lang)}</a>
             </div>
 
-            <h4 className="text-[14px] font-bold text-[#7C3AED] mt-6 mb-4">支持機構</h4>
+            <h4 className="text-[14px] font-bold text-[#7C3AED] mt-6 mb-4">{t("footer.supporters", lang)}</h4>
             <div className="space-y-2">
               {["HKSTP Ideation Programme", "Techathon+", "HK PolyU", "HKUST"].map((item) => (
                 <a key={item} href="#" className="block text-[13px] text-gray-300 hover:text-white transition-colors">{item}</a>
@@ -95,7 +94,6 @@ export default function Footer() {
               <span className="text-[18px] font-extrabold tracking-tight">SurfIO</span>
             </div>
 
-            {/* Social icons */}
             <div className="flex items-center gap-3 mb-5">
               {[
                 { label: "YT", href: "#" },
@@ -115,18 +113,17 @@ export default function Footer() {
             </div>
 
             <p className="text-[12px] text-gray-400 mb-3">
-              &copy; 2026 SurfIO&reg; Inc. 版權所有。
+              &copy; 2026 SurfIO&reg; Inc. {t("footer.copyright", lang)}
             </p>
             <div className="flex items-center gap-3 text-[12px] text-gray-400 mb-6">
-              <a href="#" className="hover:text-white transition-colors">私隱政策</a>
+              <a href="#" className="hover:text-white transition-colors">{t("footer.privacy", lang)}</a>
               <span>|</span>
-              <a href="#" className="hover:text-white transition-colors">條款及細則</a>
+              <a href="#" className="hover:text-white transition-colors">{t("footer.terms", lang)}</a>
             </div>
 
-            {/* Partner badges */}
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded bg-white/10 flex items-center justify-center">
-                <span className="text-[7px] text-gray-400 text-center leading-tight font-bold">HKSTP<br/>培育</span>
+                <span className="text-[7px] text-gray-400 text-center leading-tight font-bold whitespace-pre-line">{t("footer.hkstpBadge", lang)}</span>
               </div>
               <div className="w-10 h-10 rounded bg-white/10 flex items-center justify-center">
                 <span className="text-[7px] text-gray-400 text-center leading-tight font-bold">Tech<br/>athon+</span>

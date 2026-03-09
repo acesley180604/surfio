@@ -1,41 +1,13 @@
 import { motion } from "framer-motion";
 import Reveal from "./Reveal";
 import { StaggerContainer, StaggerItem } from "./Reveal";
-
-const columns = [
-  {
-    title: "策略：",
-    items: [
-      "AEO 準備度審計同增長路線圖",
-      "多平台答案引擎定位 (Google、Bing、Perplexity、ChatGPT 等)",
-      "實體同主題權威性映射",
-      "AI 答案收錄嘅內容中心同支柱策略",
-      "高權威引用同連結獲取 (用於 LLM 訓練數據)",
-      "基於問題嘅關鍵字擴展同優化",
-    ],
-  },
-  {
-    title: "執行：",
-    items: [
-      "直接答案同精選摘要優化",
-      "FAQ schema、HowTo 同 Q&A 標記部署",
-      "基於實體嘅內部連結同知識圖譜建設",
-      "進階 schema 同結構化數據增強",
-      "答案引擎友好嘅內容格式同索引優化",
-    ],
-  },
-  {
-    title: "監測：",
-    items: [
-      "跨主要 LLM 嘅答案出現追蹤",
-      "精選摘要同「其他人也問」位置監測",
-      "競爭對手 AEO 表現基準比較",
-      "每月報告同改善建議",
-    ],
-  },
-];
+import { useLanguage } from "../i18n/context";
+import { t } from "../i18n/translations";
 
 export default function Services() {
+  const lang = useLanguage();
+  const columns = t("services.columns", lang) as { title: string; items: string[] }[];
+
   return (
     <section id="services" className="py-16 px-5 md:px-10 max-w-[1100px] mx-auto">
       <motion.div
@@ -48,7 +20,7 @@ export default function Services() {
 
       <Reveal>
         <h2 className="text-[26px] md:text-[32px] font-extrabold text-gray-900 text-center mb-10">
-          A-Z 答案引擎優化
+          {t("services.headline", lang)}
         </h2>
       </Reveal>
 

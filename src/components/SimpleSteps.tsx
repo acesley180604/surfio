@@ -1,33 +1,18 @@
 import { motion } from "framer-motion";
 import Reveal from "./Reveal";
-
-const steps = [
-  {
-    step: "第一步：",
-    title: "免費 AI 搜尋能見度審計",
-    desc: "同我哋嘅策略師會面，制定符合你目標嘅度身增長計劃。",
-    color: "text-[#EC4899]",
-  },
-  {
-    step: "第二步：",
-    title: "規劃同啟動",
-    desc: "我哋會制定詳細策略，啟動經驗證嘅 AEO 同 GEO 計劃。",
-    color: "text-[#7C3AED]",
-  },
-  {
-    step: "第三步：",
-    title: "持續改善效果",
-    desc: "運用數據驅動方法，持續改善你嘅營銷活動效果。",
-    color: "text-[#EC4899]",
-  },
-];
+import { useLanguage } from "../i18n/context";
+import { t } from "../i18n/translations";
 
 export default function SimpleSteps() {
+  const lang = useLanguage();
+  const steps = t("steps.items", lang) as { step: string; title: string; desc: string }[];
+  const colors = ["text-[#EC4899]", "text-[#7C3AED]", "text-[#EC4899]"];
+
   return (
     <section className="py-16 px-5 md:px-10 max-w-[1100px] mx-auto">
       <Reveal>
         <h2 className="text-[26px] md:text-[34px] font-extrabold text-gray-400 text-center mb-14">
-          我哋令 AEO 變得簡單
+          {t("steps.headline", lang)}
         </h2>
       </Reveal>
 
@@ -42,7 +27,7 @@ export default function SimpleSteps() {
             whileHover={{ y: -4 }}
           >
             <motion.p
-              className={`text-[11px] font-bold ${s.color} mb-2 tracking-wide`}
+              className={`text-[11px] font-bold ${colors[i]} mb-2 tracking-wide`}
               initial={{ opacity: 0, x: -10 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}

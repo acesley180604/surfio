@@ -11,6 +11,8 @@ import SimpleSteps from "../components/SimpleSteps";
 import Comparison from "../components/Comparison";
 import OurProcess from "../components/OurProcess";
 import FAQ from "../components/FAQ";
+import { useLanguage } from "../i18n/context";
+import { t } from "../i18n/translations";
 import {
   organizationSchema,
   founderSchema,
@@ -28,31 +30,26 @@ import {
 } from "../lib/schema";
 
 export default function HomePage() {
+  const lang = useLanguage();
+
   useEffect(() => {
-    document.title = "SurfIO — AEO Agency | 令 AI 搜尋主動推薦你";
+    document.title = t("home.title", lang) as string;
     document
       .querySelector('meta[name="description"]')
-      ?.setAttribute(
-        "content",
-        "SurfIO 係香港領先嘅 AEO Agency，幫企業喺 ChatGPT、Perplexity、Google AI Overview 被推薦。HKSTP 培育、Techathon+ 支持。30 日內出現喺 AI 搜尋結果。"
-      );
+      ?.setAttribute("content", t("home.description", lang) as string);
 
-    // Set canonical
-    setCanonical(`${SITE.url}/`);
+    setCanonical(lang === "en" ? `${SITE.url}/en` : `${SITE.url}/`);
 
-    // Set OG tags
     setMetaTags({
       "og:type": "website",
-      "og:url": `${SITE.url}/`,
-      "og:title": "SurfIO — AEO Agency | 令 AI 搜尋主動推薦你",
-      "og:description":
-        "SurfIO 係香港領先嘅 AEO Agency，幫企業喺 ChatGPT、Perplexity、Google AI Overview 被推薦。HKSTP 培育、Techathon+ 支持。",
+      "og:url": lang === "en" ? `${SITE.url}/en` : `${SITE.url}/`,
+      "og:title": t("home.ogTitle", lang) as string,
+      "og:description": t("home.ogDescription", lang) as string,
       "og:image": `${SITE.url}/logos/surfio-icon.png`,
       "og:site_name": "SurfIO",
-      "og:locale": "zh_HK",
+      "og:locale": lang === "en" ? "en" : "zh_HK",
     });
 
-    // Inject JSON-LD schemas
     injectMultipleJsonLd([
       { id: "ld-org", data: organizationSchema() },
       { id: "ld-founder", data: founderSchema() },
@@ -70,7 +67,7 @@ export default function HomePage() {
         "ld-howto", "ld-industry-list", "ld-platform-list",
       ]);
     };
-  }, []);
+  }, [lang]);
 
   return (
     <>

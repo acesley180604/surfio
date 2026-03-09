@@ -1,32 +1,27 @@
 import { motion } from "framer-motion";
 import Reveal from "./Reveal";
-
-const rows = [
-  ["全方位 AEO + 轉化漏斗", "基本賬戶管理"],
-  ["品牌化文案 + 豐富視覺", "基本文案寫作"],
-  ["科技行業專家", "通才"],
-  ["策略性、易接觸嘅團隊", "唔穩定、難聯繫嘅團隊"],
-  ["簡單透明定價", "見面先講價"],
-  ["滿意保證", "無保障"],
-  ["先進 AI 工作流程", "AI 廢話或者完全唔識 AI"],
-];
+import { useLanguage } from "../i18n/context";
+import { t } from "../i18n/translations";
 
 export default function Comparison() {
+  const lang = useLanguage();
+  const rows = t("comparison.rows", lang) as [string, string][];
+
   return (
     <section className="py-16 px-5 md:px-10 max-w-[1100px] mx-auto">
       <Reveal>
         <div className="text-center mb-3">
           <h2 className="inline-block text-[26px] md:text-[32px] font-extrabold">
             <span className="bg-gradient-to-r from-[#EC4899] via-[#A855F7] to-[#7C3AED] bg-clip-text text-transparent">
-              我哋同其他 AEO/SEO 公司有咩唔同？
+              {t("comparison.headline", lang)}
             </span>
           </h2>
         </div>
         <p className="text-center text-[14px] text-gray-600 mb-1">
-          我哋唔係一般嘅 agency。
+          {t("comparison.sub1", lang)}
         </p>
         <p className="text-center text-[14px] text-gray-600 mb-10">
-          所以我哋嘅客戶唔會得到一般嘅結果。
+          {t("comparison.sub2", lang)}
         </p>
       </Reveal>
 
@@ -44,7 +39,7 @@ export default function Comparison() {
                   </div>
                 </th>
                 <th className="py-4 px-4 text-left w-1/2 text-[14px] font-semibold text-gray-400">
-                  其他 AEO/SEO 公司
+                  {t("comparison.otherLabel", lang)}
                 </th>
               </tr>
             </thead>

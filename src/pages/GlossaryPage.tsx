@@ -1,8 +1,10 @@
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
-import { glossaryTerms } from "../data/glossary";
 import Reveal from "../components/Reveal";
+import { useLanguage, langPath } from "../i18n/context";
+import { t } from "../i18n/translations";
+import { getGlossaryTerms } from "../data/getters";
 import {
   glossaryTermSchema,
   glossaryArticleSchema,
@@ -17,6 +19,8 @@ const CALENDLY = "https://calendly.com/acesley180604/aeo-service-free-audit-surf
 
 export default function GlossaryPage() {
   const { slug } = useParams();
+  const lang = useLanguage();
+  const glossaryTerms = getGlossaryTerms(lang);
   const data = glossaryTerms.find((t) => t.slug === slug);
 
   useEffect(() => {
@@ -24,21 +28,19 @@ export default function GlossaryPage() {
       document.title = data.metaTitle;
       document.querySelector('meta[name="description"]')?.setAttribute("content", data.metaDescription);
 
-      // Set canonical URL
-      setCanonical(`${SITE.url}/glossary/${data.slug}`);
+      const pagePath = lang === "en" ? `/en/glossary/${data.slug}` : `/glossary/${data.slug}`;
+      setCanonical(`${SITE.url}${pagePath}`);
 
-      // Set OG tags
       setMetaTags({
         "og:type": "article",
-        "og:url": `${SITE.url}/glossary/${data.slug}`,
+        "og:url": `${SITE.url}${pagePath}`,
         "og:title": data.metaTitle,
         "og:description": data.metaDescription,
         "og:image": `${SITE.url}/logos/surfio-icon.png`,
         "og:site_name": "SurfIO",
-        "og:locale": "zh_HK",
+        "og:locale": lang === "en" ? "en" : "zh_HK",
       });
 
-      // Inject JSON-LD
       injectMultipleJsonLd([
         { id: "ld-glossary-term", data: glossaryTermSchema(data) },
         { id: "ld-glossary-article", data: glossaryArticleSchema(data) },
@@ -49,7 +51,7 @@ export default function GlossaryPage() {
     return () => {
       cleanupJsonLd(["ld-glossary-term", "ld-glossary-article"]);
     };
-  }, [data]);
+  }, [data, lang]);
 
   if (!data) return <GlossaryIndex />;
 
@@ -60,12 +62,12 @@ export default function GlossaryPage() {
         <nav aria-label="Breadcrumb">
           <ol className="text-[12px] text-gray-400 flex items-center" itemScope itemType="https://schema.org/BreadcrumbList">
             <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-              <Link to="/" className="hover:text-gray-600" itemProp="item"><span itemProp="name">首頁</span></Link>
+              <Link to={langPath(lang, "/")} className="hover:text-gray-600" itemProp="item"><span itemProp="name">{t("glossary.breadcrumbHome", lang)}</span></Link>
               <meta itemProp="position" content="1" />
             </li>
             <span className="mx-2">/</span>
             <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-              <Link to="/glossary" className="hover:text-gray-600" itemProp="item"><span itemProp="name">術語表</span></Link>
+              <Link to={langPath(lang, "/glossary")} className="hover:text-gray-600" itemProp="item"><span itemProp="name">{t("glossary.breadcrumbGlossary", lang)}</span></Link>
               <meta itemProp="position" content="2" />
             </li>
             <span className="mx-2">/</span>
@@ -81,57 +83,37 @@ export default function GlossaryPage() {
       <article className="max-w-[800px] mx-auto px-5 md:px-10" itemScope itemType="https://schema.org/Article">
         <meta itemProp="datePublished" content="2025-01-15" />
         <meta itemProp="dateModified" content="2026-03-08" />
-        <div itemProp="author" itemScope itemType="https://schema.org/Person">
-          <meta itemProp="name" content="Acesley Chan" />
-        </div>
-        <div itemProp="publisher" itemScope itemType="https://schema.org/Organization">
-          <meta itemProp="name" content="SurfIO" />
-        </div>
+        <div itemProp="author" itemScope itemType="https://schema.org/Person"><meta itemProp="name" content="Acesley Chan" /></div>
+        <div itemProp="publisher" itemScope itemType="https://schema.org/Organization"><meta itemProp="name" content="SurfIO" /></div>
 
         <Reveal>
           <p className="text-[#7C3AED] text-[12px] font-semibold tracking-[0.2em] uppercase mb-4">
-            AEO 術語表
+            {t("glossary.label", lang)}
           </p>
-          <h1 className="text-[clamp(28px,4vw,40px)] font-extrabold text-gray-900 leading-[1.2] mb-6" itemProp="headline">
-            {data.term}
-          </h1>
+          <h1 className="text-[clamp(28px,4vw,40px)] font-extrabold text-gray-900 leading-[1.2] mb-6" itemProp="headline">{data.term}</h1>
 
-          {/* Definition box */}
           <div className="bg-purple-50 border border-purple-200 rounded-xl p-6 mb-8">
-            <p className="text-[15px] text-gray-800 leading-[1.75] font-medium" itemProp="description">
-              {data.definition}
-            </p>
+            <p className="text-[15px] text-gray-800 leading-[1.75] font-medium" itemProp="description">{data.definition}</p>
           </div>
 
-          {/* Full explanation */}
           <div className="prose-custom mb-10" itemProp="articleBody">
             {data.fullExplanation.split("\n\n").map((para, i) => (
-              <p key={i} className="text-[15px] text-gray-700 leading-[1.8] mb-5">
-                {para}
-              </p>
+              <p key={i} className="text-[15px] text-gray-700 leading-[1.8] mb-5">{para}</p>
             ))}
           </div>
 
           {/* Related terms */}
           <div className="border-t border-gray-200 pt-8 mb-10">
-            <h3 className="text-[16px] font-bold text-gray-900 mb-4">相關術語</h3>
+            <h3 className="text-[16px] font-bold text-gray-900 mb-4">{t("glossary.relatedTerms", lang)}</h3>
             <div className="flex flex-wrap gap-2">
               {data.relatedTerms.map((term) => {
                 const linked = glossaryTerms.find(
-                  (t) => t.term.includes(term) || t.slug === term.toLowerCase().replace(/\s+/g, "-")
+                  (tt) => tt.term.includes(term) || tt.slug === term.toLowerCase().replace(/\s+/g, "-")
                 );
                 return linked ? (
-                  <Link
-                    key={term}
-                    to={`/glossary/${linked.slug}`}
-                    className="px-4 py-2 rounded-full border border-gray-200 text-[13px] text-gray-600 hover:border-[#7C3AED] hover:text-[#7C3AED] transition-colors"
-                  >
-                    {term}
-                  </Link>
+                  <Link key={term} to={langPath(lang, `/glossary/${linked.slug}`)} className="px-4 py-2 rounded-full border border-gray-200 text-[13px] text-gray-600 hover:border-[#7C3AED] hover:text-[#7C3AED] transition-colors">{term}</Link>
                 ) : (
-                  <span key={term} className="px-4 py-2 rounded-full border border-gray-100 text-[13px] text-gray-400">
-                    {term}
-                  </span>
+                  <span key={term} className="px-4 py-2 rounded-full border border-gray-100 text-[13px] text-gray-400">{term}</span>
                 );
               })}
             </div>
@@ -139,19 +121,10 @@ export default function GlossaryPage() {
 
           {/* CTA */}
           <div className="bg-gradient-to-br from-[#0f1629] to-[#1a1a3a] rounded-xl p-8 text-center">
-            <h3 className="text-[20px] font-extrabold text-white mb-2">
-              想了解更多 AEO 策略？
-            </h3>
-            <p className="text-[14px] text-gray-300 mb-5">
-              免費 AI 搜尋能見度審計，了解你嘅品牌喺 AI 搜尋中嘅表現。
-            </p>
-            <motion.a
-              href={CALENDLY}
-              className="inline-block px-6 py-3 rounded-lg bg-[#7C3AED] text-white text-[14px] font-semibold hover:bg-[#6D28D9] transition-colors"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              免費 AI 搜尋能見度審計
+            <h3 className="text-[20px] font-extrabold text-white mb-2">{t("glossary.ctaHeadline", lang)}</h3>
+            <p className="text-[14px] text-gray-300 mb-5">{t("glossary.ctaSubtitle", lang)}</p>
+            <motion.a href={CALENDLY} className="inline-block px-6 py-3 rounded-lg bg-[#7C3AED] text-white text-[14px] font-semibold hover:bg-[#6D28D9] transition-colors" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
+              {t("nav.cta", lang)}
             </motion.a>
           </div>
         </Reveal>
@@ -160,15 +133,11 @@ export default function GlossaryPage() {
       {/* All glossary terms */}
       <section className="max-w-[800px] mx-auto px-5 md:px-10 mt-16">
         <div className="border-t border-gray-200 pt-10">
-          <h3 className="text-[16px] font-bold text-gray-900 mb-4">所有 AEO 術語</h3>
+          <h3 className="text-[16px] font-bold text-gray-900 mb-4">{t("glossary.allTerms", lang)}</h3>
           <div className="flex flex-wrap gap-2">
-            {glossaryTerms.filter((t) => t.slug !== slug).map((t) => (
-              <Link
-                key={t.slug}
-                to={`/glossary/${t.slug}`}
-                className="px-4 py-2 rounded-full border border-gray-200 text-[13px] text-gray-600 hover:border-[#7C3AED] hover:text-[#7C3AED] transition-colors"
-              >
-                {t.term.split(" (")[0]}
+            {glossaryTerms.filter((tt) => tt.slug !== slug).map((tt) => (
+              <Link key={tt.slug} to={langPath(lang, `/glossary/${tt.slug}`)} className="px-4 py-2 rounded-full border border-gray-200 text-[13px] text-gray-600 hover:border-[#7C3AED] hover:text-[#7C3AED] transition-colors">
+                {tt.term.split(" (")[0]}
               </Link>
             ))}
           </div>
@@ -179,33 +148,36 @@ export default function GlossaryPage() {
 }
 
 function GlossaryIndex() {
-  useEffect(() => {
-    document.title = "AEO 術語表 | AI 搜尋優化完整詞彙 - SurfIO";
-    document.querySelector('meta[name="description"]')?.setAttribute("content", "SurfIO AEO 術語表：AI 搜尋優化、答案引擎優化、LLM、Schema Markup 等核心概念完整解釋。");
+  const lang = useLanguage();
+  const glossaryTerms = getGlossaryTerms(lang);
 
-    setCanonical(`${SITE.url}/glossary`);
+  useEffect(() => {
+    document.title = t("glossary.indexMetaTitle", lang) as string;
+    document.querySelector('meta[name="description"]')?.setAttribute("content", t("glossary.indexMetaDesc", lang) as string);
+
+    const pagePath = lang === "en" ? "/en/glossary" : "/glossary";
+    setCanonical(`${SITE.url}${pagePath}`);
 
     setMetaTags({
       "og:type": "website",
-      "og:url": `${SITE.url}/glossary`,
-      "og:title": "AEO 術語表 | AI 搜尋優化完整詞彙 - SurfIO",
-      "og:description": "SurfIO AEO 術語表：AI 搜尋優化、答案引擎優化、LLM、Schema Markup 等核心概念完整解釋。",
+      "og:url": `${SITE.url}${pagePath}`,
+      "og:title": t("glossary.indexMetaTitle", lang) as string,
+      "og:description": t("glossary.indexMetaDesc", lang) as string,
       "og:image": `${SITE.url}/logos/surfio-icon.png`,
       "og:site_name": "SurfIO",
     });
 
-    // Inject DefinedTermSet schema for the glossary index
     const glossarySetSchema = {
       "@context": "https://schema.org",
       "@type": "DefinedTermSet",
-      name: "SurfIO AEO 術語表",
-      description: "AI 搜尋優化、答案引擎優化、LLM、Schema Markup 等核心概念完整解釋",
-      url: `${SITE.url}/glossary`,
-      hasDefinedTerm: glossaryTerms.map((t) => ({
+      name: lang === "en" ? "SurfIO AEO Glossary" : "SurfIO AEO 術語表",
+      description: t("glossary.indexMetaDesc", lang),
+      url: `${SITE.url}${lang === "en" ? "/en/glossary" : "/glossary"}`,
+      hasDefinedTerm: glossaryTerms.map((tt) => ({
         "@type": "DefinedTerm",
-        name: t.term,
-        description: t.definition,
-        url: `${SITE.url}/glossary/${t.slug}`,
+        name: tt.term,
+        description: tt.definition,
+        url: `${SITE.url}${lang === "en" ? "/en" : ""}/glossary/${tt.slug}`,
       })),
     };
     injectMultipleJsonLd([{ id: "ld-glossary-set", data: glossarySetSchema }]);
@@ -215,38 +187,29 @@ function GlossaryIndex() {
     return () => {
       cleanupJsonLd(["ld-glossary-set"]);
     };
-  }, []);
+  }, [lang]);
 
   return (
     <div className="pt-[90px] pb-16">
       <div className="max-w-[800px] mx-auto px-5 md:px-10">
         <Reveal>
           <p className="text-[#7C3AED] text-[12px] font-semibold tracking-[0.2em] uppercase mb-4">
-            AEO 術語表
+            {t("glossary.label", lang)}
           </p>
           <h1 className="text-[clamp(28px,4vw,40px)] font-extrabold text-gray-900 leading-[1.2] mb-5">
-            AI 搜尋優化術語表
+            {t("glossary.indexTitle", lang)}
           </h1>
           <p className="text-[15px] text-gray-600 leading-[1.75] mb-10">
-            了解 AEO、GEO 同 AI 搜尋優化嘅核心概念。呢個術語表涵蓋所有你需要知道嘅 AI 搜尋術語。
+            {t("glossary.indexSubtitle", lang)}
           </p>
         </Reveal>
 
         <div className="space-y-4">
-          {glossaryTerms.map((t, i) => (
-            <motion.div
-              key={t.slug}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
-            >
-              <Link
-                to={`/glossary/${t.slug}`}
-                className="block bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:border-[#7C3AED] hover:shadow-md transition-all"
-              >
-                <h2 className="text-[16px] font-bold text-gray-900 mb-1">{t.term}</h2>
-                <p className="text-[13px] text-gray-500 leading-[1.6] line-clamp-2">{t.definition}</p>
+          {glossaryTerms.map((tt, i) => (
+            <motion.div key={tt.slug} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}>
+              <Link to={langPath(lang, `/glossary/${tt.slug}`)} className="block bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:border-[#7C3AED] hover:shadow-md transition-all">
+                <h2 className="text-[16px] font-bold text-gray-900 mb-1">{tt.term}</h2>
+                <p className="text-[13px] text-gray-500 leading-[1.6] line-clamp-2">{tt.definition}</p>
               </Link>
             </motion.div>
           ))}
