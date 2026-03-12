@@ -71,9 +71,14 @@ export default function Footer() {
               <Link to={langPath(lang, "/aeo-agency")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{lang === "en" ? "Locations (39)" : "地區服務 (39)"}</Link>
               <Link to={langPath(lang, "/指南")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{lang === "en" ? "Guides (105)" : "指南 (105)"}</Link>
               <Link to={langPath(lang, "/用途")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{lang === "en" ? "Use Cases (20)" : "用途 (20)"}</Link>
+              <Link to={langPath(lang, "/aeo-glossary/answer-engine-optimization")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{lang === "en" ? "AEO Glossary (100)" : "AEO 詞彙表 (100)"}</Link>
+              <Link to={langPath(lang, "/integrations/wordpress")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{lang === "en" ? "Integrations (30)" : "平台整合 (30)"}</Link>
+              <Link to={langPath(lang, "/statistics/ai-search-market-size-2026")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{lang === "en" ? "AI Statistics (25)" : "AI 統計數據 (25)"}</Link>
+              <Link to={langPath(lang, "/pricing/central-western")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{lang === "en" ? "Pricing (39)" : "價格方案 (39)"}</Link>
+              <Link to={langPath(lang, "/checklist/personal-injury-lawyers")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{lang === "en" ? "AEO Checklists (70)" : "AEO 清單 (70)"}</Link>
+              <Link to={langPath(lang, "/best/best-aeo-tools")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{lang === "en" ? "Best Rankings (30)" : "最佳推薦 (30)"}</Link>
               <Link to={langPath(lang, "/glossary")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{t("footer.glossary", lang)}</Link>
-              <Link to={langPath(lang, "/glossary/aeo")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{t("footer.aeoGuide", lang)}</Link>
-              <a href="#" className="block text-[13px] text-gray-300 hover:text-white transition-colors">Blog</a>
+              <Link to={langPath(lang, "/tools/aeo-score")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{lang === "en" ? "AEO Score Tool" : "AEO 評分工具"}</Link>
             </div>
 
             <h4 className="text-[14px] font-bold text-[#7C3AED] mt-6 mb-4">{t("footer.supporters", lang)}</h4>

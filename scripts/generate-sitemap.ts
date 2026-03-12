@@ -7,6 +7,12 @@ import { getCompetitorPages } from "../src/data/pseo/competitors";
 import { getLocationPages } from "../src/data/pseo/locations";
 import { getGuidePages } from "../src/data/pseo/guides";
 import { getUseCasePages } from "../src/data/pseo/use-cases";
+import { getGlossaryTermPages } from "../src/data/pseo/glossary-terms";
+import { getIntegrationPages } from "../src/data/pseo/integrations";
+import { getStatisticsPages } from "../src/data/pseo/statistics";
+import { getPricingPages } from "../src/data/pseo/pricing";
+import { getChecklistPages } from "../src/data/pseo/checklists";
+import { getBestPages } from "../src/data/pseo/best-pages";
 import { industries } from "../src/data/industries";
 import { platforms } from "../src/data/platforms";
 import { glossaryTerms } from "../src/data/glossary";
@@ -89,6 +95,42 @@ function buildEntries(): SitemapEntry[] {
   for (const page of getUseCasePages()) {
     entries.push({ loc: `${SITE_URL}/用途/${page.slug}`, lastmod: TODAY, changefreq: "monthly", priority: "0.7" });
     entries.push({ loc: `${SITE_URL}/en/用途/${page.slug}`, lastmod: TODAY, changefreq: "monthly", priority: "0.6" });
+  }
+
+  // Cluster F: AEO Glossary Terms (zh-HK + en)
+  for (const page of getGlossaryTermPages()) {
+    entries.push({ loc: `${SITE_URL}/aeo-glossary/${page.slug}`, lastmod: TODAY, changefreq: "monthly", priority: "0.7" });
+    entries.push({ loc: `${SITE_URL}/en/aeo-glossary/${page.slug}`, lastmod: TODAY, changefreq: "monthly", priority: "0.6" });
+  }
+
+  // Cluster G: Platform Integrations (zh-HK + en)
+  for (const page of getIntegrationPages()) {
+    entries.push({ loc: `${SITE_URL}/integrations/${page.slug}`, lastmod: TODAY, changefreq: "monthly", priority: "0.7" });
+    entries.push({ loc: `${SITE_URL}/en/integrations/${page.slug}`, lastmod: TODAY, changefreq: "monthly", priority: "0.6" });
+  }
+
+  // Cluster H: AI Search Statistics (zh-HK + en)
+  for (const page of getStatisticsPages()) {
+    entries.push({ loc: `${SITE_URL}/statistics/${page.slug}`, lastmod: TODAY, changefreq: "monthly", priority: "0.7" });
+    entries.push({ loc: `${SITE_URL}/en/statistics/${page.slug}`, lastmod: TODAY, changefreq: "monthly", priority: "0.6" });
+  }
+
+  // Cluster I: Pricing by Location (zh-HK + en)
+  for (const page of getPricingPages()) {
+    entries.push({ loc: `${SITE_URL}/pricing/${page.slug}`, lastmod: TODAY, changefreq: "monthly", priority: "0.7" });
+    entries.push({ loc: `${SITE_URL}/en/pricing/${page.slug}`, lastmod: TODAY, changefreq: "monthly", priority: "0.6" });
+  }
+
+  // Cluster J: AEO Checklists (zh-HK + en)
+  for (const page of getChecklistPages()) {
+    entries.push({ loc: `${SITE_URL}/checklist/${page.slug}`, lastmod: TODAY, changefreq: "monthly", priority: "0.7" });
+    entries.push({ loc: `${SITE_URL}/en/checklist/${page.slug}`, lastmod: TODAY, changefreq: "monthly", priority: "0.6" });
+  }
+
+  // Cluster K: Best Rankings (zh-HK + en)
+  for (const page of getBestPages()) {
+    entries.push({ loc: `${SITE_URL}/best/${page.slug}`, lastmod: TODAY, changefreq: "monthly", priority: "0.7" });
+    entries.push({ loc: `${SITE_URL}/en/best/${page.slug}`, lastmod: TODAY, changefreq: "monthly", priority: "0.6" });
   }
 
   return entries;
@@ -176,6 +218,12 @@ const clusters = {
   "Cluster C (Locations)": getLocationPages().length,
   "Cluster D (Guides)": getGuidePages().length,
   "Cluster E (Use Cases)": getUseCasePages().length,
+  "Cluster F (Glossary Terms)": getGlossaryTermPages().length,
+  "Cluster G (Integrations)": getIntegrationPages().length,
+  "Cluster H (Statistics)": getStatisticsPages().length,
+  "Cluster I (Pricing)": getPricingPages().length,
+  "Cluster J (Checklists)": getChecklistPages().length,
+  "Cluster K (Best Pages)": getBestPages().length,
 };
 console.log("\nBreakdown:");
 for (const [name, count] of Object.entries(clusters)) {
