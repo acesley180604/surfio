@@ -13,6 +13,16 @@ import {
   setCanonical,
   SITE,
 } from "../lib/schema";
+import {
+  ArticleMeta,
+  AuthorBox,
+  FaqAccordion,
+  ClusterNav,
+  WasThisHelpful,
+  ShareButtons,
+  calculateReadingTime,
+} from "../components/PseoEnhancements";
+import { AutoLinkedText, useAutoLinkOptions } from "../lib/auto-linker";
 
 const CALENDLY = "https://calendly.com/acesley180604/aeo-service-free-audit-surfio";
 
@@ -62,6 +72,17 @@ export default function UseCasePage() {
     .map((rSlug) => allPages.find((p) => p.slug === rSlug))
     .filter(Boolean) as typeof allPages;
 
+  // Reading time
+  const allText = data.problemStatement + data.solutionOverview + data.steps.map((s) => s.title + s.desc).join("") + data.benefits.join("");
+  const readingTime = calculateReadingTime(allText);
+
+  // Auto-link options
+  const currentPath = lang === "en" ? `/en/用途/${data.slug}` : `/用途/${data.slug}`;
+  const autoLinkOpts = useAutoLinkOptions(currentPath, [data.useCaseName]);
+
+  // Cluster nav
+  const allSlugs = allPages.map((p) => ({ slug: p.slug, title: p.useCaseName }));
+
   return (
     <div className="pt-[90px] pb-16">
       {/* Breadcrumb */}
@@ -95,10 +116,11 @@ export default function UseCasePage() {
           <h1 className="text-[clamp(28px,4vw,44px)] font-extrabold text-gray-900 leading-[1.2] mb-5 max-w-[800px]">
             {data.heroTitle}
           </h1>
-          <p className="text-[15px] text-gray-600 leading-[1.75] mb-8 max-w-[650px]">
+          <p className="text-[15px] text-gray-600 leading-[1.75] mb-6 max-w-[650px]">
             {data.heroSubtitle}
           </p>
         </Reveal>
+        <ArticleMeta publishedDate="2025-01-15" modifiedDate="2026-03-12" readingTime={readingTime} />
       </section>
 
       {/* Problem Statement */}
@@ -112,7 +134,9 @@ export default function UseCasePage() {
               問題
             </h2>
             {data.problemStatement.split("\n\n").map((para, i) => (
-              <p key={i} className="text-[14px] text-gray-700 leading-[1.75] mb-3 last:mb-0">{para}</p>
+              <p key={i} className="text-[14px] text-gray-700 leading-[1.75] mb-3 last:mb-0">
+                <AutoLinkedText text={para} lang={lang} options={autoLinkOpts} />
+              </p>
             ))}
           </div>
         </Reveal>
@@ -129,7 +153,9 @@ export default function UseCasePage() {
               解決方案
             </h2>
             {data.solutionOverview.split("\n\n").map((para, i) => (
-              <p key={i} className="text-[14px] text-gray-700 leading-[1.75] mb-3 last:mb-0">{para}</p>
+              <p key={i} className="text-[14px] text-gray-700 leading-[1.75] mb-3 last:mb-0">
+                <AutoLinkedText text={para} lang={lang} options={autoLinkOpts} />
+              </p>
             ))}
           </div>
         </Reveal>
@@ -180,22 +206,26 @@ export default function UseCasePage() {
         </section>
       )}
 
-      {/* FAQ */}
+      {/* FAQ — Interactive Accordion */}
       {data.faqs.length > 0 && (
         <section className="bg-gray-50 py-14 mb-16">
           <div className="max-w-[800px] mx-auto px-5 md:px-10">
-            <Reveal><h2 className="text-[24px] md:text-[30px] font-extrabold text-gray-900 mb-8 text-center">常見問題</h2></Reveal>
-            <div className="space-y-6">
-              {data.faqs.map(([q, a], i) => (
-                <motion.div key={i} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
-                  <h3 className="text-[15px] font-bold text-gray-900 mb-2">{q}</h3>
-                  <p className="text-[14px] text-gray-600 leading-[1.75]">{a}</p>
-                </motion.div>
-              ))}
-            </div>
+            <Reveal><h2 className="text-[24px] md:text-[30px] font-extrabold text-gray-900 mb-8 text-center">{lang === "en" ? "FAQ" : "常見問題"}</h2></Reveal>
+            <FaqAccordion faqs={data.faqs} />
           </div>
         </section>
       )}
+
+      {/* Author E-E-A-T Box */}
+      <section className="max-w-[1100px] mx-auto px-5 md:px-10 mb-10">
+        <AuthorBox />
+      </section>
+
+      {/* Share + Engagement */}
+      <section className="max-w-[1100px] mx-auto px-5 md:px-10 mb-10">
+        <ShareButtons url={`${SITE.url}${currentPath}`} title={data.heroTitle} />
+        <WasThisHelpful pageId={`usecase-${data.slug}`} />
+      </section>
 
       {/* CTA */}
       <section className="max-w-[1100px] mx-auto px-5 md:px-10 text-center mb-16">
@@ -213,6 +243,11 @@ export default function UseCasePage() {
           </div>
         </Reveal>
       </section>
+
+      {/* Cluster Navigation */}
+      <div className="max-w-[1100px] mx-auto px-5 md:px-10 mt-6 mb-6">
+        <ClusterNav currentSlug={data.slug} allPages={allSlugs} basePath={lang === "en" ? "/en/用途" : "/用途"} />
+      </div>
 
       {/* Related Use Cases */}
       {relatedPages.length > 0 && (

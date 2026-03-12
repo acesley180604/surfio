@@ -30,6 +30,19 @@ function buildEntries(): SitemapEntry[] {
   entries.push({ loc: `${SITE_URL}/`, lastmod: TODAY, changefreq: "weekly", priority: "1.0" });
   entries.push({ loc: `${SITE_URL}/en`, lastmod: TODAY, changefreq: "weekly", priority: "1.0" });
 
+  // Hub/Index pages (critical for crawl discovery)
+  const hubPages = [
+    { path: "/aeo/industries", priority: "0.9" },
+    { path: "/vs", priority: "0.9" },
+    { path: "/aeo-agency", priority: "0.9" },
+    { path: "/指南", priority: "0.9" },
+    { path: "/用途", priority: "0.9" },
+  ];
+  for (const hub of hubPages) {
+    entries.push({ loc: `${SITE_URL}${hub.path}`, lastmod: TODAY, changefreq: "weekly", priority: hub.priority });
+    entries.push({ loc: `${SITE_URL}/en${hub.path}`, lastmod: TODAY, changefreq: "weekly", priority: hub.priority });
+  }
+
   // Existing industry pages
   for (const ind of industries) {
     entries.push({ loc: `${SITE_URL}/aeo/${ind.slug}`, lastmod: TODAY, changefreq: "monthly", priority: "0.9" });
@@ -46,54 +59,35 @@ function buildEntries(): SitemapEntry[] {
     entries.push({ loc: `${SITE_URL}/glossary/${term.slug}`, lastmod: TODAY, changefreq: "monthly", priority: "0.8" });
   }
 
-  // Cluster A: Industry × Engine
+  // Cluster A: Industry × Engine (zh-HK + en)
   for (const page of getIndustryEnginePages()) {
-    entries.push({
-      loc: `${SITE_URL}/aeo/${page.slug}`,
-      lastmod: TODAY,
-      changefreq: "monthly",
-      priority: "0.8",
-    });
+    const p = `/aeo/${page.industrySlug}/${page.engineSlug}`;
+    entries.push({ loc: `${SITE_URL}${p}`, lastmod: TODAY, changefreq: "monthly", priority: "0.8" });
+    entries.push({ loc: `${SITE_URL}/en${p}`, lastmod: TODAY, changefreq: "monthly", priority: "0.7" });
   }
 
-  // Cluster B: Competitors
+  // Cluster B: Competitors (zh-HK + en)
   for (const page of getCompetitorPages()) {
-    entries.push({
-      loc: `${SITE_URL}/vs/${page.slug}`,
-      lastmod: TODAY,
-      changefreq: "monthly",
-      priority: "0.7",
-    });
+    entries.push({ loc: `${SITE_URL}/vs/${page.slug}`, lastmod: TODAY, changefreq: "monthly", priority: "0.7" });
+    entries.push({ loc: `${SITE_URL}/en/vs/${page.slug}`, lastmod: TODAY, changefreq: "monthly", priority: "0.6" });
   }
 
-  // Cluster C: Locations
+  // Cluster C: Locations (zh-HK + en)
   for (const page of getLocationPages()) {
-    entries.push({
-      loc: `${SITE_URL}/aeo-agency/${page.slug}`,
-      lastmod: TODAY,
-      changefreq: "monthly",
-      priority: "0.8",
-    });
+    entries.push({ loc: `${SITE_URL}/aeo-agency/${page.slug}`, lastmod: TODAY, changefreq: "monthly", priority: "0.8" });
+    entries.push({ loc: `${SITE_URL}/en/aeo-agency/${page.slug}`, lastmod: TODAY, changefreq: "monthly", priority: "0.7" });
   }
 
-  // Cluster D: Guides
+  // Cluster D: Guides (zh-HK + en)
   for (const page of getGuidePages()) {
-    entries.push({
-      loc: `${SITE_URL}/指南/${page.slug}`,
-      lastmod: TODAY,
-      changefreq: "monthly",
-      priority: "0.7",
-    });
+    entries.push({ loc: `${SITE_URL}/指南/${page.slug}`, lastmod: TODAY, changefreq: "monthly", priority: "0.7" });
+    entries.push({ loc: `${SITE_URL}/en/指南/${page.slug}`, lastmod: TODAY, changefreq: "monthly", priority: "0.6" });
   }
 
-  // Cluster E: Use Cases
+  // Cluster E: Use Cases (zh-HK + en)
   for (const page of getUseCasePages()) {
-    entries.push({
-      loc: `${SITE_URL}/用途/${page.slug}`,
-      lastmod: TODAY,
-      changefreq: "monthly",
-      priority: "0.7",
-    });
+    entries.push({ loc: `${SITE_URL}/用途/${page.slug}`, lastmod: TODAY, changefreq: "monthly", priority: "0.7" });
+    entries.push({ loc: `${SITE_URL}/en/用途/${page.slug}`, lastmod: TODAY, changefreq: "monthly", priority: "0.6" });
   }
 
   return entries;
@@ -155,7 +149,7 @@ ${sitemaps.map((s) => `  <sitemap>
 const entries = buildEntries();
 console.log(`Generated ${entries.length} sitemap entries`);
 
-const publicDir = path.resolve(__dirname, "../public");
+const publicDir = path.resolve(path.dirname(new URL(import.meta.url).pathname), "../public");
 
 if (entries.length > 50000) {
   const { index, sitemaps } = generateSitemapIndex(entries);

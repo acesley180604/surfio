@@ -41,4 +41,8 @@ Allow: /
 User-agent: Bytespider
 Allow: /
 
+# AI-specific content files
+# llms.txt — structured site overview for LLM crawlers
+# llms-full.txt — detailed version with complete page inventory
+
 Sitemap: https://surfio.net/sitemap.xml

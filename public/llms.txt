@@ -22,16 +22,104 @@ SurfIO specializes in Answer Engine Optimization (AEO) and Generative Engine Opt
 - High-authority Citation & Link Acquisition for LLM Training Data
 - Cross-LLM Answer Appearance Tracking & Monthly Reporting
 
-## Industries Served
+## Industries Served (70 Industries × 7 AI Engines = 490 Pages)
 
-- [Financial Services AEO](/aeo/financial-services): AI search optimization for banks, insurers, and financial advisors
-- [Accounting Firms AEO](/aeo/accounting-firms): Get accounting firms recommended by AI assistants
-- [B2B Software AEO](/aeo/b2b-software): SaaS product recommendations in AI search
-- [Legal Services AEO](/aeo/legal-services): Law firm visibility in ChatGPT and Perplexity
-- [Healthcare AEO](/aeo/healthcare): Medical service recommendations in AI search
-- [E-commerce AEO](/aeo/ecommerce): Product recommendations in AI shopping assistants
-- [EdTech AEO](/aeo/edtech): Learning platform recommendations in AI search
-- [Startups AEO](/aeo/startups): Accelerate startup growth through AI search visibility
+### Tier 1 — High-Competition Professional Services
+- [人身傷害律師 AEO](/aeo/personal-injury-lawyers): Personal injury law AI visibility
+- [移民律師 AEO](/aeo/immigration-lawyers): Immigration law AI search optimization
+- [商業律師 AEO](/aeo/commercial-lawyers): Commercial law firm AI positioning
+- [知識產權律師 AEO](/aeo/ip-lawyers): IP law firm AI recommendations
+- [家事律師 AEO](/aeo/family-lawyers): Family law AI search visibility
+- [刑事律師 AEO](/aeo/criminal-lawyers): Criminal defense AI positioning
+- [整形外科 AEO](/aeo/plastic-surgery): Plastic surgery AI search optimization
+- [皮膚科 AEO](/aeo/dermatology): Dermatology AI visibility
+- [牙科 AEO](/aeo/dentistry): Dental practice AI recommendations
+- [生育科 AEO](/aeo/fertility): Fertility clinic AI search
+- [精神科 AEO](/aeo/psychiatry): Psychiatry AI visibility
+- [中醫 AEO](/aeo/tcm): TCM practice AI optimization
+- [財富管理 AEO](/aeo/wealth-management): Wealth management AI search
+- [稅務顧問 AEO](/aeo/tax-advisory): Tax advisory AI visibility
+- [保險 AEO](/aeo/insurance): Insurance AI recommendations
+- [按揭 AEO](/aeo/mortgage): Mortgage AI search optimization
+- [會計師 AEO](/aeo/accounting): Accounting firm AI positioning
+- [基金 AEO](/aeo/fund-management): Fund management AI visibility
+- [CRM 軟件 AEO](/aeo/crm-software): CRM software AI recommendations
+- [HR 系統 AEO](/aeo/hr-systems): HR systems AI search
+- [網絡安全 AEO](/aeo/cybersecurity): Cybersecurity AI visibility
+- [營銷自動化 AEO](/aeo/marketing-automation): Marketing automation AI search
+- [數據分析 AEO](/aeo/data-analytics): Data analytics AI recommendations
+- [管理顧問 AEO](/aeo/management-consulting): Management consulting AI positioning
+- [企業培訓 AEO](/aeo/corporate-training): Corporate training AI search
+- [併購顧問 AEO](/aeo/ma-advisory): M&A advisory AI visibility
+- [獵頭公司 AEO](/aeo/headhunting): Executive search AI recommendations
+- [商業地產 AEO](/aeo/commercial-real-estate): Commercial real estate AI search
+- [豪宅 AEO](/aeo/luxury-property): Luxury property AI visibility
+- [物業管理 AEO](/aeo/property-management): Property management AI search
+
+### Tier 2 — Consumer & Lifestyle Services
+- [電商零售 AEO](/aeo/ecommerce-retail) | [教育補習 AEO](/aeo/education-tutoring) | [旅遊 AEO](/aeo/travel) | [酒店 AEO](/aeo/hotel) | [家居服務 AEO](/aeo/home-services) | [汽車 AEO](/aeo/automotive) | [招聘 AEO](/aeo/recruitment) | [活動策劃 AEO](/aeo/event-planning) | [建築設計 AEO](/aeo/architecture) | [裝修 AEO](/aeo/renovation) | [婚禮策劃 AEO](/aeo/wedding-planning) | [攝影 AEO](/aeo/photography) | [美容 AEO](/aeo/beauty) | [健身 AEO](/aeo/fitness) | [寵物 AEO](/aeo/pet-services) | [餐飲 AEO](/aeo/fnb) | [零售 AEO](/aeo/retail) | [物流 AEO](/aeo/logistics) | [印刷 AEO](/aeo/printing) | [廣告 AEO](/aeo/advertising)
+
+### Tier 3 — Emerging & Niche Industries
+- [區塊鏈 AEO](/aeo/blockchain) | [清潔科技 AEO](/aeo/cleantech) | [生物科技 AEO](/aeo/biotech) | [無人機服務 AEO](/aeo/drone-services) | [共享辦公 AEO](/aeo/coworking) | [播客製作 AEO](/aeo/podcast-production) | [VR/AR AEO](/aeo/vr-ar) | [安老服務 AEO](/aeo/elderly-care) | [音樂製作 AEO](/aeo/music-production) | [食品科技 AEO](/aeo/food-tech) | [智能家居 AEO](/aeo/smart-home) | [可持續發展顧問 AEO](/aeo/sustainability-consulting) | [電競 AEO](/aeo/esports) | [網上心理治療 AEO](/aeo/online-therapy) | [語言學校 AEO](/aeo/language-school) | [垂直農業 AEO](/aeo/vertical-farming) | [碳交易 AEO](/aeo/carbon-trading) | [寵物科技 AEO](/aeo/pet-tech) | [睡眠科技 AEO](/aeo/sleep-tech) | [托兒服務 AEO](/aeo/childcare)
+
+Each industry page has dedicated sub-pages for all 7 AI engines:
+- [Perplexity](/aeo/{industry}/perplexity) | [ChatGPT](/aeo/{industry}/chatgpt) | [Claude](/aeo/{industry}/claude) | [Gemini](/aeo/{industry}/gemini) | [Google AI Overview](/aeo/{industry}/google-ai-overview) | [Copilot](/aeo/{industry}/copilot) | [Bing Chat](/aeo/{industry}/bing-chat)
+
+## Competitor Comparisons (65 Competitors × 3 Types = 195 Pages)
+
+### SEO Agencies vs SurfIO
+- [SurfIO vs Siege Media](/vs/siege-media-替代方案) | [SurfIO vs Animalz](/vs/animalz-替代方案) | [SurfIO vs Grow & Convert](/vs/grow-convert-替代方案) | [SurfIO vs Neil Patel](/vs/neil-patel-替代方案) | [SurfIO vs Backlinko](/vs/backlinko-替代方案) | [SurfIO vs Single Grain](/vs/single-grain-替代方案)
+
+### SEO Tools vs SurfIO
+- [SurfIO vs Ahrefs](/vs/ahrefs-替代方案) | [SurfIO vs Semrush](/vs/semrush-替代方案) | [SurfIO vs Surfer SEO](/vs/surfer-seo-替代方案) | [SurfIO vs Moz](/vs/moz-替代方案) | [SurfIO vs Clearscope](/vs/clearscope-替代方案) | [SurfIO vs Frase](/vs/frase-替代方案)
+
+### AI Content Tools vs SurfIO
+- [SurfIO vs Jasper](/vs/jasper-替代方案) | [SurfIO vs Copy.ai](/vs/copyai-替代方案) | [SurfIO vs Writer](/vs/writer-替代方案) | [SurfIO vs Writesonic](/vs/writesonic-替代方案)
+
+Each competitor has 3 page types: Alternative (替代方案), Comparison (比較), Migration (遷移)
+
+## Location Pages (39 Locations)
+
+### Hong Kong 18 Districts
+- [中西區 AEO](/aeo-agency/central-western) | [灣仔 AEO](/aeo-agency/wan-chai) | [東區 AEO](/aeo-agency/eastern) | [南區 AEO](/aeo-agency/southern) | [油尖旺 AEO](/aeo-agency/yau-tsim-mong) | [深水埗 AEO](/aeo-agency/sham-shui-po) | [九龍城 AEO](/aeo-agency/kowloon-city) | [黃大仙 AEO](/aeo-agency/wong-tai-sin) | [觀塘 AEO](/aeo-agency/kwun-tong) | [葵青 AEO](/aeo-agency/kwai-tsing) | [荃灣 AEO](/aeo-agency/tsuen-wan) | [屯門 AEO](/aeo-agency/tuen-mun) | [元朗 AEO](/aeo-agency/yuen-long) | [北區 AEO](/aeo-agency/north) | [大埔 AEO](/aeo-agency/tai-po) | [沙田 AEO](/aeo-agency/sha-tin) | [西貢 AEO](/aeo-agency/sai-kung) | [離島 AEO](/aeo-agency/islands)
+
+### Greater Bay Area
+- [深圳 AEO](/aeo-agency/shenzhen) | [廣州 AEO](/aeo-agency/guangzhou) | [珠海 AEO](/aeo-agency/zhuhai) | [佛山 AEO](/aeo-agency/foshan) | [東莞 AEO](/aeo-agency/dongguan) | [中山 AEO](/aeo-agency/zhongshan) | [惠州 AEO](/aeo-agency/huizhou) | [江門 AEO](/aeo-agency/jiangmen) | [肇慶 AEO](/aeo-agency/zhaoqing) | [澳門 AEO](/aeo-agency/macau)
+
+### International Markets
+- [溫哥華 AEO](/aeo-agency/vancouver) | [多倫多 AEO](/aeo-agency/toronto) | [三藩市 AEO](/aeo-agency/san-francisco) | [洛杉磯 AEO](/aeo-agency/los-angeles) | [紐約 AEO](/aeo-agency/new-york) | [悉尼 AEO](/aeo-agency/sydney) | [墨爾本 AEO](/aeo-agency/melbourne) | [倫敦 AEO](/aeo-agency/london) | [曼徹斯特 AEO](/aeo-agency/manchester) | [新加坡 AEO](/aeo-agency/singapore) | [吉隆坡 AEO](/aeo-agency/kuala-lumpur)
+
+## Educational Guides (7 Engines × 15 Topics = 105 Pages)
+
+### Guide Topics per AI Engine
+Each of the 7 AI engines has dedicated guides on:
+排名方法 | 排名因素分析 | 引用來源研究 | 點解唔引用你 | 同 Google 比較 | 優化 Checklist | 內容類型優化 | 引用追蹤 | 演算法更新 | E-E-A-T 要求 | 結構化數據 | B2B vs B2C 策略 | 本地搜尋 | 圖片影片引用 | 未來預測
+
+Example guide pages:
+- [Perplexity 排名方法](/指南/perplexity-ranking) | [ChatGPT 排名因素](/指南/chatgpt-ranking-factors) | [Claude 引用來源研究](/指南/claude-citation-sources) | [Gemini 優化 Checklist](/指南/gemini-checklist)
+
+## Use Cases (20 Pages)
+
+- [品牌監測](/用途/brand-monitoring): Monitor how AI engines describe your brand
+- [潛在客戶開發](/用途/lead-generation): Generate leads through AI search visibility
+- [內容策略](/用途/content-strategy): Build content that AI engines cite
+- [競爭對手分析](/用途/competitor-analysis): Track competitor AI visibility
+- [聲譽管理](/用途/reputation-management): Control your brand narrative in AI search
+- [產品發佈](/用途/product-launch): Launch products with AI search visibility
+- [思想領袖建設](/用途/thought-leadership): Establish thought leadership in AI search
+- [本地能見度](/用途/local-visibility): Local business AI search optimization
+- [危機管理](/用途/crisis-management): Manage AI search crisis situations
+- [投資者關係](/用途/investor-relations): Investor-facing AI visibility
+- [招聘品牌](/用途/recruitment-branding): Employer branding in AI search
+- [客戶教育](/用途/customer-education): Customer education through AI search
+- [市場擴展](/用途/market-expansion): Market expansion via AI search
+- [合作夥伴生態](/用途/partner-ecosystem): Partner ecosystem AI visibility
+- [AI 準備度審計](/用途/ai-readiness-audit): Audit your AI search readiness
+- [Schema 實施](/用途/schema-implementation): Implement schema for AI visibility
+- [實體建設](/用途/entity-building): Build entity authority for AI search
+- [引用建設](/用途/citation-building): Build citations for AI recommendations
+- [知識圖譜優化](/用途/knowledge-graph): Optimize your knowledge graph
+- [語音搜尋優化](/用途/voice-search): Voice search optimization for AI
 
 ## Platform Optimization Guides
 
@@ -58,3 +146,4 @@ SurfIO specializes in Answer Engine Optimization (AEO) and Generative Engine Opt
 
 - Free AI Visibility Audit: https://calendly.com/acesley180604/aeo-service-free-audit-surfio
 - Website: https://surfio.net
+- Hub Pages: [Industries](/aeo/industries) | [Comparisons](/vs) | [Locations](/aeo-agency) | [Guides](/指南) | [Use Cases](/用途)

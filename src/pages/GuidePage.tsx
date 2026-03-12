@@ -13,6 +13,17 @@ import {
   setCanonical,
   SITE,
 } from "../lib/schema";
+import {
+  TableOfContents,
+  AuthorBox,
+  ArticleMeta,
+  FaqAccordion,
+  ClusterNav,
+  WasThisHelpful,
+  ShareButtons,
+  calculateReadingTime,
+} from "../components/PseoEnhancements";
+import { AutoLinkedText, useAutoLinkOptions } from "../lib/auto-linker";
 
 const CALENDLY = "https://calendly.com/acesley180604/aeo-service-free-audit-surfio";
 
@@ -62,6 +73,25 @@ export default function GuidePage() {
     .map((rSlug) => allPages.find((p) => p.slug === rSlug))
     .filter(Boolean) as typeof allPages;
 
+  // Build ToC sections from headings
+  const tocSections = data.sections.map((section, i) => ({
+    id: `section-${i}`,
+    title: section.heading,
+  }));
+  if (data.keyTakeaways.length > 0) tocSections.push({ id: "key-takeaways", title: lang === "en" ? "Key Takeaways" : "重點摘要" });
+  if (data.faqs.length > 0) tocSections.push({ id: "faq", title: lang === "en" ? "FAQ" : "常見問題" });
+
+  // Reading time
+  const allText = data.sections.map((s) => s.content + (s.items?.join("") || "")).join("");
+  const readingTime = calculateReadingTime(allText);
+
+  // Auto-link options
+  const currentPath = lang === "en" ? `/en/指南/${data.slug}` : `/指南/${data.slug}`;
+  const autoLinkOpts = useAutoLinkOptions(currentPath, [data.engineName, data.topicName]);
+
+  // Cluster nav
+  const allSlugs = allPages.map((p) => ({ slug: p.slug, title: `${p.engineName} — ${p.topicName}` }));
+
   return (
     <div className="pt-[90px] pb-16">
       {/* Breadcrumb */}
@@ -106,19 +136,29 @@ export default function GuidePage() {
           <h1 className="text-[clamp(28px,4vw,40px)] font-extrabold text-gray-900 leading-[1.2] mb-5" itemProp="headline">
             {data.heroTitle}
           </h1>
-          <p className="text-[15px] text-gray-600 leading-[1.75] mb-10" itemProp="description">
+          <p className="text-[15px] text-gray-600 leading-[1.75] mb-6" itemProp="description">
             {data.heroSubtitle}
           </p>
         </Reveal>
+
+        {/* Article Meta — dates + reading time */}
+        <ArticleMeta publishedDate="2025-01-15" modifiedDate="2026-03-12" readingTime={readingTime} />
+
+        {/* Table of Contents */}
+        <div className="mb-10">
+          <TableOfContents sections={tocSections} />
+        </div>
 
         {/* Article Sections */}
         <div itemProp="articleBody">
           {data.sections.map((section, i) => (
             <Reveal key={i} delay={i * 0.05}>
-              <div className="mb-10">
+              <div className="mb-10" id={`section-${i}`}>
                 <h2 className="text-[22px] font-extrabold text-gray-900 mb-4">{section.heading}</h2>
                 {section.content.split("\n\n").map((para, j) => (
-                  <p key={j} className="text-[15px] text-gray-700 leading-[1.8] mb-4">{para}</p>
+                  <p key={j} className="text-[15px] text-gray-700 leading-[1.8] mb-4">
+                    <AutoLinkedText text={para} lang={lang} options={autoLinkOpts} />
+                  </p>
                 ))}
 
                 {/* Optional items list */}
@@ -151,8 +191,8 @@ export default function GuidePage() {
         {/* Key Takeaways */}
         {data.keyTakeaways.length > 0 && (
           <Reveal>
-            <div className="bg-gradient-to-br from-[#7C3AED] to-[#6D28D9] rounded-xl p-8 mb-10 text-white">
-              <h2 className="text-[20px] font-extrabold mb-5">重點摘要</h2>
+            <div id="key-takeaways" className="bg-gradient-to-br from-[#7C3AED] to-[#6D28D9] rounded-xl p-8 mb-10 text-white">
+              <h2 className="text-[20px] font-extrabold mb-5">{lang === "en" ? "Key Takeaways" : "重點摘要"}</h2>
               <StaggerContainer className="space-y-3">
                 {data.keyTakeaways.map((takeaway, i) => (
                   <StaggerItem key={i}>
@@ -169,20 +209,22 @@ export default function GuidePage() {
           </Reveal>
         )}
 
-        {/* FAQ */}
+        {/* FAQ — Interactive Accordion */}
         {data.faqs.length > 0 && (
-          <div className="mb-10">
-            <Reveal><h2 className="text-[22px] font-extrabold text-gray-900 mb-6">常見問題</h2></Reveal>
-            <div className="space-y-5">
-              {data.faqs.map(([q, a], i) => (
-                <motion.div key={i} className="bg-gray-50 rounded-xl p-5 border border-gray-100" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
-                  <h3 className="text-[15px] font-bold text-gray-900 mb-2">{q}</h3>
-                  <p className="text-[14px] text-gray-600 leading-[1.75]">{a}</p>
-                </motion.div>
-              ))}
-            </div>
+          <div className="mb-10" id="faq">
+            <Reveal><h2 className="text-[22px] font-extrabold text-gray-900 mb-6">{lang === "en" ? "FAQ" : "常見問題"}</h2></Reveal>
+            <FaqAccordion faqs={data.faqs} />
           </div>
         )}
+
+        {/* Author E-E-A-T Box */}
+        <AuthorBox />
+
+        {/* Share Buttons */}
+        <ShareButtons url={`${SITE.url}${currentPath}`} title={data.heroTitle} />
+
+        {/* Was This Helpful */}
+        <WasThisHelpful pageId={`guide-${data.slug}`} />
 
         {/* CTA */}
         <Reveal>
@@ -196,11 +238,16 @@ export default function GuidePage() {
         </Reveal>
       </article>
 
+      {/* Cluster Navigation — prev/next */}
+      <div className="max-w-[800px] mx-auto px-5 md:px-10 mt-6">
+        <ClusterNav currentSlug={data.slug} allPages={allSlugs} basePath={lang === "en" ? "/en/指南" : "/指南"} />
+      </div>
+
       {/* Related Guides */}
       {relatedPages.length > 0 && (
         <section className="max-w-[800px] mx-auto px-5 md:px-10 mt-10">
           <div className="border-t border-gray-200 pt-10">
-            <h3 className="text-[16px] font-bold text-gray-900 mb-4">相關指南</h3>
+            <h3 className="text-[16px] font-bold text-gray-900 mb-4">{lang === "en" ? "Related Guides" : "相關指南"}</h3>
             <div className="flex flex-wrap gap-2">
               {relatedPages.map((p) => (
                 <Link key={p.slug} to={langPath(lang, `/指南/${p.slug}`)} className="px-4 py-2 rounded-full border border-gray-200 text-[13px] text-gray-600 hover:border-[#7C3AED] hover:text-[#7C3AED] transition-colors">

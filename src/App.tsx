@@ -7,6 +7,13 @@ import HomePage from "./pages/HomePage";
 import IndustryPage from "./pages/IndustryPage";
 import PlatformPage from "./pages/PlatformPage";
 import GlossaryPage from "./pages/GlossaryPage";
+import {
+  IndustryEngineHub,
+  CompetitorHub,
+  LocationHub,
+  GuideHub,
+  UseCaseHub,
+} from "./pages/HubPages";
 
 // pSEO pages — lazy loaded for code splitting
 const IndustryEnginePage = lazy(() => import("./pages/IndustryEnginePage"));
@@ -33,6 +40,13 @@ function AppRoutes() {
         <Route path="/glossary" element={<GlossaryPage />} />
         <Route path="/glossary/:slug" element={<GlossaryPage />} />
 
+        {/* pSEO Hub/Index pages — eagerly loaded for crawling */}
+        <Route path="/aeo/industries" element={<IndustryEngineHub />} />
+        <Route path="/vs" element={<CompetitorHub />} />
+        <Route path="/aeo-agency" element={<LocationHub />} />
+        <Route path="/指南" element={<GuideHub />} />
+        <Route path="/用途" element={<UseCaseHub />} />
+
         {/* pSEO: Cluster A — Industry × Engine */}
         <Route path="/aeo/:industrySlug/:engineSlug" element={<IndustryEnginePage />} />
 
@@ -54,6 +68,13 @@ function AppRoutes() {
         <Route path="/en/platform/:slug" element={<PlatformPage />} />
         <Route path="/en/glossary" element={<GlossaryPage />} />
         <Route path="/en/glossary/:slug" element={<GlossaryPage />} />
+        {/* English hub pages */}
+        <Route path="/en/aeo/industries" element={<IndustryEngineHub />} />
+        <Route path="/en/vs" element={<CompetitorHub />} />
+        <Route path="/en/aeo-agency" element={<LocationHub />} />
+        <Route path="/en/指南" element={<GuideHub />} />
+        <Route path="/en/用途" element={<UseCaseHub />} />
+
         <Route path="/en/aeo/:industrySlug/:engineSlug" element={<IndustryEnginePage />} />
         <Route path="/en/vs/:slug" element={<CompetitorPage />} />
         <Route path="/en/aeo-agency/:slug" element={<LocationPage />} />
