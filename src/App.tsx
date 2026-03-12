@@ -24,6 +24,14 @@ const LocationPage = lazy(() => import("./pages/LocationPage"));
 const GuidePage = lazy(() => import("./pages/GuidePage"));
 const UseCasePage = lazy(() => import("./pages/UseCasePage"));
 
+// New pSEO clusters F-K
+const GlossaryTermPage = lazy(() => import("./pages/GlossaryTermPage"));
+const IntegrationPage = lazy(() => import("./pages/IntegrationPage"));
+const StatisticsPage = lazy(() => import("./pages/StatisticsPage"));
+const PricingPage = lazy(() => import("./pages/PricingPage"));
+const ChecklistPage = lazy(() => import("./pages/ChecklistPage"));
+const BestPage = lazy(() => import("./pages/BestPage"));
+
 function PageLoader() {
   return (
     <div className="pt-[120px] pb-20 text-center">
@@ -67,6 +75,24 @@ function AppRoutes() {
         {/* pSEO: Cluster E — Use Cases */}
         <Route path="/用途/:slug" element={<UseCasePage />} />
 
+        {/* pSEO: Cluster H — Statistics */}
+        <Route path="/statistics/:slug" element={<StatisticsPage />} />
+
+        {/* pSEO: Cluster I — Pricing by Location */}
+        <Route path="/pricing/:slug" element={<PricingPage />} />
+
+        {/* pSEO: Cluster J — AEO Checklists */}
+        <Route path="/checklist/:slug" element={<ChecklistPage />} />
+
+        {/* pSEO: Cluster F — Glossary Terms */}
+        <Route path="/aeo-glossary/:slug" element={<GlossaryTermPage />} />
+
+        {/* pSEO: Cluster G — Integrations */}
+        <Route path="/integrations/:slug" element={<IntegrationPage />} />
+
+        {/* pSEO: Cluster K — Best Rankings */}
+        <Route path="/best/:slug" element={<BestPage />} />
+
         {/* English routes */}
         <Route path="/en" element={<HomePage />} />
         <Route path="/en/aeo/:slug" element={<IndustryPage />} />
@@ -86,6 +112,13 @@ function AppRoutes() {
         <Route path="/en/aeo-agency/:slug" element={<LocationPage />} />
         <Route path="/en/指南/:slug" element={<GuidePage />} />
         <Route path="/en/用途/:slug" element={<UseCasePage />} />
+
+        <Route path="/en/statistics/:slug" element={<StatisticsPage />} />
+        <Route path="/en/pricing/:slug" element={<PricingPage />} />
+        <Route path="/en/checklist/:slug" element={<ChecklistPage />} />
+        <Route path="/en/aeo-glossary/:slug" element={<GlossaryTermPage />} />
+        <Route path="/en/integrations/:slug" element={<IntegrationPage />} />
+        <Route path="/en/best/:slug" element={<BestPage />} />
       </Routes>
     </Suspense>
   );
