@@ -17,3 +17,10 @@ export function getPlatforms(lang: Lang) {
 export function getGlossaryTerms(lang: Lang) {
   return lang === "en" ? glossaryTermsEn : glossaryTerms;
 }
+
+// pSEO data getters — lazy loaded
+export { getIndustryEnginePages } from "./pseo/industry-engine";
+export { getCompetitorPages } from "./pseo/competitors";
+export { getLocationPages } from "./pseo/locations";
+export { getGuidePages } from "./pseo/guides";
+export { getUseCasePages } from "./pseo/use-cases";

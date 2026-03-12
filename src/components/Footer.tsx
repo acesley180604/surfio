@@ -69,8 +69,10 @@ export default function Footer() {
               <a href="#" className="block text-[13px] text-gray-300 hover:text-white transition-colors">Blog</a>
               <Link to={langPath(lang, "/glossary/aeo")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{t("footer.aeoGuide", lang)}</Link>
               <Link to={langPath(lang, "/glossary")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{t("footer.glossary", lang)}</Link>
+              <Link to={langPath(lang, "/指南/chatgpt-ranking")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{lang === "en" ? "Guides" : "指南"}</Link>
+              <Link to={langPath(lang, "/用途/brand-monitoring")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{lang === "en" ? "Use Cases" : "用途"}</Link>
+              <Link to={langPath(lang, "/aeo-agency/central-western")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{lang === "en" ? "Locations" : "地區服務"}</Link>
               <a href="#" className="block text-[13px] text-gray-300 hover:text-white transition-colors">{t("footer.sitemap", lang)}</a>
-              <a href="#" className="block text-[13px] text-gray-300 hover:text-white transition-colors">{t("footer.caseStudies", lang)}</a>
             </div>
 
             <h4 className="text-[14px] font-bold text-[#7C3AED] mt-6 mb-4">{t("footer.supporters", lang)}</h4>

@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { lazy, Suspense } from "react";
 import { LanguageProvider } from "./i18n/context";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -7,21 +8,59 @@ import IndustryPage from "./pages/IndustryPage";
 import PlatformPage from "./pages/PlatformPage";
 import GlossaryPage from "./pages/GlossaryPage";
 
+// pSEO pages — lazy loaded for code splitting
+const IndustryEnginePage = lazy(() => import("./pages/IndustryEnginePage"));
+const CompetitorPage = lazy(() => import("./pages/CompetitorPage"));
+const LocationPage = lazy(() => import("./pages/LocationPage"));
+const GuidePage = lazy(() => import("./pages/GuidePage"));
+const UseCasePage = lazy(() => import("./pages/UseCasePage"));
+
+function PageLoader() {
+  return (
+    <div className="pt-[120px] pb-20 text-center">
+      <div className="w-8 h-8 border-2 border-[#7C3AED] border-t-transparent rounded-full animate-spin mx-auto" />
+    </div>
+  );
+}
+
 function AppRoutes() {
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/aeo/:slug" element={<IndustryPage />} />
-      <Route path="/platform/:slug" element={<PlatformPage />} />
-      <Route path="/glossary" element={<GlossaryPage />} />
-      <Route path="/glossary/:slug" element={<GlossaryPage />} />
-      {/* English routes */}
-      <Route path="/en" element={<HomePage />} />
-      <Route path="/en/aeo/:slug" element={<IndustryPage />} />
-      <Route path="/en/platform/:slug" element={<PlatformPage />} />
-      <Route path="/en/glossary" element={<GlossaryPage />} />
-      <Route path="/en/glossary/:slug" element={<GlossaryPage />} />
-    </Routes>
+    <Suspense fallback={<PageLoader />}>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/aeo/:slug" element={<IndustryPage />} />
+        <Route path="/platform/:slug" element={<PlatformPage />} />
+        <Route path="/glossary" element={<GlossaryPage />} />
+        <Route path="/glossary/:slug" element={<GlossaryPage />} />
+
+        {/* pSEO: Cluster A — Industry × Engine */}
+        <Route path="/aeo/:industrySlug/:engineSlug" element={<IndustryEnginePage />} />
+
+        {/* pSEO: Cluster B — Competitor Comparisons */}
+        <Route path="/vs/:slug" element={<CompetitorPage />} />
+
+        {/* pSEO: Cluster C — Location */}
+        <Route path="/aeo-agency/:slug" element={<LocationPage />} />
+
+        {/* pSEO: Cluster D — Educational Guides */}
+        <Route path="/指南/:slug" element={<GuidePage />} />
+
+        {/* pSEO: Cluster E — Use Cases */}
+        <Route path="/用途/:slug" element={<UseCasePage />} />
+
+        {/* English routes */}
+        <Route path="/en" element={<HomePage />} />
+        <Route path="/en/aeo/:slug" element={<IndustryPage />} />
+        <Route path="/en/platform/:slug" element={<PlatformPage />} />
+        <Route path="/en/glossary" element={<GlossaryPage />} />
+        <Route path="/en/glossary/:slug" element={<GlossaryPage />} />
+        <Route path="/en/aeo/:industrySlug/:engineSlug" element={<IndustryEnginePage />} />
+        <Route path="/en/vs/:slug" element={<CompetitorPage />} />
+        <Route path="/en/aeo-agency/:slug" element={<LocationPage />} />
+        <Route path="/en/指南/:slug" element={<GuidePage />} />
+        <Route path="/en/用途/:slug" element={<UseCasePage />} />
+      </Routes>
+    </Suspense>
   );
 }
 

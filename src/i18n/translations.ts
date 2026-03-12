@@ -541,6 +541,121 @@ const translations = {
   // Language switcher
   "lang.zh": { zh: "中", en: "中" },
   "lang.en": { zh: "EN", en: "EN" },
+
+  // --- pSEO: Industry × Engine Page ---
+  "ie.breadcrumbHome": { zh: "首頁", en: "Home" },
+  "ie.breadcrumbIndustry": { zh: "行業", en: "Industries" },
+  "ie.cta": { zh: "免費 AI 搜尋能見度審計", en: "Free AI Search Visibility Audit" },
+  "ie.challengesTitle": {
+    zh: (ind: string, eng: string) => `${ind}喺 ${eng} 時代面對嘅挑戰`,
+    en: (ind: string, eng: string) => `Challenges ${ind} Faces in the ${eng} Era`,
+  },
+  "ie.solutionsTitle": {
+    zh: (ind: string, eng: string) => `SurfIO 嘅${ind} ${eng} 優化方案`,
+    en: (ind: string, eng: string) => `SurfIO's ${ind} ${eng} Optimization Solution`,
+  },
+  "ie.faqTitle": {
+    zh: (ind: string, eng: string) => `${ind} × ${eng} AEO 常見問題`,
+    en: (ind: string, eng: string) => `${ind} × ${eng} AEO FAQ`,
+  },
+  "ie.readyTitle": {
+    zh: (eng: string) => `準備好喺 ${eng} 被推薦？`,
+    en: (eng: string) => `Ready to Get Recommended on ${eng}?`,
+  },
+  "ie.readySubtitle": {
+    zh: (ind: string) => `預約免費 AEO 審計，了解你嘅${ind}喺 AI 搜尋中嘅改善機會。`,
+    en: (ind: string) => `Book a free AEO audit to discover improvement opportunities for your ${ind} in AI search.`,
+  },
+  "ie.otherEngines": { zh: "其他 AI 引擎優化", en: "Other AI Engine Optimizations" },
+  "ie.otherIndustries": { zh: "其他行業優化", en: "Other Industry Optimizations" },
+  "ie.notFoundTitle": { zh: "搵唔到呢個頁面", en: "Page Not Found" },
+  "ie.backHome": { zh: "返回首頁", en: "Back to Home" },
+
+  // --- pSEO: Competitor Page ---
+  "comp.breadcrumbHome": { zh: "首頁", en: "Home" },
+  "comp.breadcrumbCompare": { zh: "比較", en: "Compare" },
+  "comp.cta": { zh: "免費 AI 搜尋能見度審計", en: "Free AI Search Visibility Audit" },
+  "comp.verdictTitle": { zh: "快速結論", en: "Quick Verdict" },
+  "comp.comparisonTitle": { zh: "詳細比較", en: "Detailed Comparison" },
+  "comp.featureCol": { zh: "功能", en: "Feature" },
+  "comp.advantagesTitle": { zh: "點解揀 SurfIO？", en: "Why Choose SurfIO?" },
+  "comp.faqTitle": {
+    zh: (name: string) => `SurfIO vs ${name} 常見問題`,
+    en: (name: string) => `SurfIO vs ${name} FAQ`,
+  },
+  "comp.readyTitle": { zh: "準備好轉用 AEO 專家？", en: "Ready to Switch to an AEO Expert?" },
+  "comp.readySubtitle": {
+    zh: "預約免費審計，了解 SurfIO 點樣幫你嘅品牌喺 AI 搜尋被推薦。",
+    en: "Book a free audit to see how SurfIO can get your brand recommended in AI search.",
+  },
+  "comp.otherComparisons": { zh: "其他比較", en: "Other Comparisons" },
+  "comp.notFoundTitle": { zh: "搵唔到呢個頁面", en: "Page Not Found" },
+  "comp.backHome": { zh: "返回首頁", en: "Back to Home" },
+
+  // --- pSEO: Location Page ---
+  "loc.breadcrumbHome": { zh: "首頁", en: "Home" },
+  "loc.breadcrumbLocation": { zh: "地區", en: "Locations" },
+  "loc.cta": { zh: "免費 AI 搜尋能見度審計", en: "Free AI Search Visibility Audit" },
+  "loc.localContext": { zh: "本地商業環境", en: "Local Business Landscape" },
+  "loc.keyIndustries": { zh: "主要行業", en: "Key Industries" },
+  "loc.faqTitle": {
+    zh: (name: string) => `${name} AEO 常見問題`,
+    en: (name: string) => `${name} AEO FAQ`,
+  },
+  "loc.readyTitle": {
+    zh: (name: string) => `準備好提升你喺${name}嘅 AI 搜尋能見度？`,
+    en: (name: string) => `Ready to Boost Your AI Search Visibility in ${name}?`,
+  },
+  "loc.readySubtitle": {
+    zh: (name: string) => `預約免費審計，了解${name}企業喺 AI 搜尋中嘅機遇。`,
+    en: (name: string) => `Book a free audit to discover AI search opportunities for ${name} businesses.`,
+  },
+  "loc.nearbyLocations": { zh: "附近地區", en: "Nearby Locations" },
+  "loc.notFoundTitle": { zh: "搵唔到呢個頁面", en: "Page Not Found" },
+  "loc.backHome": { zh: "返回首頁", en: "Back to Home" },
+
+  // --- pSEO: Guide Page ---
+  "guide.breadcrumbHome": { zh: "首頁", en: "Home" },
+  "guide.breadcrumbGuide": { zh: "指南", en: "Guides" },
+  "guide.label": { zh: "AEO 指南", en: "AEO Guide" },
+  "guide.keyTakeaways": { zh: "重點摘要", en: "Key Takeaways" },
+  "guide.tip": { zh: "提示", en: "Tip" },
+  "guide.faqTitle": {
+    zh: (eng: string, topic: string) => `${eng} ${topic}常見問題`,
+    en: (eng: string, topic: string) => `${eng} ${topic} FAQ`,
+  },
+  "guide.relatedGuides": { zh: "相關指南", en: "Related Guides" },
+  "guide.ctaHeadline": { zh: "想將呢啲知識應用到你嘅業務？", en: "Want to Apply This Knowledge to Your Business?" },
+  "guide.ctaSubtitle": {
+    zh: "免費 AEO 審計，了解你嘅品牌喺 AI 搜尋中嘅表現同改善機會。",
+    en: "Free AEO audit to understand your brand's AI search performance and improvement opportunities.",
+  },
+  "guide.notFoundTitle": { zh: "搵唔到呢個頁面", en: "Page Not Found" },
+  "guide.backHome": { zh: "返回首頁", en: "Back to Home" },
+
+  // --- pSEO: Use Case Page ---
+  "uc.breadcrumbHome": { zh: "首頁", en: "Home" },
+  "uc.breadcrumbUseCase": { zh: "用途", en: "Use Cases" },
+  "uc.cta": { zh: "免費 AI 搜尋能見度審計", en: "Free AI Search Visibility Audit" },
+  "uc.problemTitle": { zh: "問題", en: "The Problem" },
+  "uc.solutionTitle": { zh: "解決方案", en: "The Solution" },
+  "uc.stepsTitle": { zh: "實施步驟", en: "Implementation Steps" },
+  "uc.benefitsTitle": { zh: "你會獲得嘅好處", en: "Benefits You'll Get" },
+  "uc.faqTitle": {
+    zh: (name: string) => `${name}常見問題`,
+    en: (name: string) => `${name} FAQ`,
+  },
+  "uc.readyTitle": {
+    zh: (name: string) => `準備好用 AEO 實現${name}？`,
+    en: (name: string) => `Ready to Achieve ${name} with AEO?`,
+  },
+  "uc.readySubtitle": {
+    zh: "預約免費審計，了解 AEO 點樣幫你達成目標。",
+    en: "Book a free audit to see how AEO can help you achieve your goals.",
+  },
+  "uc.relatedUseCases": { zh: "相關用途", en: "Related Use Cases" },
+  "uc.notFoundTitle": { zh: "搵唔到呢個頁面", en: "Page Not Found" },
+  "uc.backHome": { zh: "返回首頁", en: "Back to Home" },
 } as const;
 
 type TranslationKey = keyof typeof translations;

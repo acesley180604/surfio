@@ -595,4 +595,249 @@ export function platformListSchema() {
   };
 }
 
+// --- pSEO Schema Generators ---
+
+export function industryEnginePageSchema(data: {
+  slug: string;
+  industryName: string;
+  engineName: string;
+  heroTitle: string;
+  heroSubtitle: string;
+  metaTitle: string;
+  metaDescription: string;
+  faqs: [string, string][];
+}) {
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": `${SITE_URL}/aeo/${data.slug}`,
+      name: data.metaTitle,
+      description: data.metaDescription,
+      url: `${SITE_URL}/aeo/${data.slug}`,
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+      about: {
+        "@type": "Service",
+        name: `${data.industryName} ${data.engineName} AEO 優化`,
+        description: data.heroSubtitle,
+        provider: { "@id": `${SITE_URL}/#organization` },
+      },
+      breadcrumb: {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "首頁", item: SITE_URL },
+          { "@type": "ListItem", position: 2, name: "行業", item: `${SITE_URL}/#industries` },
+          { "@type": "ListItem", position: 3, name: data.industryName, item: `${SITE_URL}/aeo/${data.slug.split("-").slice(0, -1).join("-")}` },
+          { "@type": "ListItem", position: 4, name: data.engineName },
+        ],
+      },
+      datePublished: "2025-01-15",
+      dateModified: "2026-03-12",
+      inLanguage: "zh-HK",
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: data.faqs.map(([q, a]) => ({
+        "@type": "Question",
+        name: q,
+        acceptedAnswer: { "@type": "Answer", text: a },
+      })),
+    },
+  ];
+}
+
+export function competitorPageSchema(data: {
+  slug: string;
+  competitorName: string;
+  heroTitle: string;
+  metaTitle: string;
+  metaDescription: string;
+  faqs: [string, string][];
+}) {
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": `${SITE_URL}/vs/${data.slug}`,
+      name: data.metaTitle,
+      description: data.metaDescription,
+      url: `${SITE_URL}/vs/${data.slug}`,
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+      about: {
+        "@type": "Thing",
+        name: `SurfIO vs ${data.competitorName}`,
+        description: data.metaDescription,
+      },
+      breadcrumb: {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "首頁", item: SITE_URL },
+          { "@type": "ListItem", position: 2, name: "比較" },
+          { "@type": "ListItem", position: 3, name: data.competitorName },
+        ],
+      },
+      datePublished: "2025-01-15",
+      dateModified: "2026-03-12",
+      inLanguage: "zh-HK",
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: data.faqs.map(([q, a]) => ({
+        "@type": "Question",
+        name: q,
+        acceptedAnswer: { "@type": "Answer", text: a },
+      })),
+    },
+  ];
+}
+
+export function locationPageSchema(data: {
+  slug: string;
+  locationName: string;
+  heroTitle: string;
+  metaTitle: string;
+  metaDescription: string;
+  faqs: [string, string][];
+}) {
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": `${SITE_URL}/aeo-agency/${data.slug}`,
+      name: data.metaTitle,
+      description: data.metaDescription,
+      url: `${SITE_URL}/aeo-agency/${data.slug}`,
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+      about: {
+        "@type": "Service",
+        name: `${data.locationName} AEO 服務`,
+        description: data.metaDescription,
+        provider: { "@id": `${SITE_URL}/#organization` },
+        areaServed: {
+          "@type": "Place",
+          name: data.locationName,
+        },
+      },
+      breadcrumb: {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "首頁", item: SITE_URL },
+          { "@type": "ListItem", position: 2, name: "地區" },
+          { "@type": "ListItem", position: 3, name: data.locationName },
+        ],
+      },
+      datePublished: "2025-01-15",
+      dateModified: "2026-03-12",
+      inLanguage: "zh-HK",
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: data.faqs.map(([q, a]) => ({
+        "@type": "Question",
+        name: q,
+        acceptedAnswer: { "@type": "Answer", text: a },
+      })),
+    },
+  ];
+}
+
+export function guidePageSchema(data: {
+  slug: string;
+  engineName: string;
+  topicName: string;
+  heroTitle: string;
+  metaTitle: string;
+  metaDescription: string;
+  faqs: [string, string][];
+}) {
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "@id": `${SITE_URL}/指南/${data.slug}`,
+      headline: data.metaTitle,
+      description: data.metaDescription,
+      url: `${SITE_URL}/指南/${data.slug}`,
+      author: { "@id": `${SITE_URL}/#founder` },
+      publisher: { "@id": `${SITE_URL}/#organization` },
+      datePublished: "2025-01-15",
+      dateModified: "2026-03-12",
+      inLanguage: "zh-HK",
+      mainEntityOfPage: `${SITE_URL}/指南/${data.slug}`,
+      about: {
+        "@type": "Thing",
+        name: `${data.engineName} ${data.topicName}`,
+      },
+      breadcrumb: {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "首頁", item: SITE_URL },
+          { "@type": "ListItem", position: 2, name: "指南" },
+          { "@type": "ListItem", position: 3, name: data.engineName },
+          { "@type": "ListItem", position: 4, name: data.topicName },
+        ],
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: data.faqs.map(([q, a]) => ({
+        "@type": "Question",
+        name: q,
+        acceptedAnswer: { "@type": "Answer", text: a },
+      })),
+    },
+  ];
+}
+
+export function useCasePageSchema(data: {
+  slug: string;
+  useCaseName: string;
+  heroTitle: string;
+  metaTitle: string;
+  metaDescription: string;
+  faqs: [string, string][];
+}) {
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": `${SITE_URL}/用途/${data.slug}`,
+      name: data.metaTitle,
+      description: data.metaDescription,
+      url: `${SITE_URL}/用途/${data.slug}`,
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+      about: {
+        "@type": "Service",
+        name: `AEO ${data.useCaseName}`,
+        description: data.metaDescription,
+        provider: { "@id": `${SITE_URL}/#organization` },
+      },
+      breadcrumb: {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "首頁", item: SITE_URL },
+          { "@type": "ListItem", position: 2, name: "用途" },
+          { "@type": "ListItem", position: 3, name: data.useCaseName },
+        ],
+      },
+      datePublished: "2025-01-15",
+      dateModified: "2026-03-12",
+      inLanguage: "zh-HK",
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: data.faqs.map(([q, a]) => ({
+        "@type": "Question",
+        name: q,
+        acceptedAnswer: { "@type": "Answer", text: a },
+      })),
+    },
+  ];
+}
+
 export const SITE = { url: SITE_URL, calendly: CALENDLY };
