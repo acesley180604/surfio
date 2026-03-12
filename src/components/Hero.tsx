@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Reveal from "./Reveal";
 import { LogoCloud } from "./ui/logo-cloud";
@@ -14,6 +15,16 @@ const logos = [
 
 export default function Hero() {
   const lang = useLanguage();
+  const [heroEmail, setHeroEmail] = useState("");
+
+  const handleHeroEmail = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!heroEmail) return;
+    window.open(
+      `https://calendly.com/acesley180604/aeo-service-free-audit-surfio?email=${encodeURIComponent(heroEmail)}`,
+      "_blank"
+    );
+  };
 
   return (
     <section className="relative pt-[100px] pb-10 overflow-hidden">
@@ -64,10 +75,41 @@ export default function Hero() {
         </Reveal>
 
         <Reveal delay={0.3}>
+          {/* Low-friction email capture */}
+          <form onSubmit={handleHeroEmail} className="flex flex-col sm:flex-row items-center justify-center gap-2 mb-4 max-w-[460px] mx-auto">
+            <input
+              type="email"
+              required
+              value={heroEmail}
+              onChange={(e) => setHeroEmail(e.target.value)}
+              placeholder={t("hero.emailPlaceholder", lang) as string}
+              className="w-full sm:flex-1 px-4 py-3 rounded-full border border-gray-300 bg-white/80 backdrop-blur-sm text-[13px] text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30 focus:border-[#7C3AED] transition-all"
+            />
+            <motion.button
+              type="submit"
+              className="w-full sm:w-auto px-6 py-3 rounded-full bg-[#7C3AED] text-white text-[13px] font-semibold hover:bg-[#6D28D9] transition-colors whitespace-nowrap"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              {t("hero.emailBtn", lang)}
+            </motion.button>
+          </form>
+
+          {/* Guarantee tag */}
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              <path d="m9 12 2 2 4-4" />
+            </svg>
+            <span className="text-[11px] text-gray-500 font-medium">
+              {t("hero.guaranteeTag", lang)}
+            </span>
+          </div>
+
           <div className="flex items-center justify-center gap-3 mb-14">
             <motion.a
-              href="#process"
-              className="px-6 py-3 rounded-full border border-gray-900 text-gray-900 text-[14px] font-medium hover:bg-gray-900 hover:text-white transition-all"
+              href="#pricing"
+              className="px-6 py-2.5 rounded-full border border-gray-900 text-gray-900 text-[13px] font-medium hover:bg-gray-900 hover:text-white transition-all"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.97 }}
             >
@@ -75,7 +117,7 @@ export default function Hero() {
             </motion.a>
             <motion.a
               href="https://calendly.com/acesley180604/aeo-service-free-audit-surfio"
-              className="px-6 py-3 rounded-full bg-[#7C3AED] text-white text-[14px] font-medium hover:bg-[#6D28D9] transition-colors"
+              className="px-6 py-2.5 rounded-full bg-gray-900 text-white text-[13px] font-medium hover:bg-gray-800 transition-colors"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.97 }}
             >

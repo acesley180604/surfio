@@ -1,16 +1,19 @@
 import { useEffect } from "react";
 import Hero from "../components/Hero";
+import SocialProof from "../components/SocialProof";
 import ProblemSection from "../components/ProblemSection";
 import Experts from "../components/Experts";
 import Playbook from "../components/Playbook";
-import Planning from "../components/Planning";
 import Services from "../components/Services";
+import Pricing from "../components/Pricing";
+import GuaranteeBanner from "../components/GuaranteeBanner";
 import CaseStudies from "../components/CaseStudies";
 import Founder from "../components/Founder";
-import SimpleSteps from "../components/SimpleSteps";
 import Comparison from "../components/Comparison";
 import OurProcess from "../components/OurProcess";
+import EmailCapture from "../components/EmailCapture";
 import FAQ from "../components/FAQ";
+import ExitIntent from "../components/ExitIntent";
 import { useLanguage } from "../i18n/context";
 import { t } from "../i18n/translations";
 import {
@@ -72,17 +75,20 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <SocialProof />
       <ProblemSection />
       <Experts />
       <Playbook />
-      <Planning />
       <Services />
+      <Pricing />
+      <GuaranteeBanner />
       <CaseStudies />
       <Founder />
-      <SimpleSteps />
       <Comparison />
       <OurProcess />
+      <EmailCapture />
       <FAQ />
+      <ExitIntent />
     </>
   );
 }

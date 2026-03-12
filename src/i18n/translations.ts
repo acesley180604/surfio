@@ -656,6 +656,265 @@ const translations = {
   "uc.relatedUseCases": { zh: "相關用途", en: "Related Use Cases" },
   "uc.notFoundTitle": { zh: "搵唔到呢個頁面", en: "Page Not Found" },
   "uc.backHome": { zh: "返回首頁", en: "Back to Home" },
+
+  // --- Social Proof ---
+  "socialProof.metrics": {
+    zh: [
+      { value: "30+", label: "AI 搜尋能見度\n審計已完成" },
+      { value: "73%", label: "平均 AI 引用\n提升率" },
+      { value: "90 日", label: "效果保證\n全額退款" },
+      { value: "$0", label: "免費流量\n唔洗畀廣告費" },
+    ],
+    en: [
+      { value: "30+", label: "AI Search Visibility\nAudits Completed" },
+      { value: "73%", label: "Avg AI Citation\nImprovement" },
+      { value: "90 Days", label: "Results Guarantee\nFull Refund" },
+      { value: "$0", label: "Free Organic Traffic\nNo Ad Spend" },
+    ],
+  },
+  "socialProof.urgency": {
+    zh: "本月剩餘 3 個免費審計名額",
+    en: "Only 3 free audit slots remaining this month",
+  },
+
+  // --- Guarantee ---
+  "guarantee.headline": {
+    zh: "90 日效果保證 — 無效果，全額退款",
+    en: "90-Day Results Guarantee — No Results, Full Refund",
+  },
+  "guarantee.subtitle": {
+    zh: "我哋對自己嘅方法有信心。如果 90 日內你嘅 AI 搜尋能見度無明顯提升，我哋會全額退款。無條件。",
+    en: "We're confident in our methodology. If your AI search visibility doesn't measurably improve within 90 days, we'll refund you in full. No questions asked.",
+  },
+  "guarantee.promises": {
+    zh: [
+      { icon: "🚀", title: "免費自然流量", desc: "唔洗付費廣告，純靠 AI 搜尋推薦帶嚟持續流量" },
+      { icon: "🛡️", title: "90 日退款保證", desc: "無效果 = 全額退款，零風險" },
+      { icon: "📊", title: "可量化結果", desc: "每月報告追蹤你嘅 AI 能見度提升" },
+    ],
+    en: [
+      { icon: "🚀", title: "Free Organic Traffic", desc: "No paid ads needed — AI search recommendations drive sustained traffic" },
+      { icon: "🛡️", title: "90-Day Money-Back", desc: "No results = full refund, zero risk" },
+      { icon: "📊", title: "Measurable Results", desc: "Monthly reports tracking your AI visibility improvements" },
+    ],
+  },
+  "guarantee.fine": {
+    zh: "* 保證適用於所有標準 AEO 服務方案。詳情請參閱條款及細則。",
+    en: "* Guarantee applies to all standard AEO service plans. See Terms & Conditions for details.",
+  },
+
+  // --- Email Capture ---
+  "emailCapture.label": {
+    zh: "免費資源",
+    en: "Free Resource",
+  },
+  "emailCapture.headline": {
+    zh: "免費獲取你嘅 AI 搜尋能見度報告",
+    en: "Get Your Free AI Search Visibility Report",
+  },
+  "emailCapture.subtitle": {
+    zh: "輸入你嘅 Email，即刻收到免費嘅 AI 搜尋能見度分析報告，了解你嘅品牌喺 ChatGPT、Perplexity 同 Google AI 嘅表現。",
+    en: "Enter your email to receive a free AI search visibility analysis — see how your brand performs on ChatGPT, Perplexity & Google AI.",
+  },
+  "emailCapture.items": {
+    zh: [
+      "你嘅品牌喺 AI 搜尋嘅能見度評分",
+      "競爭對手 AI 引用對比分析",
+      "5 個即時可行嘅改善建議",
+      "免費 — 無需信用卡",
+    ],
+    en: [
+      "Your brand's AI search visibility score",
+      "Competitor AI citation comparison",
+      "5 actionable improvement suggestions",
+      "Free — no credit card required",
+    ],
+  },
+  "emailCapture.placeholder": {
+    zh: "輸入你嘅電郵地址",
+    en: "Enter your email address",
+  },
+  "emailCapture.btn": {
+    zh: "免費獲取報告",
+    en: "Get Free Report",
+  },
+  "emailCapture.success": {
+    zh: "報告已發送！請檢查你嘅收件箱。",
+    en: "Report sent! Check your inbox.",
+  },
+  "emailCapture.successSub": {
+    zh: "我哋嘅策略師會喺 24 小時內跟進。",
+    en: "Our strategist will follow up within 24 hours.",
+  },
+  "emailCapture.noSpam": {
+    zh: "我哋唔會發垃圾郵件。你可以隨時取消訂閱。",
+    en: "No spam, ever. Unsubscribe anytime.",
+  },
+
+  // --- Pricing ---
+  "pricing.label": {
+    zh: "透明定價",
+    en: "Transparent Pricing",
+  },
+  "pricing.headline": {
+    zh: "簡單透明嘅定價",
+    en: "Simple, Transparent Pricing",
+  },
+  "pricing.subtitle": {
+    zh: "無隱藏費用，無長期合約。揀最適合你嘅方案。所有方案都包含 90 日效果保證。",
+    en: "No hidden fees, no long-term contracts. Choose the plan that fits. All plans include our 90-day results guarantee.",
+  },
+  "pricing.popular": { zh: "最受歡迎", en: "Most Popular" },
+  "pricing.guaranteeBadge": {
+    zh: "所有方案均包含 90 日效果保證 — 無效果全額退款",
+    en: "All plans include 90-day results guarantee — full refund if no results",
+  },
+  "pricing.plans": {
+    zh: [
+      {
+        name: "AEO 啟動方案",
+        price: "HK$8,000",
+        period: "/月",
+        desc: "適合想試水溫嘅中小企",
+        features: [
+          "AI 搜尋能見度審計",
+          "1 個平台優化 (ChatGPT 或 Google AI)",
+          "基本 Schema 標記",
+          "每月 2 篇 AI 優化內容",
+          "月度能見度報告",
+          "90 日效果保證",
+        ],
+        cta: "預約免費諮詢",
+      },
+      {
+        name: "AEO 增長方案",
+        price: "HK$18,000",
+        period: "/月",
+        desc: "全方位 AI 搜尋優化，最受歡迎",
+        popular: true,
+        features: [
+          "全平台 AI 搜尋優化",
+          "進階 Schema + 結構化數據",
+          "每月 4 篇 AI 優化內容",
+          "BrandBrain 知識庫建設",
+          "競爭對手 AI 引用追蹤",
+          "連結建設 (每月 5 條)",
+          "90 日效果保證",
+        ],
+        cta: "預約免費諮詢",
+      },
+      {
+        name: "AEO 企業方案",
+        price: "定制",
+        period: "",
+        desc: "為大型企業度身訂造",
+        features: [
+          "專屬 AEO 策略師",
+          "全平台 + 語音助手優化",
+          "無限 AI 優化內容",
+          "企業級 Schema 架構",
+          "每週報告 + 即時儀表板",
+          "PR 級連結建設",
+          "90 日效果保證",
+        ],
+        cta: "聯絡我哋",
+      },
+    ],
+    en: [
+      {
+        name: "AEO Starter",
+        price: "HK$8,000",
+        period: "/mo",
+        desc: "For SMBs ready to test the waters",
+        features: [
+          "AI search visibility audit",
+          "1 platform optimization (ChatGPT or Google AI)",
+          "Basic Schema markup",
+          "2 AI-optimized articles/month",
+          "Monthly visibility report",
+          "90-day results guarantee",
+        ],
+        cta: "Book Free Consultation",
+      },
+      {
+        name: "AEO Growth",
+        price: "HK$18,000",
+        period: "/mo",
+        desc: "Full AI search optimization — most popular",
+        popular: true,
+        features: [
+          "All-platform AI search optimization",
+          "Advanced Schema + structured data",
+          "4 AI-optimized articles/month",
+          "BrandBrain knowledge base",
+          "Competitor AI citation tracking",
+          "Link building (5 links/month)",
+          "90-day results guarantee",
+        ],
+        cta: "Book Free Consultation",
+      },
+      {
+        name: "AEO Enterprise",
+        price: "Custom",
+        period: "",
+        desc: "Tailored for large organizations",
+        features: [
+          "Dedicated AEO strategist",
+          "All platforms + voice assistant optimization",
+          "Unlimited AI-optimized content",
+          "Enterprise-grade Schema architecture",
+          "Weekly reports + live dashboard",
+          "PR-grade link building",
+          "90-day results guarantee",
+        ],
+        cta: "Contact Us",
+      },
+    ],
+  },
+
+  // --- Exit Intent ---
+  "exit.headline": {
+    zh: "等等！送你一份免費 AEO 報告",
+    en: "Wait! Get a Free AEO Report",
+  },
+  "exit.subtitle": {
+    zh: "離開前，輸入 Email 免費獲取你嘅品牌 AI 搜尋能見度分析。了解點解你嘅競爭對手出現喺 ChatGPT 而你無。",
+    en: "Before you go — get a free analysis of your brand's AI search visibility. See why competitors appear on ChatGPT and you don't.",
+  },
+  "exit.placeholder": {
+    zh: "你嘅電郵地址",
+    en: "Your email address",
+  },
+  "exit.btn": {
+    zh: "免費獲取報告",
+    en: "Get Free Report",
+  },
+  "exit.success": {
+    zh: "已發送！請查收你嘅收件箱。",
+    en: "Sent! Check your inbox.",
+  },
+  "exit.noSpam": {
+    zh: "我哋唔會發垃圾郵件。隨時取消訂閱。",
+    en: "No spam. Unsubscribe anytime.",
+  },
+  "exit.dismiss": {
+    zh: "唔洗了，多謝",
+    en: "No thanks, I'm good",
+  },
+
+  // --- Hero additions ---
+  "hero.emailPlaceholder": {
+    zh: "輸入你嘅電郵獲取免費報告",
+    en: "Enter your email for a free report",
+  },
+  "hero.emailBtn": {
+    zh: "免費獲取",
+    en: "Get Free",
+  },
+  "hero.guaranteeTag": {
+    zh: "90 日效果保證 · 無效果全額退款",
+    en: "90-day guarantee · Full refund if no results",
+  },
 } as const;
 
 type TranslationKey = keyof typeof translations;
