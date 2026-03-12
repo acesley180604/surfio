@@ -37,6 +37,7 @@ function buildEntries(): SitemapEntry[] {
     { path: "/aeo-agency", priority: "0.9" },
     { path: "/指南", priority: "0.9" },
     { path: "/用途", priority: "0.9" },
+    { path: "/tools/aeo-score", priority: "0.9" },
   ];
   for (const hub of hubPages) {
     entries.push({ loc: `${SITE_URL}${hub.path}`, lastmod: TODAY, changefreq: "weekly", priority: hub.priority });

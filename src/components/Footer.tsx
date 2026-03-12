@@ -66,13 +66,14 @@ export default function Footer() {
 
             <h4 className="text-[14px] font-bold text-[#7C3AED] mt-6 mb-4">{t("footer.resources", lang)}</h4>
             <div className="space-y-2">
-              <a href="#" className="block text-[13px] text-gray-300 hover:text-white transition-colors">Blog</a>
-              <Link to={langPath(lang, "/glossary/aeo")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{t("footer.aeoGuide", lang)}</Link>
+              <Link to={langPath(lang, "/aeo/industries")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{lang === "en" ? "All Industries (490)" : "所有行業 (490)"}</Link>
+              <Link to={langPath(lang, "/vs")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{lang === "en" ? "Comparisons (195)" : "競爭對手比較 (195)"}</Link>
+              <Link to={langPath(lang, "/aeo-agency")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{lang === "en" ? "Locations (39)" : "地區服務 (39)"}</Link>
+              <Link to={langPath(lang, "/指南")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{lang === "en" ? "Guides (105)" : "指南 (105)"}</Link>
+              <Link to={langPath(lang, "/用途")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{lang === "en" ? "Use Cases (20)" : "用途 (20)"}</Link>
               <Link to={langPath(lang, "/glossary")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{t("footer.glossary", lang)}</Link>
-              <Link to={langPath(lang, "/指南/chatgpt-ranking")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{lang === "en" ? "Guides" : "指南"}</Link>
-              <Link to={langPath(lang, "/用途/brand-monitoring")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{lang === "en" ? "Use Cases" : "用途"}</Link>
-              <Link to={langPath(lang, "/aeo-agency/central-western")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{lang === "en" ? "Locations" : "地區服務"}</Link>
-              <a href="#" className="block text-[13px] text-gray-300 hover:text-white transition-colors">{t("footer.sitemap", lang)}</a>
+              <Link to={langPath(lang, "/glossary/aeo")} className="block text-[13px] text-gray-300 hover:text-white transition-colors">{t("footer.aeoGuide", lang)}</Link>
+              <a href="#" className="block text-[13px] text-gray-300 hover:text-white transition-colors">Blog</a>
             </div>
 
             <h4 className="text-[14px] font-bold text-[#7C3AED] mt-6 mb-4">{t("footer.supporters", lang)}</h4>

@@ -15,6 +15,8 @@ import {
   UseCaseHub,
 } from "./pages/HubPages";
 
+const AeoToolPage = lazy(() => import("./pages/AeoToolPage"));
+
 // pSEO pages — lazy loaded for code splitting
 const IndustryEnginePage = lazy(() => import("./pages/IndustryEnginePage"));
 const CompetitorPage = lazy(() => import("./pages/CompetitorPage"));
@@ -39,6 +41,9 @@ function AppRoutes() {
         <Route path="/platform/:slug" element={<PlatformPage />} />
         <Route path="/glossary" element={<GlossaryPage />} />
         <Route path="/glossary/:slug" element={<GlossaryPage />} />
+
+        {/* Standalone tool pages */}
+        <Route path="/tools/aeo-score" element={<AeoToolPage />} />
 
         {/* pSEO Hub/Index pages — eagerly loaded for crawling */}
         <Route path="/aeo/industries" element={<IndustryEngineHub />} />
@@ -68,6 +73,7 @@ function AppRoutes() {
         <Route path="/en/platform/:slug" element={<PlatformPage />} />
         <Route path="/en/glossary" element={<GlossaryPage />} />
         <Route path="/en/glossary/:slug" element={<GlossaryPage />} />
+        <Route path="/en/tools/aeo-score" element={<AeoToolPage />} />
         {/* English hub pages */}
         <Route path="/en/aeo/industries" element={<IndustryEngineHub />} />
         <Route path="/en/vs" element={<CompetitorHub />} />

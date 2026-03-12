@@ -7,6 +7,7 @@ import { useLanguage, langPath } from "../i18n/context";
 import { getCompetitorPages } from "../data/pseo/competitors";
 import {
   competitorPageSchema,
+  softwareApplicationSchema,
   injectMultipleJsonLd,
   cleanupJsonLd,
   setMetaTags,
@@ -15,6 +16,8 @@ import {
 } from "../lib/schema";
 import { SocialProofBar, TrustBadges } from "../components/SocialProofBar";
 import { FaqAccordion, AuthorBox, WasThisHelpful, ShareButtons } from "../components/PseoEnhancements";
+import AeoScoreCalculator from "../components/AeoScoreCalculator";
+import { ComparisonVisual } from "../components/VisualDiagrams";
 
 const CALENDLY = "https://calendly.com/acesley180604/aeo-service-free-audit-surfio";
 
@@ -43,15 +46,21 @@ export default function CompetitorPage() {
       });
 
       const schemas = competitorPageSchema(data);
+      const appSchema = softwareApplicationSchema({
+        competitorName: data.competitorName,
+        competitorCategory: data.competitorCategory,
+        slug: data.slug,
+      });
       injectMultipleJsonLd([
         { id: "ld-competitor-page", data: schemas[0] },
         { id: "ld-competitor-faq", data: schemas[1] },
+        { id: "ld-competitor-app", data: appSchema },
       ]);
     }
     window.scrollTo(0, 0);
 
     return () => {
-      cleanupJsonLd(["ld-competitor-page", "ld-competitor-faq"]);
+      cleanupJsonLd(["ld-competitor-page", "ld-competitor-faq", "ld-competitor-app"]);
     };
   }, [data, lang]);
 
@@ -71,7 +80,9 @@ export default function CompetitorPage() {
             </li>
             <span className="mx-2">/</span>
             <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-              <span itemProp="name">比較</span>
+              <Link to={langPath(lang, "/vs")} className="hover:text-gray-600" itemProp="item">
+                <span itemProp="name">{lang === "en" ? "Comparisons" : "比較"}</span>
+              </Link>
               <meta itemProp="position" content="2" />
             </li>
             <span className="mx-2">/</span>
@@ -142,6 +153,14 @@ export default function CompetitorPage() {
             ))}
           </div>
         </div>
+
+        {/* Comparison Visual */}
+        <ComparisonVisual
+          leftTitle={data.competitorName}
+          rightTitle="SurfIO AEO"
+          leftItems={data.comparisonPoints.map((p) => `${p.feature}: ${p.competitor}`)}
+          rightItems={data.comparisonPoints.map((p) => `${p.feature}: ${p.surfio}`)}
+        />
       </section>
 
       {/* Advantages */}
@@ -179,6 +198,11 @@ export default function CompetitorPage() {
           <ShareButtons url={`${SITE.url}${lang === "en" ? `/en/vs/${data.slug}` : `/vs/${data.slug}`}`} title={data.heroTitle} />
           <WasThisHelpful pageId={`comp-${data.slug}`} />
         </div>
+      </section>
+
+      {/* AEO Score Calculator */}
+      <section className="max-w-[1100px] mx-auto px-5 md:px-10 mb-16">
+        <AeoScoreCalculator />
       </section>
 
       {/* CTA */}

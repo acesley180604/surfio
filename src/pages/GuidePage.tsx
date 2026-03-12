@@ -24,6 +24,8 @@ import {
   calculateReadingTime,
 } from "../components/PseoEnhancements";
 import { AutoLinkedText, useAutoLinkOptions } from "../lib/auto-linker";
+import AeoScoreCalculator from "../components/AeoScoreCalculator";
+import { EngineVisibilityMatrix } from "../components/VisualDiagrams";
 
 const CALENDLY = "https://calendly.com/acesley180604/aeo-service-free-audit-surfio";
 
@@ -104,7 +106,9 @@ export default function GuidePage() {
             </li>
             <span className="mx-2">/</span>
             <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-              <span itemProp="name">指南</span>
+              <Link to={langPath(lang, "/指南")} className="hover:text-gray-600" itemProp="item">
+                <span itemProp="name">{lang === "en" ? "Guides" : "指南"}</span>
+              </Link>
               <meta itemProp="position" content="2" />
             </li>
             <span className="mx-2">/</span>
@@ -188,6 +192,16 @@ export default function GuidePage() {
           ))}
         </div>
 
+        {/* Engine Visibility Matrix */}
+        <div className="mb-10">
+          <Reveal>
+            <h2 className="text-[22px] font-extrabold text-gray-900 mb-4">
+              {lang === "en" ? "AI Engine Visibility Matrix" : "AI 引擎能見度矩陣"}
+            </h2>
+            <EngineVisibilityMatrix highlights={[data.engineName]} />
+          </Reveal>
+        </div>
+
         {/* Key Takeaways */}
         {data.keyTakeaways.length > 0 && (
           <Reveal>
@@ -225,6 +239,11 @@ export default function GuidePage() {
 
         {/* Was This Helpful */}
         <WasThisHelpful pageId={`guide-${data.slug}`} />
+
+        {/* AEO Score Calculator */}
+        <div className="mb-10">
+          <AeoScoreCalculator />
+        </div>
 
         {/* CTA */}
         <Reveal>

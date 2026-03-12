@@ -2,11 +2,11 @@ import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
 import Reveal from "../components/Reveal";
-import { StaggerContainer, StaggerItem } from "../components/Reveal";
 import { useLanguage, langPath } from "../i18n/context";
 import { getUseCasePages } from "../data/pseo/use-cases";
 import {
   useCasePageSchema,
+  howToSchemaForSteps,
   injectMultipleJsonLd,
   cleanupJsonLd,
   setMetaTags,
@@ -23,6 +23,8 @@ import {
   calculateReadingTime,
 } from "../components/PseoEnhancements";
 import { AutoLinkedText, useAutoLinkOptions } from "../lib/auto-linker";
+import AeoScoreCalculator from "../components/AeoScoreCalculator";
+import { ProcessTimeline } from "../components/VisualDiagrams";
 
 const CALENDLY = "https://calendly.com/acesley180604/aeo-service-free-audit-surfio";
 
@@ -53,15 +55,21 @@ export default function UseCasePage() {
       });
 
       const schemas = useCasePageSchema(data);
+      const howTo = howToSchemaForSteps({
+        name: data.heroTitle,
+        description: data.heroSubtitle,
+        steps: data.steps,
+      });
       injectMultipleJsonLd([
         { id: "ld-usecase-page", data: schemas[0] },
         { id: "ld-usecase-faq", data: schemas[1] },
+        { id: "ld-usecase-howto", data: howTo },
       ]);
     }
     window.scrollTo(0, 0);
 
     return () => {
-      cleanupJsonLd(["ld-usecase-page", "ld-usecase-faq"]);
+      cleanupJsonLd(["ld-usecase-page", "ld-usecase-faq", "ld-usecase-howto"]);
     };
   }, [data, lang]);
 
@@ -95,7 +103,9 @@ export default function UseCasePage() {
             </li>
             <span className="mx-2">/</span>
             <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-              <span itemProp="name">用途</span>
+              <Link to={langPath(lang, "/用途")} className="hover:text-gray-600" itemProp="item">
+                <span itemProp="name">{lang === "en" ? "Use Cases" : "用途"}</span>
+              </Link>
               <meta itemProp="position" content="2" />
             </li>
             <span className="mx-2">/</span>
@@ -163,22 +173,14 @@ export default function UseCasePage() {
 
       {/* Step-by-step Implementation */}
       <section className="max-w-[1100px] mx-auto px-5 md:px-10 mb-16">
-        <Reveal><h2 className="text-[24px] md:text-[30px] font-extrabold text-gray-900 mb-8">實施步驟</h2></Reveal>
-        <StaggerContainer className="space-y-5">
-          {data.steps.map((step, i) => (
-            <StaggerItem key={i}>
-              <div className="flex items-start gap-5 bg-white border border-gray-100 rounded-xl p-6 shadow-sm">
-                <span className="w-10 h-10 rounded-full bg-gradient-to-br from-[#7C3AED] to-[#6D28D9] flex items-center justify-center shrink-0">
-                  <span className="text-[15px] font-bold text-white">{i + 1}</span>
-                </span>
-                <div>
-                  <h3 className="text-[16px] font-bold text-gray-900 mb-2">{step.title}</h3>
-                  <p className="text-[14px] text-gray-600 leading-[1.75]">{step.desc}</p>
-                </div>
-              </div>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
+        <Reveal><h2 className="text-[24px] md:text-[30px] font-extrabold text-gray-900 mb-8">{lang === "en" ? "Implementation Steps" : "實施步驟"}</h2></Reveal>
+        <ProcessTimeline
+          steps={data.steps.map((step, i) => ({
+            title: step.title,
+            duration: lang === "en" ? `Step ${i + 1}` : `第${i + 1}步`,
+            desc: step.desc,
+          }))}
+        />
       </section>
 
       {/* Benefits Grid */}
@@ -225,6 +227,11 @@ export default function UseCasePage() {
       <section className="max-w-[1100px] mx-auto px-5 md:px-10 mb-10">
         <ShareButtons url={`${SITE.url}${currentPath}`} title={data.heroTitle} />
         <WasThisHelpful pageId={`usecase-${data.slug}`} />
+      </section>
+
+      {/* AEO Score Calculator */}
+      <section className="max-w-[1100px] mx-auto px-5 md:px-10 mb-16">
+        <AeoScoreCalculator />
       </section>
 
       {/* CTA */}

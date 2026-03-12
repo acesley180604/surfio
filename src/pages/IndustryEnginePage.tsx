@@ -16,9 +16,21 @@ import {
 import type { IndustryEngineSection } from "../data/pseo/types";
 import { SocialProofBar, TrustBadges, TestimonialCard, getTestimonialForIndustry } from "../components/SocialProofBar";
 import { FaqAccordion, AuthorBox, ArticleMeta, WasThisHelpful, ShareButtons, calculateReadingTime } from "../components/PseoEnhancements";
+import AeoScoreCalculator from "../components/AeoScoreCalculator";
+import { AeoWorkflowDiagram, StatCounter } from "../components/VisualDiagrams";
 // Auto-linker available for future use: import { AutoLinkedText, useAutoLinkOptions } from "../lib/auto-linker";
 
 const CALENDLY = "https://calendly.com/acesley180604/aeo-service-free-audit-surfio";
+
+/** Parse a stat value string like "68%", "3.2x", "1,200+" into { value, suffix } */
+function parseStatValue(raw: string): { value: number; suffix: string } {
+  const match = raw.match(/^([0-9,.]+)\s*(.*)/);
+  if (!match) return { value: 0, suffix: raw };
+  const numStr = match[1].replace(/,/g, "");
+  const value = parseFloat(numStr);
+  const suffix = match[2] || "";
+  return { value: isNaN(value) ? 0 : value, suffix };
+}
 
 export default function IndustryEnginePage() {
   const { industrySlug, engineSlug } = useParams();
@@ -256,7 +268,9 @@ export default function IndustryEnginePage() {
             </li>
             <span className="mx-2">/</span>
             <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-              <span itemProp="name">行業</span>
+              <Link to={langPath(lang, "/aeo/industries")} className="hover:text-gray-600" itemProp="item">
+                <span itemProp="name">{lang === "en" ? "Industries" : "行業"}</span>
+              </Link>
               <meta itemProp="position" content="2" />
             </li>
             <span className="mx-2">/</span>
@@ -311,16 +325,23 @@ export default function IndustryEnginePage() {
         <section className="bg-gradient-to-br from-[#0f1629] to-[#1a1a3a] py-14 mb-16">
           <div className="max-w-[1100px] mx-auto px-5 md:px-10">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-              {data.stats.map((s, i) => (
-                <motion.div key={i} className="text-center" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.15 }}>
-                  <div className="text-[32px] md:text-[42px] font-extrabold text-white">{s.value}</div>
-                  <div className="text-[13px] text-gray-400 mt-1">{s.label}</div>
-                </motion.div>
-              ))}
+              {data.stats.map((s, i) => {
+                const { value, suffix } = parseStatValue(s.value);
+                return (
+                  <div key={i} className="text-center">
+                    <StatCounter value={value} suffix={suffix} label={s.label} />
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>
       )}
+
+      {/* AEO Workflow Diagram */}
+      <section className="max-w-[1100px] mx-auto px-5 md:px-10 mb-16">
+        <AeoWorkflowDiagram />
+      </section>
 
       {/* Dynamic Sections */}
       <section className="max-w-[1100px] mx-auto px-5 md:px-10 mb-16">
@@ -357,21 +378,9 @@ export default function IndustryEnginePage() {
         <WasThisHelpful pageId={`ie-${data.slug}`} />
       </section>
 
-      {/* CTA */}
-      <section className="max-w-[1100px] mx-auto px-5 md:px-10 text-center mb-16">
-        <Reveal>
-          <div className="bg-gradient-to-br from-[#0f1629] to-[#1a1a3a] rounded-xl p-8">
-            <h2 className="text-[22px] md:text-[28px] font-extrabold text-white mb-3">
-              準備好喺 {data.engineName} 被推薦？
-            </h2>
-            <p className="text-[14px] text-gray-300 mb-6 max-w-[460px] mx-auto">
-              免費審計你嘅{data.industryName}品牌喺 {data.engineName} 嘅能見度
-            </p>
-            <motion.a href={CALENDLY} className="inline-block px-7 py-3 rounded-lg bg-[#7C3AED] text-white text-[14px] font-semibold hover:bg-[#6D28D9] transition-colors" whileHover={{ scale: 1.06, y: -2 }} whileTap={{ scale: 0.97 }}>
-              免費 AEO 審計
-            </motion.a>
-          </div>
-        </Reveal>
+      {/* AEO Score Calculator */}
+      <section className="max-w-[1100px] mx-auto px-5 md:px-10 mb-16">
+        <AeoScoreCalculator industry={data.industrySlug} />
       </section>
 
       {/* Internal Links */}

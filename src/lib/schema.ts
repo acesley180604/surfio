@@ -840,4 +840,49 @@ export function useCasePageSchema(data: {
   ];
 }
 
+// Dynamic HowTo schema for step-based pSEO pages
+export function howToSchemaForSteps(data: {
+  name: string;
+  description: string;
+  steps: { title: string; desc: string }[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: data.name,
+    description: data.description,
+    step: data.steps.map((s, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: s.title,
+      text: s.desc,
+    })),
+  };
+}
+
+// SoftwareApplication schema for competitor comparison pages
+export function softwareApplicationSchema(data: {
+  competitorName: string;
+  competitorCategory: string;
+  slug: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "SurfIO",
+    applicationCategory: "BusinessApplication",
+    operatingSystem: "Web",
+    url: SITE_URL,
+    description: `SurfIO 係一個專業嘅 AEO 平台，相比 ${data.competitorName}（${data.competitorCategory}），SurfIO 專注於 AI 搜尋引擎優化。`,
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "HKD",
+      name: "免費 AI 搜尋能見度審計",
+      url: CALENDLY,
+    },
+    provider: { "@id": `${SITE_URL}/#organization` },
+  };
+}
+
 export const SITE = { url: SITE_URL, calendly: CALENDLY };
