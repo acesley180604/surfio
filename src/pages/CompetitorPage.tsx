@@ -13,6 +13,8 @@ import {
   setCanonical,
   SITE,
 } from "../lib/schema";
+import { SocialProofBar, TrustBadges } from "../components/SocialProofBar";
+import { FaqAccordion, AuthorBox, WasThisHelpful, ShareButtons } from "../components/PseoEnhancements";
 
 const CALENDLY = "https://calendly.com/acesley180604/aeo-service-free-audit-surfio";
 
@@ -93,9 +95,10 @@ export default function CompetitorPage() {
           <p className="text-[15px] text-gray-600 leading-[1.75] mb-8 max-w-[650px]">
             {data.heroSubtitle}
           </p>
-          <div className="inline-block px-3 py-1 rounded-full bg-gray-100 text-[12px] text-gray-500 font-medium">
+          <div className="inline-block px-3 py-1 rounded-full bg-gray-100 text-[12px] text-gray-500 font-medium mb-6">
             {data.competitorCategory}
           </div>
+          <SocialProofBar />
         </Reveal>
       </section>
 
@@ -158,22 +161,25 @@ export default function CompetitorPage() {
         </StaggerContainer>
       </section>
 
-      {/* FAQ */}
+      {/* FAQ — Interactive Accordion */}
       {data.faqs.length > 0 && (
         <section className="bg-gray-50 py-14 mb-16">
           <div className="max-w-[800px] mx-auto px-5 md:px-10">
-            <Reveal><h2 className="text-[24px] md:text-[30px] font-extrabold text-gray-900 mb-8 text-center">常見問題</h2></Reveal>
-            <div className="space-y-6">
-              {data.faqs.map(([q, a], i) => (
-                <motion.div key={i} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
-                  <h3 className="text-[15px] font-bold text-gray-900 mb-2">{q}</h3>
-                  <p className="text-[14px] text-gray-600 leading-[1.75]">{a}</p>
-                </motion.div>
-              ))}
-            </div>
+            <Reveal><h2 className="text-[24px] md:text-[30px] font-extrabold text-gray-900 mb-8 text-center">{lang === "en" ? "FAQ" : "常見問題"}</h2></Reveal>
+            <FaqAccordion faqs={data.faqs} />
           </div>
         </section>
       )}
+
+      {/* Author + Engagement */}
+      <section className="max-w-[800px] mx-auto px-5 md:px-10 mb-10">
+        <AuthorBox />
+        <TrustBadges />
+        <div className="mt-6">
+          <ShareButtons url={`${SITE.url}${lang === "en" ? `/en/vs/${data.slug}` : `/vs/${data.slug}`}`} title={data.heroTitle} />
+          <WasThisHelpful pageId={`comp-${data.slug}`} />
+        </div>
+      </section>
 
       {/* CTA */}
       <section className="max-w-[1100px] mx-auto px-5 md:px-10 text-center mb-16">

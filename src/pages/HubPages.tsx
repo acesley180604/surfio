@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState, useMemo, useRef } from "react";
 import Reveal, { StaggerContainer, StaggerItem } from "../components/Reveal";
 import { useLanguage, langPath } from "../i18n/context";
+import type { Lang } from "../i18n/context";
 import {
   injectMultipleJsonLd,
   cleanupJsonLd,
@@ -12,6 +13,9 @@ import {
 } from "../lib/schema";
 import {
   ALL_INDUSTRIES,
+  INDUSTRIES_TIER1,
+  INDUSTRIES_TIER2,
+  INDUSTRIES_TIER3,
   AI_ENGINES,
   HK_DISTRICTS,
   GBA_CITIES,
@@ -23,10 +27,41 @@ import {
 import { competitorToSlug } from "../data/pseo/competitors";
 
 const CALENDLY = "https://calendly.com/acesley180604/aeo-service-free-audit-surfio";
+const ITEMS_PER_PAGE = 20;
+
+// ============================
+// Shared Types
+// ============================
+
+type SortMode = "popular" | "az" | "newest";
 
 // ============================
 // Shared UI Components
 // ============================
+
+function SocialProofBar({ lang }: { lang: Lang }) {
+  return (
+    <div className="bg-gradient-to-r from-[#7C3AED] to-[#6D28D9] py-3">
+      <div className="max-w-[1100px] mx-auto px-5 md:px-10 flex flex-wrap items-center justify-center gap-4 md:gap-8 text-white text-[13px] md:text-[14px] font-medium">
+        <span>
+          {lang === "en" ? "500+ HK businesses served" : "已服務 500+ 香港企業"}
+        </span>
+        <span className="hidden sm:inline text-white/40">|</span>
+        <span>
+          {lang === "en"
+            ? "7 AI engines covered"
+            : "7 大 AI 引擎覆蓋"}
+        </span>
+        <span className="hidden sm:inline text-white/40">|</span>
+        <span>
+          {lang === "en"
+            ? "98% client renewal rate"
+            : "98% 客戶續約率"}
+        </span>
+      </div>
+    </div>
+  );
+}
 
 function HubHero({
   label,
@@ -133,48 +168,6 @@ function HubCTA({ lang }: { lang: "zh" | "en" }) {
   );
 }
 
-function CollapsibleSection({
-  title,
-  defaultOpen = false,
-  children,
-}: {
-  title: string;
-  defaultOpen?: boolean;
-  children: React.ReactNode;
-}) {
-  const [open, setOpen] = useState(defaultOpen);
-  return (
-    <div className="mb-10">
-      <button
-        onClick={() => setOpen(!open)}
-        className="flex items-center gap-3 w-full text-left group mb-4"
-      >
-        <motion.span
-          animate={{ rotate: open ? 90 : 0 }}
-          transition={{ duration: 0.2 }}
-          className="text-[#7C3AED] text-[20px] font-bold"
-        >
-          ▸
-        </motion.span>
-        <h2 className="text-[20px] md:text-[24px] font-extrabold text-[#7C3AED] group-hover:text-[#6D28D9] transition-colors">
-          {title}
-        </h2>
-      </button>
-      <motion.div
-        initial={false}
-        animate={{
-          height: open ? "auto" : 0,
-          opacity: open ? 1 : 0,
-        }}
-        transition={{ duration: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
-        className="overflow-hidden"
-      >
-        {children}
-      </motion.div>
-    </div>
-  );
-}
-
 function HubCard({
   to,
   title,
@@ -206,6 +199,202 @@ function HubCard({
   );
 }
 
+// ============================
+// Search Bar Component
+// ============================
+
+function HubSearchBar({
+  value,
+  onChange,
+  placeholder,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  placeholder: string;
+}) {
+  return (
+    <div className="relative mb-6">
+      <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+        <svg
+          className="w-4 h-4 text-gray-400"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          />
+        </svg>
+      </div>
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        className="w-full pl-11 pr-10 py-3 rounded-xl border border-gray-200 bg-white text-[14px] text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/20 transition-all"
+      />
+      {value && (
+        <button
+          onClick={() => onChange("")}
+          className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600 transition-colors"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      )}
+    </div>
+  );
+}
+
+// ============================
+// Category Filter Tabs
+// ============================
+
+function CategoryTabs({
+  categories,
+  activeCategory,
+  onSelect,
+}: {
+  categories: { key: string; label: string; count: number }[];
+  activeCategory: string;
+  onSelect: (key: string) => void;
+}) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  return (
+    <div
+      ref={scrollRef}
+      className="flex gap-2 overflow-x-auto pb-2 mb-6 scrollbar-hide"
+      style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+    >
+      {categories.map((cat) => (
+        <button
+          key={cat.key}
+          onClick={() => onSelect(cat.key)}
+          className={`flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-medium transition-all ${
+            activeCategory === cat.key
+              ? "bg-[#7C3AED] text-white shadow-md"
+              : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+          }`}
+        >
+          {cat.label}
+          <span
+            className={`ml-1.5 text-[11px] ${
+              activeCategory === cat.key ? "text-white/70" : "text-gray-400"
+            }`}
+          >
+            ({cat.count})
+          </span>
+        </button>
+      ))}
+    </div>
+  );
+}
+
+// ============================
+// Results Count + Sort
+// ============================
+
+function ResultsBar({
+  lang,
+  showing,
+  total,
+  sort,
+  onSortChange,
+}: {
+  lang: Lang;
+  showing: number;
+  total: number;
+  sort: SortMode;
+  onSortChange: (s: SortMode) => void;
+}) {
+  const sortLabels: Record<SortMode, { zh: string; en: string }> = {
+    popular: { zh: "最熱門", en: "Most Popular" },
+    az: { zh: "A-Z", en: "A-Z" },
+    newest: { zh: "最新", en: "Newest" },
+  };
+
+  return (
+    <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
+      <p className="text-[13px] text-gray-500">
+        {lang === "en"
+          ? `Showing 1-${showing} of ${total} results`
+          : `顯示 1-${showing} / ${total} 個結果`}
+      </p>
+      <div className="flex items-center gap-2">
+        <span className="text-[12px] text-gray-400">
+          {lang === "en" ? "Sort:" : "排序:"}
+        </span>
+        <select
+          value={sort}
+          onChange={(e) => onSortChange(e.target.value as SortMode)}
+          className="text-[13px] border border-gray-200 rounded-lg px-3 py-1.5 bg-white text-gray-700 focus:outline-none focus:border-[#7C3AED] cursor-pointer"
+        >
+          {(Object.keys(sortLabels) as SortMode[]).map((key) => (
+            <option key={key} value={key}>
+              {lang === "en" ? sortLabels[key].en : sortLabels[key].zh}
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
+  );
+}
+
+// ============================
+// Load More Button
+// ============================
+
+function LoadMoreButton({
+  lang,
+  onClick,
+  remaining,
+}: {
+  lang: Lang;
+  onClick: () => void;
+  remaining: number;
+}) {
+  return (
+    <div className="flex justify-center mt-8">
+      <motion.button
+        onClick={onClick}
+        className="px-8 py-3 rounded-xl bg-[#7C3AED]/10 border border-[#7C3AED]/30 text-[#7C3AED] text-[14px] font-semibold hover:bg-[#7C3AED]/20 transition-all"
+        whileHover={{ scale: 1.04 }}
+        whileTap={{ scale: 0.97 }}
+      >
+        {lang === "en"
+          ? `Load More (${remaining} remaining)`
+          : `載入更多 (剩餘 ${remaining} 個)`}
+      </motion.button>
+    </div>
+  );
+}
+
+// ============================
+// No Results
+// ============================
+
+function NoResults({ lang }: { lang: Lang }) {
+  return (
+    <div className="text-center py-12">
+      <p className="text-gray-400 text-[15px]">
+        {lang === "en"
+          ? "No results found. Try a different search term."
+          : "搵唔到結果，試下其他關鍵詞。"}
+      </p>
+    </div>
+  );
+}
+
 function itemListSchema(
   name: string,
   description: string,
@@ -226,6 +415,18 @@ function itemListSchema(
       url: item.url,
     })),
   };
+}
+
+// ============================
+// Sorting helper
+// ============================
+
+function sortItems<T>(items: T[], sort: SortMode, getName: (item: T) => string): T[] {
+  if (sort === "az") {
+    return [...items].sort((a, b) => getName(a).localeCompare(getName(b)));
+  }
+  // "popular" and "newest" keep original order (deterministic from seed data)
+  return items;
 }
 
 // ============================
@@ -285,6 +486,18 @@ const INDUSTRY_CATEGORIES: Record<string, { zh: string; en: string; slugs: strin
   },
 };
 
+// Industry tier mapping
+const INDUSTRY_TIER_MAP = new Map<string, string>();
+INDUSTRIES_TIER1.forEach((i) => INDUSTRY_TIER_MAP.set(i.slug, "tier1"));
+INDUSTRIES_TIER2.forEach((i) => INDUSTRY_TIER_MAP.set(i.slug, "tier2"));
+INDUSTRIES_TIER3.forEach((i) => INDUSTRY_TIER_MAP.set(i.slug, "tier3"));
+
+// Industry category mapping
+const INDUSTRY_CAT_MAP = new Map<string, string>();
+Object.entries(INDUSTRY_CATEGORIES).forEach(([catKey, cat]) => {
+  cat.slugs.forEach((slug) => INDUSTRY_CAT_MAP.set(slug, catKey));
+});
+
 // ============================
 // 1. IndustryEngineHub
 // ============================
@@ -293,6 +506,16 @@ export function IndustryEngineHub() {
   const lang = useLanguage();
   const totalPages = ALL_INDUSTRIES.length * AI_ENGINES.length;
   const pagePath = lang === "en" ? "/en/aeo/industries" : "/aeo/industries";
+
+  const [search, setSearch] = useState("");
+  const [activeFilter, setActiveFilter] = useState("all");
+  const [sort, setSort] = useState<SortMode>("popular");
+  const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
+
+  // Reset pagination when filter/search changes
+  useEffect(() => {
+    setVisibleCount(ITEMS_PER_PAGE);
+  }, [search, activeFilter, sort]);
 
   useEffect(() => {
     const title =
@@ -342,9 +565,76 @@ export function IndustryEngineHub() {
     return () => cleanupJsonLd(["ld-hub-industry-engine"]);
   }, [lang]);
 
-  const industryMap = new Map<string, { slug: string; name: string }>(
-    ALL_INDUSTRIES.map((i) => [i.slug, i])
-  );
+  // Filter categories: Tier + Category
+  const filterCategories = useMemo(() => {
+    const cats: { key: string; label: string; count: number }[] = [
+      {
+        key: "all",
+        label: lang === "en" ? "All" : "全部",
+        count: ALL_INDUSTRIES.length,
+      },
+      {
+        key: "tier1",
+        label: lang === "en" ? "Tier 1" : "第一梯隊",
+        count: INDUSTRIES_TIER1.length,
+      },
+      {
+        key: "tier2",
+        label: lang === "en" ? "Tier 2" : "第二梯隊",
+        count: INDUSTRIES_TIER2.length,
+      },
+      {
+        key: "tier3",
+        label: lang === "en" ? "Tier 3" : "第三梯隊",
+        count: INDUSTRIES_TIER3.length,
+      },
+    ];
+    Object.entries(INDUSTRY_CATEGORIES).forEach(([key, cat]) => {
+      cats.push({
+        key: `cat-${key}`,
+        label: lang === "en" ? cat.en : cat.zh,
+        count: cat.slugs.filter((s) =>
+          ALL_INDUSTRIES.some((ind) => ind.slug === s)
+        ).length,
+      });
+    });
+    return cats;
+  }, [lang]);
+
+  const filteredIndustries = useMemo(() => {
+    let list = [...ALL_INDUSTRIES];
+
+    // Search
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      list = list.filter(
+        (ind) =>
+          ind.name.toLowerCase().includes(q) ||
+          ind.slug.toLowerCase().includes(q)
+      );
+    }
+
+    // Filter
+    if (activeFilter === "tier1") {
+      list = list.filter((ind) => INDUSTRY_TIER_MAP.get(ind.slug) === "tier1");
+    } else if (activeFilter === "tier2") {
+      list = list.filter((ind) => INDUSTRY_TIER_MAP.get(ind.slug) === "tier2");
+    } else if (activeFilter === "tier3") {
+      list = list.filter((ind) => INDUSTRY_TIER_MAP.get(ind.slug) === "tier3");
+    } else if (activeFilter.startsWith("cat-")) {
+      const catKey = activeFilter.replace("cat-", "");
+      const catSlugs = INDUSTRY_CATEGORIES[catKey]?.slugs ?? [];
+      list = list.filter((ind) => catSlugs.includes(ind.slug));
+    }
+
+    // Sort
+    list = sortItems(list, sort, (ind) => ind.name);
+
+    return list;
+  }, [search, activeFilter, sort]);
+
+  const visibleIndustries = filteredIndustries.slice(0, visibleCount);
+  const remaining = filteredIndustries.length - visibleCount;
 
   return (
     <div className="pb-16">
@@ -366,6 +656,7 @@ export function IndustryEngineHub() {
             : `${ALL_INDUSTRIES.length} 個行業 × ${AI_ENGINES.length} 大 AI 引擎 = ${totalPages} 頁專業分析`
         }
       />
+      <SocialProofBar lang={lang} />
 
       <div className="max-w-[1100px] mx-auto px-5 md:px-10 pt-10">
         <HubBreadcrumb
@@ -375,22 +666,42 @@ export function IndustryEngineHub() {
           ]}
         />
 
-        {Object.entries(INDUSTRY_CATEGORIES).map(([key, cat]) => {
-          const industries = cat.slugs
-            .map((s) => industryMap.get(s))
-            .filter(Boolean) as { slug: string; name: string }[];
-          if (industries.length === 0) return null;
+        <HubSearchBar
+          value={search}
+          onChange={setSearch}
+          placeholder={lang === "en" ? "Search industries..." : "搜尋行業..."}
+        />
 
-          return (
-            <CollapsibleSection
-              key={key}
-              title={`${lang === "en" ? cat.en : cat.zh} (${industries.length})`}
-              defaultOpen={key === "legal" || key === "medical" || key === "finance"}
-            >
-              <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                {industries.map((ind) => (
+        <CategoryTabs
+          categories={filterCategories}
+          activeCategory={activeFilter}
+          onSelect={setActiveFilter}
+        />
+
+        <ResultsBar
+          lang={lang}
+          showing={Math.min(visibleCount, filteredIndustries.length)}
+          total={filteredIndustries.length}
+          sort={sort}
+          onSortChange={setSort}
+        />
+
+        {filteredIndustries.length === 0 ? (
+          <NoResults lang={lang} />
+        ) : (
+          <>
+            <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <AnimatePresence mode="popLayout">
+                {visibleIndustries.map((ind) => (
                   <StaggerItem key={ind.slug}>
-                    <div className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
+                    <motion.div
+                      layout
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.2 }}
+                      className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm"
+                    >
                       <h3 className="text-[15px] font-bold text-gray-900 mb-3">
                         {ind.name}
                       </h3>
@@ -405,13 +716,21 @@ export function IndustryEngineHub() {
                           </Link>
                         ))}
                       </div>
-                    </div>
+                    </motion.div>
                   </StaggerItem>
                 ))}
-              </StaggerContainer>
-            </CollapsibleSection>
-          );
-        })}
+              </AnimatePresence>
+            </StaggerContainer>
+
+            {remaining > 0 && (
+              <LoadMoreButton
+                lang={lang}
+                onClick={() => setVisibleCount((c) => c + ITEMS_PER_PAGE)}
+                remaining={remaining}
+              />
+            )}
+          </>
+        )}
 
         <HubCTA lang={lang} />
       </div>
@@ -437,11 +756,26 @@ const PAGE_TYPE_LABELS: Record<string, { zh: string; en: string }> = {
   migration: { zh: "遷移", en: "Migration" },
 };
 
+const PAGE_TYPE_SUFFIXES_ZH: Record<string, string> = {
+  alternative: "替代方案",
+  comparison: "比較",
+  migration: "遷移",
+};
+
 export function CompetitorHub() {
   const lang = useLanguage();
   const totalCompetitors = ALL_COMPETITORS.length;
   const totalPages = totalCompetitors * 3;
   const pagePath = lang === "en" ? "/en/vs" : "/vs";
+
+  const [search, setSearch] = useState("");
+  const [activeFilter, setActiveFilter] = useState("all");
+  const [sort, setSort] = useState<SortMode>("popular");
+  const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
+
+  useEffect(() => {
+    setVisibleCount(ITEMS_PER_PAGE);
+  }, [search, activeFilter, sort]);
 
   useEffect(() => {
     const title =
@@ -492,6 +826,48 @@ export function CompetitorHub() {
     return () => cleanupJsonLd(["ld-hub-competitor"]);
   }, [lang]);
 
+  const filterCategories = useMemo(() => {
+    const cats: { key: string; label: string; count: number }[] = [
+      {
+        key: "all",
+        label: lang === "en" ? "All" : "全部",
+        count: ALL_COMPETITORS.length,
+      },
+    ];
+    COMPETITOR_CATEGORIES.forEach((cat) => {
+      cats.push({
+        key: cat.key,
+        label: lang === "en" ? cat.en : cat.zh,
+        count: ALL_COMPETITORS.filter((c) => c.category === cat.key).length,
+      });
+    });
+    return cats;
+  }, [lang]);
+
+  const filteredCompetitors = useMemo(() => {
+    let list = [...ALL_COMPETITORS];
+
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      list = list.filter(
+        (c) =>
+          c.name.toLowerCase().includes(q) ||
+          c.category.toLowerCase().includes(q)
+      );
+    }
+
+    if (activeFilter !== "all") {
+      list = list.filter((c) => c.category === activeFilter);
+    }
+
+    list = sortItems(list, sort, (c) => c.name);
+
+    return list;
+  }, [search, activeFilter, sort]);
+
+  const visibleCompetitors = filteredCompetitors.slice(0, visibleCount);
+  const remaining = filteredCompetitors.length - visibleCount;
+
   return (
     <div className="pb-16">
       <HubHero
@@ -512,6 +888,7 @@ export function CompetitorHub() {
             : `${totalCompetitors} 個競爭對手 × 3 種頁面 = ${totalPages} 頁比較分析`
         }
       />
+      <SocialProofBar lang={lang} />
 
       <div className="max-w-[1100px] mx-auto px-5 md:px-10 pt-10">
         <HubBreadcrumb
@@ -521,27 +898,54 @@ export function CompetitorHub() {
           ]}
         />
 
-        {COMPETITOR_CATEGORIES.map((cat, catIdx) => {
-          const competitors = ALL_COMPETITORS.filter(
-            (c) => c.category === cat.key
-          );
-          if (competitors.length === 0) return null;
+        <HubSearchBar
+          value={search}
+          onChange={setSearch}
+          placeholder={
+            lang === "en"
+              ? "Search competitors..."
+              : "搜尋競爭對手..."
+          }
+        />
 
-          return (
-            <CollapsibleSection
-              key={cat.key}
-              title={`${lang === "en" ? cat.en : cat.zh} (${competitors.length})`}
-              defaultOpen={catIdx < 2}
-            >
-              <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                {competitors.map((comp) => {
+        <CategoryTabs
+          categories={filterCategories}
+          activeCategory={activeFilter}
+          onSelect={setActiveFilter}
+        />
+
+        <ResultsBar
+          lang={lang}
+          showing={Math.min(visibleCount, filteredCompetitors.length)}
+          total={filteredCompetitors.length}
+          sort={sort}
+          onSortChange={setSort}
+        />
+
+        {filteredCompetitors.length === 0 ? (
+          <NoResults lang={lang} />
+        ) : (
+          <>
+            <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <AnimatePresence mode="popLayout">
+                {visibleCompetitors.map((comp) => {
                   const slug = competitorToSlug(comp.name);
                   return (
                     <StaggerItem key={comp.name}>
-                      <div className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
+                      <motion.div
+                        layout
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        transition={{ duration: 0.2 }}
+                        className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm"
+                      >
                         <h3 className="text-[14px] font-bold text-gray-900 mb-2">
                           SurfIO vs {comp.name}
                         </h3>
+                        <p className="text-[11px] text-gray-400 mb-2">
+                          {comp.category}
+                        </p>
                         <div className="flex flex-wrap gap-2">
                           {(["alternative", "comparison", "migration"] as const).map(
                             (pt) => (
@@ -557,26 +961,28 @@ export function CompetitorHub() {
                             )
                           )}
                         </div>
-                      </div>
+                      </motion.div>
                     </StaggerItem>
                   );
                 })}
-              </StaggerContainer>
-            </CollapsibleSection>
-          );
-        })}
+              </AnimatePresence>
+            </StaggerContainer>
+
+            {remaining > 0 && (
+              <LoadMoreButton
+                lang={lang}
+                onClick={() => setVisibleCount((c) => c + ITEMS_PER_PAGE)}
+                remaining={remaining}
+              />
+            )}
+          </>
+        )}
 
         <HubCTA lang={lang} />
       </div>
     </div>
   );
 }
-
-const PAGE_TYPE_SUFFIXES_ZH: Record<string, string> = {
-  alternative: "替代方案",
-  comparison: "比較",
-  migration: "遷移",
-};
 
 // ============================
 // 3. LocationHub
@@ -586,6 +992,15 @@ export function LocationHub() {
   const lang = useLanguage();
   const totalLocations = HK_DISTRICTS.length + GBA_CITIES.length + OVERSEAS_CITIES.length;
   const pagePath = lang === "en" ? "/en/aeo-agency" : "/aeo-agency";
+
+  const [search, setSearch] = useState("");
+  const [activeFilter, setActiveFilter] = useState("all");
+  const [sort, setSort] = useState<SortMode>("popular");
+  const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
+
+  useEffect(() => {
+    setVisibleCount(ITEMS_PER_PAGE);
+  }, [search, activeFilter, sort]);
 
   useEffect(() => {
     const title =
@@ -640,6 +1055,73 @@ export function LocationHub() {
     return () => cleanupJsonLd(["ld-hub-location"]);
   }, [lang]);
 
+  // Flatten all locations with type
+  const allLocations = useMemo(() => {
+    return [
+      ...HK_DISTRICTS.map((l) => ({ ...l, type: "hk" as const })),
+      ...GBA_CITIES.map((l) => ({ ...l, type: "gba" as const })),
+      ...OVERSEAS_CITIES.map((l) => ({ ...l, type: "overseas" as const })),
+    ];
+  }, []);
+
+  const filterCategories = useMemo(() => {
+    return [
+      {
+        key: "all",
+        label: lang === "en" ? "All" : "全部",
+        count: totalLocations,
+      },
+      {
+        key: "hk",
+        label: lang === "en" ? "Hong Kong" : "香港",
+        count: HK_DISTRICTS.length,
+      },
+      {
+        key: "gba",
+        label: lang === "en" ? "Greater Bay Area" : "大灣區",
+        count: GBA_CITIES.length,
+      },
+      {
+        key: "overseas",
+        label: lang === "en" ? "Overseas" : "海外",
+        count: OVERSEAS_CITIES.length,
+      },
+    ];
+  }, [lang, totalLocations]);
+
+  const filteredLocations = useMemo(() => {
+    let list = [...allLocations];
+
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      list = list.filter(
+        (l) =>
+          l.name.toLowerCase().includes(q) ||
+          l.slug.toLowerCase().includes(q)
+      );
+    }
+
+    if (activeFilter !== "all") {
+      list = list.filter((l) => l.type === activeFilter);
+    }
+
+    list = sortItems(list, sort, (l) => l.name);
+
+    return list;
+  }, [search, activeFilter, sort, allLocations]);
+
+  const visibleLocations = filteredLocations.slice(0, visibleCount);
+  const remaining = filteredLocations.length - visibleCount;
+
+  const typeLabel = (type: "hk" | "gba" | "overseas") => {
+    const labels = {
+      hk: { zh: "香港地區", en: "HK District" },
+      gba: { zh: "大灣區城市", en: "GBA City" },
+      overseas: { zh: "海外城市", en: "Overseas" },
+    };
+    return lang === "en" ? labels[type].en : labels[type].zh;
+  };
+
   return (
     <div className="pb-16">
       <HubHero
@@ -660,6 +1142,7 @@ export function LocationHub() {
             : `${HK_DISTRICTS.length} 個香港地區 + ${GBA_CITIES.length} 個大灣區城市 + ${OVERSEAS_CITIES.length} 個海外城市 = ${totalLocations} 頁`
         }
       />
+      <SocialProofBar lang={lang} />
 
       <div className="max-w-[1100px] mx-auto px-5 md:px-10 pt-10">
         <HubBreadcrumb
@@ -669,53 +1152,62 @@ export function LocationHub() {
           ]}
         />
 
-        <CollapsibleSection
-          title={`${lang === "en" ? "Hong Kong Districts" : "香港地區"} (${HK_DISTRICTS.length})`}
-          defaultOpen
-        >
-          <StaggerContainer className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-            {HK_DISTRICTS.map((loc) => (
-              <HubCard
-                key={loc.slug}
-                to={langPath(lang, `/aeo-agency/${loc.slug}`)}
-                title={loc.name}
-                subtitle={lang === "en" ? "HK District" : "香港地區"}
-              />
-            ))}
-          </StaggerContainer>
-        </CollapsibleSection>
+        <HubSearchBar
+          value={search}
+          onChange={setSearch}
+          placeholder={
+            lang === "en" ? "Search locations..." : "搜尋地區..."
+          }
+        />
 
-        <CollapsibleSection
-          title={`${lang === "en" ? "Greater Bay Area Cities" : "大灣區城市"} (${GBA_CITIES.length})`}
-          defaultOpen
-        >
-          <StaggerContainer className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-            {GBA_CITIES.map((loc) => (
-              <HubCard
-                key={loc.slug}
-                to={langPath(lang, `/aeo-agency/${loc.slug}`)}
-                title={loc.name}
-                subtitle={lang === "en" ? "GBA City" : "大灣區城市"}
-              />
-            ))}
-          </StaggerContainer>
-        </CollapsibleSection>
+        <CategoryTabs
+          categories={filterCategories}
+          activeCategory={activeFilter}
+          onSelect={setActiveFilter}
+        />
 
-        <CollapsibleSection
-          title={`${lang === "en" ? "Overseas Cities" : "海外城市"} (${OVERSEAS_CITIES.length})`}
-          defaultOpen
-        >
-          <StaggerContainer className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-            {OVERSEAS_CITIES.map((loc) => (
-              <HubCard
-                key={loc.slug}
-                to={langPath(lang, `/aeo-agency/${loc.slug}`)}
-                title={loc.name}
-                subtitle={lang === "en" ? "Overseas" : "海外城市"}
+        <ResultsBar
+          lang={lang}
+          showing={Math.min(visibleCount, filteredLocations.length)}
+          total={filteredLocations.length}
+          sort={sort}
+          onSortChange={setSort}
+        />
+
+        {filteredLocations.length === 0 ? (
+          <NoResults lang={lang} />
+        ) : (
+          <>
+            <StaggerContainer className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+              <AnimatePresence mode="popLayout">
+                {visibleLocations.map((loc) => (
+                  <motion.div
+                    key={loc.slug}
+                    layout
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <HubCard
+                      to={langPath(lang, `/aeo-agency/${loc.slug}`)}
+                      title={loc.name}
+                      subtitle={typeLabel(loc.type)}
+                    />
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </StaggerContainer>
+
+            {remaining > 0 && (
+              <LoadMoreButton
+                lang={lang}
+                onClick={() => setVisibleCount((c) => c + ITEMS_PER_PAGE)}
+                remaining={remaining}
               />
-            ))}
-          </StaggerContainer>
-        </CollapsibleSection>
+            )}
+          </>
+        )}
 
         <HubCTA lang={lang} />
       </div>
@@ -731,6 +1223,15 @@ export function GuideHub() {
   const lang = useLanguage();
   const totalGuides = AI_ENGINES.length * GUIDE_TOPICS.length;
   const pagePath = lang === "en" ? "/en/指南" : "/指南";
+
+  const [search, setSearch] = useState("");
+  const [activeFilter, setActiveFilter] = useState("all");
+  const [sort, setSort] = useState<SortMode>("popular");
+  const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
+
+  useEffect(() => {
+    setVisibleCount(ITEMS_PER_PAGE);
+  }, [search, activeFilter, sort]);
 
   useEffect(() => {
     const title =
@@ -781,6 +1282,72 @@ export function GuideHub() {
     return () => cleanupJsonLd(["ld-hub-guide"]);
   }, [lang]);
 
+  // Flatten all guides
+  const allGuides = useMemo(() => {
+    const list: {
+      slug: string;
+      engineSlug: string;
+      engineName: string;
+      topicName: string;
+      displayName: string;
+    }[] = [];
+    for (const eng of AI_ENGINES) {
+      for (const topic of GUIDE_TOPICS) {
+        list.push({
+          slug: `${eng.slug}-${topic.slug}`,
+          engineSlug: eng.slug,
+          engineName: eng.name,
+          topicName: topic.topicName,
+          displayName: `${eng.name} ${topic.topicName}`,
+        });
+      }
+    }
+    return list;
+  }, []);
+
+  const filterCategories = useMemo(() => {
+    const cats: { key: string; label: string; count: number }[] = [
+      {
+        key: "all",
+        label: lang === "en" ? "All" : "全部",
+        count: allGuides.length,
+      },
+    ];
+    AI_ENGINES.forEach((eng) => {
+      cats.push({
+        key: eng.slug,
+        label: eng.name,
+        count: GUIDE_TOPICS.length,
+      });
+    });
+    return cats;
+  }, [lang, allGuides.length]);
+
+  const filteredGuides = useMemo(() => {
+    let list = [...allGuides];
+
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      list = list.filter(
+        (g) =>
+          g.displayName.toLowerCase().includes(q) ||
+          g.topicName.toLowerCase().includes(q) ||
+          g.engineName.toLowerCase().includes(q)
+      );
+    }
+
+    if (activeFilter !== "all") {
+      list = list.filter((g) => g.engineSlug === activeFilter);
+    }
+
+    list = sortItems(list, sort, (g) => g.displayName);
+
+    return list;
+  }, [search, activeFilter, sort, allGuides]);
+
+  const visibleGuides = filteredGuides.slice(0, visibleCount);
+  const remaining = filteredGuides.length - visibleCount;
+
   return (
     <div className="pb-16">
       <HubHero
@@ -801,6 +1368,7 @@ export function GuideHub() {
             : `${AI_ENGINES.length} 個 AI 引擎 × ${GUIDE_TOPICS.length} 個主題 = ${totalGuides} 篇專業指南`
         }
       />
+      <SocialProofBar lang={lang} />
 
       <div className="max-w-[1100px] mx-auto px-5 md:px-10 pt-10">
         <HubBreadcrumb
@@ -810,31 +1378,66 @@ export function GuideHub() {
           ]}
         />
 
-        {AI_ENGINES.map((eng, engIdx) => (
-          <CollapsibleSection
-            key={eng.slug}
-            title={`${eng.name} (${GUIDE_TOPICS.length} ${lang === "en" ? "guides" : "篇"})`}
-            defaultOpen={engIdx < 3}
-          >
+        <HubSearchBar
+          value={search}
+          onChange={setSearch}
+          placeholder={
+            lang === "en" ? "Search guides..." : "搜尋指南..."
+          }
+        />
+
+        <CategoryTabs
+          categories={filterCategories}
+          activeCategory={activeFilter}
+          onSelect={setActiveFilter}
+        />
+
+        <ResultsBar
+          lang={lang}
+          showing={Math.min(visibleCount, filteredGuides.length)}
+          total={filteredGuides.length}
+          sort={sort}
+          onSortChange={setSort}
+        />
+
+        {filteredGuides.length === 0 ? (
+          <NoResults lang={lang} />
+        ) : (
+          <>
             <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {GUIDE_TOPICS.map((topic) => {
-                const slug = `${eng.slug}-${topic.slug}`;
-                return (
-                  <HubCard
-                    key={slug}
-                    to={langPath(lang, `/指南/${slug}`)}
-                    title={`${eng.name} ${topic.topicName}`}
-                    subtitle={
-                      lang === "en"
-                        ? `${eng.name} optimization guide`
-                        : `${eng.name} 優化指南`
-                    }
-                  />
-                );
-              })}
+              <AnimatePresence mode="popLayout">
+                {visibleGuides.map((guide) => (
+                  <motion.div
+                    key={guide.slug}
+                    layout
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <HubCard
+                      to={langPath(lang, `/指南/${guide.slug}`)}
+                      title={guide.displayName}
+                      subtitle={
+                        lang === "en"
+                          ? `${guide.engineName} optimization guide`
+                          : `${guide.engineName} 優化指南`
+                      }
+                    />
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </StaggerContainer>
-          </CollapsibleSection>
-        ))}
+
+            {remaining > 0 && (
+              <LoadMoreButton
+                lang={lang}
+                onClick={() => setVisibleCount((c) => c + ITEMS_PER_PAGE)}
+                remaining={remaining}
+              />
+            )}
+          </>
+        )}
 
         <HubCTA lang={lang} />
       </div>
@@ -850,6 +1453,9 @@ export function UseCaseHub() {
   const lang = useLanguage();
   const totalUseCases = USE_CASES.length;
   const pagePath = lang === "en" ? "/en/用途" : "/用途";
+
+  const [search, setSearch] = useState("");
+  const [sort, setSort] = useState<SortMode>("popular");
 
   useEffect(() => {
     const title =
@@ -894,6 +1500,23 @@ export function UseCaseHub() {
     return () => cleanupJsonLd(["ld-hub-usecase"]);
   }, [lang]);
 
+  const filteredUseCases = useMemo(() => {
+    let list = [...USE_CASES];
+
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      list = list.filter(
+        (uc) =>
+          uc.name.toLowerCase().includes(q) ||
+          uc.slug.toLowerCase().includes(q)
+      );
+    }
+
+    list = sortItems(list, sort, (uc) => uc.name);
+
+    return list;
+  }, [search, sort]);
+
   return (
     <div className="pb-16">
       <HubHero
@@ -914,6 +1537,7 @@ export function UseCaseHub() {
             : `${totalUseCases} 個實用 AEO 用途`
         }
       />
+      <SocialProofBar lang={lang} />
 
       <div className="max-w-[1100px] mx-auto px-5 md:px-10 pt-10">
         <HubBreadcrumb
@@ -923,22 +1547,52 @@ export function UseCaseHub() {
           ]}
         />
 
-        <Reveal>
-          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {USE_CASES.map((uc) => (
-              <HubCard
-                key={uc.slug}
-                to={langPath(lang, `/用途/${uc.slug}`)}
-                title={uc.name}
-                subtitle={
-                  lang === "en"
-                    ? "AEO use case"
-                    : "AEO 用途"
-                }
-              />
-            ))}
-          </StaggerContainer>
-        </Reveal>
+        <HubSearchBar
+          value={search}
+          onChange={setSearch}
+          placeholder={
+            lang === "en" ? "Search use cases..." : "搜尋用途..."
+          }
+        />
+
+        <ResultsBar
+          lang={lang}
+          showing={filteredUseCases.length}
+          total={filteredUseCases.length}
+          sort={sort}
+          onSortChange={setSort}
+        />
+
+        {filteredUseCases.length === 0 ? (
+          <NoResults lang={lang} />
+        ) : (
+          <Reveal>
+            <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <AnimatePresence mode="popLayout">
+                {filteredUseCases.map((uc) => (
+                  <motion.div
+                    key={uc.slug}
+                    layout
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <HubCard
+                      to={langPath(lang, `/用途/${uc.slug}`)}
+                      title={uc.name}
+                      subtitle={
+                        lang === "en"
+                          ? "AEO use case"
+                          : "AEO 用途"
+                      }
+                    />
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </StaggerContainer>
+          </Reveal>
+        )}
 
         <HubCTA lang={lang} />
       </div>

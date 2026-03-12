@@ -14,6 +14,9 @@ import {
   SITE,
 } from "../lib/schema";
 import type { IndustryEngineSection } from "../data/pseo/types";
+import { SocialProofBar, TrustBadges, TestimonialCard, getTestimonialForIndustry } from "../components/SocialProofBar";
+import { FaqAccordion, AuthorBox, ArticleMeta, WasThisHelpful, ShareButtons, calculateReadingTime } from "../components/PseoEnhancements";
+// Auto-linker available for future use: import { AutoLinkedText, useAutoLinkOptions } from "../lib/auto-linker";
 
 const CALENDLY = "https://calendly.com/acesley180604/aeo-service-free-audit-surfio";
 
@@ -57,6 +60,12 @@ export default function IndustryEnginePage() {
   }, [data, lang]);
 
   if (!data) return <NotFound />;
+
+  // Reading time & auto-link setup
+  const allText = data.sections.map((s) => (typeof s.content === "string" ? s.content : s.content.join(""))).join("");
+  const readingTime = calculateReadingTime(allText);
+  const currentPath = lang === "en" ? `/en/aeo/${data.industrySlug}/${data.engineSlug}` : `/aeo/${data.industrySlug}/${data.engineSlug}`;
+  const testimonial = getTestimonialForIndustry(data.industrySlug);
 
   // Cross-links: same industry different engines + same engine different industries
   const sameIndustry = allPages.filter(
@@ -285,6 +294,16 @@ export default function IndustryEnginePage() {
             免費 AEO 審計
           </motion.a>
         </Reveal>
+
+        {/* Social Proof Bar */}
+        <div className="mt-8">
+          <SocialProofBar />
+        </div>
+
+        {/* Article Meta */}
+        <div className="mt-4">
+          <ArticleMeta publishedDate="2025-01-15" modifiedDate="2026-03-12" readingTime={readingTime} />
+        </div>
       </section>
 
       {/* Stats */}
@@ -308,22 +327,35 @@ export default function IndustryEnginePage() {
         {renderSections()}
       </section>
 
-      {/* FAQ */}
+      {/* Client Testimonial */}
+      <section className="max-w-[800px] mx-auto px-5 md:px-10 mb-16">
+        <Reveal>
+          <h2 className="text-[20px] font-extrabold text-gray-900 mb-5">
+            {lang === "en" ? "What Our Clients Say" : "客戶評價"}
+          </h2>
+          <TestimonialCard {...testimonial} />
+          <div className="mt-4">
+            <TrustBadges />
+          </div>
+        </Reveal>
+      </section>
+
+      {/* FAQ — Interactive Accordion */}
       {data.faqs.length > 0 && (
         <section className="bg-gray-50 py-14 mb-16">
           <div className="max-w-[800px] mx-auto px-5 md:px-10">
-            <Reveal><h2 className="text-[24px] md:text-[30px] font-extrabold text-gray-900 mb-8 text-center">常見問題</h2></Reveal>
-            <div className="space-y-6">
-              {data.faqs.map(([q, a], i) => (
-                <motion.div key={i} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
-                  <h3 className="text-[15px] font-bold text-gray-900 mb-2">{q}</h3>
-                  <p className="text-[14px] text-gray-600 leading-[1.75]">{a}</p>
-                </motion.div>
-              ))}
-            </div>
+            <Reveal><h2 className="text-[24px] md:text-[30px] font-extrabold text-gray-900 mb-8 text-center">{lang === "en" ? "FAQ" : "常見問題"}</h2></Reveal>
+            <FaqAccordion faqs={data.faqs} />
           </div>
         </section>
       )}
+
+      {/* Author E-E-A-T + Engagement */}
+      <section className="max-w-[800px] mx-auto px-5 md:px-10 mb-10">
+        <AuthorBox />
+        <ShareButtons url={`${SITE.url}${currentPath}`} title={data.heroTitle} />
+        <WasThisHelpful pageId={`ie-${data.slug}`} />
+      </section>
 
       {/* CTA */}
       <section className="max-w-[1100px] mx-auto px-5 md:px-10 text-center mb-16">
